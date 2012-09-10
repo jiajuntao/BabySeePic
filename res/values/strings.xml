@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">宝宝看图识物</string>
+    <string name="app_name">宝宝看图</string>
+    <string name="help_singal">"?"</string>
+
+    <!-- SD卡检查 -->
+    <string name="download_file_error_dlg_title">"没有存储空间"</string>
+    <string name="download_file_error_dlg_msg">"无法下载，请释放部分手机空间，然后重试。"</string>
+    <string name="download_failed_generic_dlg_title">"下载失败"</string>
+    <string name="download_failed_generic_msg">"下载失败"</string>
+    <string name="download_success_generic_msg">"下载完成"</string>
+    <string name="download_no_sdcard_dlg_title">"没有 SD 卡"</string>
+    <string name="download_no_sdcard_dlg_msg">"您的设备没有安装 SD 卡！"</string>
+    <string name="download_sdcard_busy_dlg_title">"SD 卡不可用"</string>
+    <string name="download_sdcard_busy_dlg_msg">"您的SD卡正在用于其他用途，请在通知中选择“关闭 USB 存储设备”。"</string>
+</resources>
