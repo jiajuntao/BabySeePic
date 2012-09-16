@@ -4,6 +4,21 @@
     <string name="hello">宝宝看图识物</string>
     <string name="app_name">宝宝看图</string>
     <string name="help_singal">"?"</string>
+    <string name="dialog_save_pic_title">请输入要保存的名称</string>
+    <string name="dialog_ok">确定</string>
+    <string name="dialog_cancel">取消</string>
+    <string name="pic_type">.jpg</string>
+    <string name="pic_view">预览宝宝作品</string>
+    <string name="pic_empty">没有找到宝宝的作品\n赶快让您的宝宝来画画吧！</string>
+    
+    <!-- 画板 -->
+    <string name="menu_color">颜色</string>
+    <string name="menu_emboss">浮雕</string>
+    <string name="menu_blur">羽化</string>
+    <string name="menu_erase">橡皮檫</string>
+    <string name="menu_save_pic">保存</string>
+    <string name="menu_save_pic_list">宝宝作品</string>
+    <string name="menu_srcatop">SrcATop</string>
 
     <!-- SD卡检查 -->
     <string name="download_file_error_dlg_title">"没有存储空间"</string>

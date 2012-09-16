@@ -71,4 +71,16 @@
             android:text="交通工具"
             android:textColor="@android:color/black" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/brush"
+        style="@style/TextAppearance.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:gravity="center"
+        android:text="宝宝画板"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
 </LinearLayout>

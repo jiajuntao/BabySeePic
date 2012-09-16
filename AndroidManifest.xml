@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cn.babysee.picture"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionCode="2"
+    android:versionName="1.1" >
 
     <uses-sdk android:minSdkVersion="8" />
-    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:icon="@drawable/ic_launcher"
@@ -27,6 +28,14 @@
         <activity
             android:name=".WebViewActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".draw.FingerPaint"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".draw.DrawPicListActivity"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

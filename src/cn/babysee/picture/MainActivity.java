@@ -1,5 +1,6 @@
 package cn.babysee.picture;
 
+import cn.babysee.picture.draw.FingerPaint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +16,7 @@ public class MainActivity extends Activity implements OnClickListener {
     private View view2;
     private View view3;
     private View view4;
+    private View brush;
     
     private Context context;
 
@@ -35,6 +37,8 @@ public class MainActivity extends Activity implements OnClickListener {
         view3.setOnClickListener(this);
         view4 = findViewById(R.id.item_4);
         view4.setOnClickListener(this);
+        brush = findViewById(R.id.brush);
+        brush.setOnClickListener(this);
     }
 
     @Override
@@ -54,6 +58,9 @@ public class MainActivity extends Activity implements OnClickListener {
                 break;
             case R.id.item_4:
                 startActivity(new Intent(context, ViewPicActivity.class).putExtra("item", 3));
+                break;
+            case R.id.brush:
+                startActivity(new Intent(context, FingerPaint.class));
                 break;
 
             default:
