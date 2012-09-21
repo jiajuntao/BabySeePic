@@ -109,17 +109,17 @@ public class ViewPicActivity extends Activity implements OnClickListener {
         switch (v.getId()) {
             case R.id.imageView1:
                 mediaPlay.playSound(currentPic1Index);
-//                if (currentIndex == currentPic1Index) {
-//                    imageView2.setVisibility(View.GONE);
-//                    goToNext();
-//                }
+                //                if (currentIndex == currentPic1Index) {
+                //                    imageView2.setVisibility(View.GONE);
+                //                    goToNext();
+                //                }
                 break;
             case R.id.imageView2:
                 mediaPlay.playSound(currentPic2Index);
-//                if (currentIndex == currentPic2Index) {
-//                    imageView1.setVisibility(View.GONE);
-//                    goToNext();
-//                }
+                //                if (currentIndex == currentPic2Index) {
+                //                    imageView1.setVisibility(View.GONE);
+                //                    goToNext();
+                //                }
 
                 break;
             case R.id.up:

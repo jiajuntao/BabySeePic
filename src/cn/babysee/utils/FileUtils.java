@@ -15,6 +15,7 @@ import java.text.DecimalFormat;
 import java.util.zip.GZIPOutputStream;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.StatFs;
@@ -25,29 +26,27 @@ import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 import cn.babysee.picture.R;
 
-
 public class FileUtils {
-
 
     /**
      * 本程序文件夹名
      */
     public static final String APP_FOLDER_NAME = "babyseepic";
-    
+
     /**
      * 存放保存的图片的文件夹名
      */
-    public static final String IMAGE_FOLDER_NAME = "babyseepic";
-    
+    public static final String IMAGE_FOLDER_NAME = "pic";
+
+    /**
+     * 存放临时文件的文件夹名
+     */
+    public static final String SAVE_DRAW_PIC_DIR = "pic";
+
     /**
      * 存放临时文件的文件夹名
      */
     public static final String TEMP_FOLDER_NAME = "temp";
-    
-    /**
-     *多图上传临时文件夹 
-     */
-    public static final String TEMP_UPLOAD_PHOTO_FOLDER_NAME = "tmp";
 
     /**
      * 存放临时的图片压缩文件的文件名
@@ -57,67 +56,69 @@ public class FileUtils {
     /**
      * temporary path to save the cropped image in BlogSettingActivity
      */
-    public static final String TEMP_CROP_IMAGE_NAME = "temp_crop_image" ;
-    
+    public static final String TEMP_CROP_IMAGE_NAME = "temp_crop_image";
+
     /**
      * 存放临时的图片查看文件的文件名
      */
     public static final String TEMP_VIEW_IMAGE_NAME = "temp_view";
 
-    private static String appFolderPath = null;               // 此程序存放文件的文件夹路径
-    private static String imageFolderPath = null;             // 存放图片的文件夹名
-    private static String tempFolderPath = null; 
-    private static String tempUploadFolderPath = null;
+    private static String appFolderPath = null; // 此程序存放文件的文件夹路径
 
-	// 判断SD卡是否存在
-	public static boolean isSdcardValid(Context context) {
-		String status = Environment.getExternalStorageState();
-		if (!status.equals(Environment.MEDIA_MOUNTED)) {
-			int msg;
+    private static String imageFolderPath = null; // 存放图片的文件夹名
 
-			// 判断SD卡是否正在使用文件共享（U盘模式挂载）
-			if (status.equals(Environment.MEDIA_SHARED)) {
-				msg = R.string.download_sdcard_busy_dlg_msg;
-			} else {
-				msg = R.string.download_no_sdcard_dlg_msg;
-			}
+    private static String tempFolderPath = null;
 
-			Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
-			return false;
-		} else {
-            // 获得存储卡的路径
-            String sdcardPath = Environment.getExternalStorageDirectory().getPath();
-            if(!sdcardPath.endsWith(File.separator)) {
-                sdcardPath = sdcardPath + File.separator;
+    static {
+        // 获得存储卡的路径
+        String sdcardPath = Environment.getExternalStorageDirectory().getPath();
+        if (!sdcardPath.endsWith(File.separator)) {
+            sdcardPath = sdcardPath + File.separator;
+        }
+        // 拼接本程序用到的目录
+        appFolderPath = sdcardPath + APP_FOLDER_NAME + File.separator;
+        imageFolderPath = appFolderPath + IMAGE_FOLDER_NAME + File.separator;
+        tempFolderPath = appFolderPath + TEMP_FOLDER_NAME + File.separator;
+    }
+
+    // 判断SD卡是否存在
+    public static boolean isSdcardValid(Context context) {
+        String status = Environment.getExternalStorageState();
+        if (!status.equals(Environment.MEDIA_MOUNTED)) {
+            int msg;
+
+            // 判断SD卡是否正在使用文件共享（U盘模式挂载）
+            if (status.equals(Environment.MEDIA_SHARED)) {
+                msg = R.string.download_sdcard_busy_dlg_msg;
+            } else {
+                msg = R.string.download_no_sdcard_dlg_msg;
             }
-            // 拼接本程序用到的目录
-            appFolderPath = sdcardPath + APP_FOLDER_NAME + File.separator;
-            imageFolderPath = appFolderPath + IMAGE_FOLDER_NAME + File.separator;
-            tempFolderPath = appFolderPath + TEMP_FOLDER_NAME + File.separator;
-            tempUploadFolderPath = appFolderPath + TEMP_UPLOAD_PHOTO_FOLDER_NAME + File.separator;
-			return true;
-		}
-	}
 
-	public static boolean isSdcardValidNoToast(){
-	    String status = Environment.getExternalStorageState();
-        if (!status.equals(Environment.MEDIA_MOUNTED)){
+            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
             return false;
-        }else{
+        } else {
             // 获得存储卡的路径
             String sdcardPath = Environment.getExternalStorageDirectory().getPath();
-            if(!sdcardPath.endsWith(File.separator)) {
+            if (!sdcardPath.endsWith(File.separator)) {
                 sdcardPath = sdcardPath + File.separator;
             }
             // 拼接本程序用到的目录
             appFolderPath = sdcardPath + APP_FOLDER_NAME + File.separator;
             imageFolderPath = appFolderPath + IMAGE_FOLDER_NAME + File.separator;
             tempFolderPath = appFolderPath + TEMP_FOLDER_NAME + File.separator;
-            tempUploadFolderPath = appFolderPath + TEMP_UPLOAD_PHOTO_FOLDER_NAME + File.separator;
             return true;
         }
-	}
-	
+    }
+
+    public static boolean isSdcardValidNoToast() {
+        String status = Environment.getExternalStorageState();
+        if (!status.equals(Environment.MEDIA_MOUNTED)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     /**
      * 获取保存图片的路径
      */
@@ -152,17 +153,6 @@ public class FileUtils {
     }
 
     /**
-     * 获取上传文件临时目录的路径
-     */
-    public static String getTempPhotosUploadFolderPath(){
-        if (createFolder(tempUploadFolderPath)) {
-            return tempUploadFolderPath;
-        } else {
-            return null;
-        }
-    }
-    
-    /**
      * 获取临时压缩图片文件的路径
      */
     public static String getTempCompressImagePath() {
@@ -183,13 +173,14 @@ public class FileUtils {
             return null;
         }
     }
-    
+
     /**
      * get the temp save path by the image url
+     * 
      * @param imageUrl
      * @return
      */
-    public static String getTempImagePath(String imageUrl){
+    public static String getTempImagePath(String imageUrl) {
         String path = Md5Util.getMd5(imageUrl);
         if (createFolder(tempFolderPath)) {
             return tempFolderPath + path;
@@ -197,7 +188,7 @@ public class FileUtils {
             return null;
         }
     }
-    
+
     /**
      * get the temporary path of the cropped image
      */
@@ -208,21 +199,7 @@ public class FileUtils {
             return null;
         }
     }
-    
-    /**
-     * 根据路径获取压缩后的图片路径
-     * 
-     * @param path
-     * @return
-     */
-    public static String getTempUploadPhotosPath(String path){
-        if (createFolder(tempUploadFolderPath)) {
-            return tempUploadFolderPath + Md5Util.getMd5(path);
-        } else {
-            return null;
-        }
-    }
-    
+
     public static String getMimeType(String url) {
         CacheResult mCacheResult = CacheManager.getCacheFile(url, null);
         if (mCacheResult != null) {
@@ -231,8 +208,10 @@ public class FileUtils {
             return null;
         }
     }
+
     /**
      * 获取文件扩展名
+     * 
      * @return suggested extension
      */
     public static final String guessFileExtension(String url, String mimeType) {
@@ -279,7 +258,8 @@ public class FileUtils {
                     } else {
                         extension = ".txt";
                     }
-                } if ((mimeType != null) && mimeType.toLowerCase().startsWith("image/")) {
+                }
+                if ((mimeType != null) && mimeType.toLowerCase().startsWith("image/")) {
                     if (mimeType.equalsIgnoreCase("image/jpeg")) {
                         extension = ".jpg";
                     } else if (mimeType.equalsIgnoreCase("image/png")) {
@@ -310,56 +290,55 @@ public class FileUtils {
 
         return extension;
     }
-    
-	/**
-	 * 判断指定路径的文件是否存在
-	 */
-	public static boolean isFileExist(String filePath) {
-		try{
-			return new File(filePath).exists();
-		} catch(SecurityException e) {
-			e.printStackTrace();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
 
-	/**
-	 * 创建目录
-	 * return: 如果目录已经存在，或者目录创建成功，返回true；如果目录创建失败，返回false
-	 */
-	public static boolean createFolder(String folderPath) {
-	    boolean success = false;
-		try{
-		    File folder = new File(folderPath);
-		    if (folder.exists() && folder.isDirectory()) {
-		        success = true;
-		    } else {
-		        success = folder.mkdirs();
-		    }
-		} catch(SecurityException e) {
-			e.printStackTrace();
-		}
-		return success;
-	}
-	
-	/**
-	 * 创建指定文件的目录
-	 */
-	public static void createFileFolder(String filePath) {
-		try{
-			new File(filePath).getParentFile().mkdirs();
-		} catch(SecurityException e) {
-			e.printStackTrace();
-		}
-	}
+    /**
+     * 判断指定路径的文件是否存在
+     */
+    public static boolean isFileExist(String filePath) {
+        try {
+            return new File(filePath).exists();
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
-	/**
-	 * 移动指定文件到指定的路径
-	 */
-	public static boolean copyFile(String fromPath, String toPath) {
-	    boolean success;
+    /**
+     * 创建目录 return: 如果目录已经存在，或者目录创建成功，返回true；如果目录创建失败，返回false
+     */
+    public static boolean createFolder(String folderPath) {
+        boolean success = false;
+        try {
+            File folder = new File(folderPath);
+            if (folder.exists() && folder.isDirectory()) {
+                success = true;
+            } else {
+                success = folder.mkdirs();
+            }
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        }
+        return success;
+    }
+
+    /**
+     * 创建指定文件的目录
+     */
+    public static void createFileFolder(String filePath) {
+        try {
+            new File(filePath).getParentFile().mkdirs();
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 移动指定文件到指定的路径
+     */
+    public static boolean copyFile(String fromPath, String toPath) {
+        boolean success;
         // get channels
         FileInputStream fis = null;
         FileOutputStream fos = null;
@@ -400,63 +379,63 @@ public class FileUtils {
             }
         }
         return success;
-	}
+    }
 
-	/**
-	 * 移动指定文件到指定的路径
-	 */
-	public static boolean moveFile(String fromPath, String toPath) {
-		try{
-			File fromFile = new File(fromPath);
-			File toFile = new File(toPath);
-			if(fromFile.exists()) {
-				return fromFile.renameTo(toFile);
-			} else {
-				return false;
-			}
-		} catch(SecurityException e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
+    /**
+     * 移动指定文件到指定的路径
+     */
+    public static boolean moveFile(String fromPath, String toPath) {
+        try {
+            File fromFile = new File(fromPath);
+            File toFile = new File(toPath);
+            if (fromFile.exists()) {
+                return fromFile.renameTo(toFile);
+            } else {
+                return false;
+            }
+        } catch (SecurityException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
-	/**
-	 * 删除指定路径的文件
-	 */
-	public static boolean deleteFile(String filePath) {
-		try{
-			return new File(filePath).delete();
-		} catch(SecurityException e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
+    /**
+     * 删除指定路径的文件
+     */
+    public static boolean deleteFile(String filePath) {
+        try {
+            return new File(filePath).delete();
+        } catch (SecurityException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
-	/**
-	 * 删除指定文件夹中的全部文件
-	 */
-	public static boolean cleanDirectory(String folderPath) {
-		if (TextUtils.isEmpty(folderPath)) {
-			return false;
-		}
-		try{
-			for(File tempFile: new File(folderPath).listFiles()) {
-				if (tempFile.isDirectory()) {
-					cleanDirectory(tempFile.getPath());
-				}
-				tempFile.delete();
-			}
-		} catch(SecurityException e) {
-			e.printStackTrace();
-			return false;
-		}
-		return true;
-	}
+    /**
+     * 删除指定文件夹中的全部文件
+     */
+    public static boolean cleanDirectory(String folderPath) {
+        if (TextUtils.isEmpty(folderPath)) {
+            return false;
+        }
+        try {
+            for (File tempFile : new File(folderPath).listFiles()) {
+                if (tempFile.isDirectory()) {
+                    cleanDirectory(tempFile.getPath());
+                }
+                tempFile.delete();
+            }
+        } catch (SecurityException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 
     /**
      * 保存浏览器中的图片
      */
-	public static boolean saveImageFromWebCache(String url, String savePath) {
+    public static boolean saveImageFromWebCache(String url, String savePath) {
 
         // 缓存的文件路径
         String cachePath = null;;
@@ -472,74 +451,74 @@ public class FileUtils {
             }
         }
         return false;
-	}
-	
-	// 这个是手机内存的总空间大小
-	public static long getTotalInternalMemorySize() {
-		File path = Environment.getDataDirectory();
-		StatFs stat = new StatFs(path.getPath());
-		long blockSize = stat.getBlockSize();
-		long totalBlocks = stat.getBlockCount();
-		return totalBlocks * blockSize;
-	}
+    }
 
-	// 这个是手机内存的可用空间大小
-	public static long getAvailableInternalMemorySize() {
-		File path = Environment.getDataDirectory();
-		StatFs stat = new StatFs(path.getPath());
-		long blockSize = stat.getBlockSize();
-		long availableBlocks = stat.getAvailableBlocks();
-		return availableBlocks * blockSize;
-	}
+    // 这个是手机内存的总空间大小
+    public static long getTotalInternalMemorySize() {
+        File path = Environment.getDataDirectory();
+        StatFs stat = new StatFs(path.getPath());
+        long blockSize = stat.getBlockSize();
+        long totalBlocks = stat.getBlockCount();
+        return totalBlocks * blockSize;
+    }
 
-	// 这个是外部存储的总空间大小
-	public static long getAvailableExternalMemorySize(Context context) {
-		long availableExternalMemorySize = 0;
-		if(isSdcardValid(context)) {
-			File path = Environment.getExternalStorageDirectory();
-			StatFs stat = new StatFs(path.getPath());
-			long blockSize = stat.getBlockSize();
-			long availableBlocks = stat.getAvailableBlocks();
-			availableExternalMemorySize = availableBlocks * blockSize;
-		} else {
-			availableExternalMemorySize = -1;
-		}
-		return availableExternalMemorySize;
-	}
+    // 这个是手机内存的可用空间大小
+    public static long getAvailableInternalMemorySize() {
+        File path = Environment.getDataDirectory();
+        StatFs stat = new StatFs(path.getPath());
+        long blockSize = stat.getBlockSize();
+        long availableBlocks = stat.getAvailableBlocks();
+        return availableBlocks * blockSize;
+    }
 
-	// 这个是外部存储的总空间大小
-	public static long getTotalExternalMemorySize(Context context) {
-		long totalExternalMemorySize = 0;
-		if(isSdcardValid(context)) {
-			File path = Environment.getExternalStorageDirectory();
-			StatFs stat = new StatFs(path.getPath());
-			long blockSize = stat.getBlockSize();
-			long totalBlocks = stat.getBlockCount();
-			totalExternalMemorySize = totalBlocks * blockSize;
-		} else {
-			totalExternalMemorySize = -1;
-		}
+    // 这个是外部存储的总空间大小
+    public static long getAvailableExternalMemorySize(Context context) {
+        long availableExternalMemorySize = 0;
+        if (isSdcardValid(context)) {
+            File path = Environment.getExternalStorageDirectory();
+            StatFs stat = new StatFs(path.getPath());
+            long blockSize = stat.getBlockSize();
+            long availableBlocks = stat.getAvailableBlocks();
+            availableExternalMemorySize = availableBlocks * blockSize;
+        } else {
+            availableExternalMemorySize = -1;
+        }
+        return availableExternalMemorySize;
+    }
 
-		return totalExternalMemorySize;
-	}
+    // 这个是外部存储的总空间大小
+    public static long getTotalExternalMemorySize(Context context) {
+        long totalExternalMemorySize = 0;
+        if (isSdcardValid(context)) {
+            File path = Environment.getExternalStorageDirectory();
+            StatFs stat = new StatFs(path.getPath());
+            long blockSize = stat.getBlockSize();
+            long totalBlocks = stat.getBlockCount();
+            totalExternalMemorySize = totalBlocks * blockSize;
+        } else {
+            totalExternalMemorySize = -1;
+        }
 
-	/* 返回为字符串数组[0]为大小[1]为单位KB或MB */
-	public static String fileSize(long size) {
-		String str = "";
-		if (size >= 1024) {
-			str = "KB";
-			size /= 1024;
-			if (size >= 1024) {
-				str = "MB";
-				size /= 1024;
-			}
-		}
-		DecimalFormat formatter = new DecimalFormat();
-		/* 每3个数字用,分隔如：1,000 */
-		formatter.setGroupingSize(3);
-		return formatter.format(size) + str;
-	}
-    
+        return totalExternalMemorySize;
+    }
+
+    /* 返回为字符串数组[0]为大小[1]为单位KB或MB */
+    public static String fileSize(long size) {
+        String str = "";
+        if (size >= 1024) {
+            str = "KB";
+            size /= 1024;
+            if (size >= 1024) {
+                str = "MB";
+                size /= 1024;
+            }
+        }
+        DecimalFormat formatter = new DecimalFormat();
+        /* 每3个数字用,分隔如：1,000 */
+        formatter.setGroupingSize(3);
+        return formatter.format(size) + str;
+    }
+
     /**
      * 将指定内容写入Log（指定目录）
      * */
@@ -556,7 +535,7 @@ public class FileUtils {
         }
         return false;
     }
-    
+
     /**
      * 从指定位置读取Log（指定目录）
      * */
@@ -569,7 +548,7 @@ public class FileUtils {
             FileReader fileReader = new FileReader(filePath);
             BufferedReader br = new BufferedReader(fileReader);
             String s = null;
-            while((s=br.readLine())!=null){
+            while ((s = br.readLine()) != null) {
                 sb.append(s);
             }
             // 将字符列表转换成字符串
@@ -580,7 +559,7 @@ public class FileUtils {
         }
         return content;
     }
-    
+
     /**
      * 写测试日志数据
      * */
@@ -589,7 +568,7 @@ public class FileUtils {
             writeFile(getAppFolderPath() + "http_log.txt", content.concat(","), true);
         }
     }
-    
+
     /**
      * 读测试日志数据
      * */
@@ -599,14 +578,14 @@ public class FileUtils {
         }
         return null;
     }
-    
+
     /**
      * 将Gzip压缩过的内容写入Log（指定文件名）
      * */
     public static boolean writeGzipFile(Context context, String filePath, String content) {
         File file;
         file = new File(filePath);
-        
+
         FileOutputStream fos = null;
         GZIPOutputStream gos = null;
         try {
@@ -626,7 +605,7 @@ public class FileUtils {
         }
         return false;
     }
-    
+
     /**
      * 写测试日志数据
      * */
@@ -635,14 +614,14 @@ public class FileUtils {
             deleteFile(getAppFolderPath() + "http_log.txt");
         }
     }
-    
+
     // Returns the contents of the file in a byte array.
     public static byte[] getBytesFromFile(File file, long byteLen) throws IOException {
         InputStream is = new FileInputStream(file);
 
         // Get the size of the file
         long length = byteLen;
-        if(length == 0){
+        if (length == 0) {
             length = file.length();
         }
 
@@ -652,27 +631,45 @@ public class FileUtils {
         // to ensure that file is not larger than Integer.MAX_VALUE.
         if (length > Integer.MAX_VALUE) {
             // File is too large
-            throw new IOException("ensure that file is not larger than Integer.MAX_VALUE "+file.getName());
+            throw new IOException("ensure that file is not larger than Integer.MAX_VALUE "
+                    + file.getName());
         }
 
         // Create the byte array to hold the data
-        byte[] bytes = new byte[(int)length];
+        byte[] bytes = new byte[(int) length];
 
         // Read in the bytes
         int offset = 0;
         int numRead = 0;
         while (offset < bytes.length
-               && (numRead=is.read(bytes, offset, bytes.length-offset)) >= 0) {
+                && (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
             offset += numRead;
         }
 
         // Ensure all the bytes have been read in
         if (offset < bytes.length) {
-            throw new IOException("Could not completely read file "+file.getName());
+            throw new IOException("Could not completely read file " + file.getName());
         }
 
         // Close the input stream and return bytes
         is.close();
         return bytes;
+    }
+
+    public static void saveFile(String filePath, Bitmap bitmap) throws FileNotFoundException {
+
+        File imageFile = new File(filePath);
+
+        FileOutputStream fos = new FileOutputStream(imageFile);
+
+        final BufferedOutputStream bos = new BufferedOutputStream(fos, 16384);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+        try {
+            bos.flush();
+            bos.close();
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
