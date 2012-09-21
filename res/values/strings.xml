@@ -3,7 +3,19 @@
 
     <string name="hello">宝宝看图识物</string>
     <string name="app_name">宝宝看图</string>
-    <string name="help_singal">"?"</string>
+    <string name="app_version">宝宝看图 V1.0.0</string>
+    
+     <string name="menu_settings">设置</string>
+     <string name="menu_about">关于</string>
+     <string name="menu_advice">意见反馈</string>
+     
+     <string name="about_office_web">官网：</string>
+     <string name="about_office_web_url">babystudy.diandian.com</string>
+     <string name="about_mail">邮箱：</string>
+     <string name="about_mail_url">babyseepic@gmail.com</string>
+     <string name="about_copyright">懿轩工作室</string>
+     <string name="about_description">"　　通过多年对宝宝行为的观察，专为宝宝量身打造的看图软件，通过图片和声音认识常见的动物、水果、蔬菜、交通工具。在玩的过程中认识新的事物，帮助你做好宝宝的启蒙教育！
+        如果你有任何反馈或修改意见请与我们联系！"</string>
 
     <!-- SD卡检查 -->
     <string name="download_file_error_dlg_title">"没有存储空间"</string>

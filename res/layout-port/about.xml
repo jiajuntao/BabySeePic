@@ -2,72 +2,93 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/bg"
-    android:gravity="center_horizontal"
+    android:gravity="center"
     android:orientation="vertical"
-    android:weightSum="1" >
+    android:padding="10dip" >
 
-    <!-- Header -->
-
-    <RelativeLayout
+    <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="4dip"
-        android:paddingRight="4dip"
-        android:paddingTop="6dip" >
+        android:layout_height="fill_parent" >
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="4dip" >
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/dialog_bg"
+                android:orientation="vertical"
+                android:paddingLeft="10dip" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@style/TextDialog"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/about_office_web" />
+
+                    <TextView
+                        style="@style/TextDialog"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:autoLink="web"
+                        android:gravity="left"
+                        android:linksClickable="true"
+                        android:paddingBottom="3dip"
+                        android:paddingTop="3dip"
+                        android:text="@string/about_office_web_url"
+                        android:textColorLink="@android:color/white" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@style/TextDialog"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/about_mail" />
+
+                    <TextView
+                        style="@style/TextDialog"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:autoLink="email"
+                        android:gravity="left"
+                        android:linksClickable="true"
+                        android:paddingBottom="3dip"
+                        android:paddingTop="3dip"
+                        android:text="@string/about_mail_url"
+                        android:textColorLink="@android:color/white" />
+                </LinearLayout>
+            </LinearLayout>
 
             <TextView
+                style="@style/TextDialog"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:text="关于"
-                style="@android:style/TextAppearance.Large"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_marginTop="10dip"
+                android:text="@string/about_copyright" />
+
+            <TextView
+                style="@style/TextDialog"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:background="@drawable/dialog_bg"
+                android:gravity="left"
+                android:text="@string/about_description" />
         </LinearLayout>
-    </RelativeLayout>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="68dip"
-        android:gravity="center_vertical"
-        android:src="@drawable/ic_launcher" />
-
-    <TextView
-        android:id="@+id/offical_blog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dip"
-        android:singleLine="true"
-        android:text="官方博客"
-        style="@style/TextAppearance.Medium"
-         />
-
-    <TextView
-        android:id="@+id/check_update"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dip"
-        android:singleLine="true"
-        android:text="检查更新"
-        style="@style/TextAppearance.Medium" />
-
-    <TextView
-        android:id="@+id/version_text"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:gravity="bottom"
-        android:paddingBottom="16dip"
-        android:singleLine="true"
-        android:textSize="12sp"
-        android:textStyle="bold" />
+    </ScrollView>
 
 </LinearLayout>
