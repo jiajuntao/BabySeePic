@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.EmbossMaskFilter;
 import android.graphics.MaskFilter;
 import android.graphics.Paint;
@@ -27,14 +28,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 import cn.babysee.picture.MediaPlay;
 import cn.babysee.picture.R;
 import cn.babysee.picture.ResourcesHelper;
+import cn.babysee.picture.draw.ColorPickerDialog.OnColorChangedListener;
 import cn.babysee.utils.FileUtils;
 
-public class FingerPaint extends GraphicsActivity implements
-        ColorPickerDialog.OnColorChangedListener {
+public class FingerPaint extends GraphicsActivity {
 
     private Context mContext;
 
@@ -137,9 +137,7 @@ public class FingerPaint extends GraphicsActivity implements
 
     private MaskFilter mBlur;
 
-    public void colorChanged(int color) {
-        mPaint.setColor(color);
-    }
+    private Canvas mCanvas;
 
     public class MyView extends View {
 
@@ -149,8 +147,6 @@ public class FingerPaint extends GraphicsActivity implements
 
         private Bitmap mBitmap;
 
-        private Canvas mCanvas;
-
         private Path mPath;
 
         private Paint mBitmapPaint;
@@ -159,6 +155,7 @@ public class FingerPaint extends GraphicsActivity implements
             super(c);
 
             mBitmap = Bitmap.createBitmap(screenWeight, screenHeight, Bitmap.Config.ARGB_8888);
+
             mCanvas = new Canvas(mBitmap);
             mPath = new Path();
             mBitmapPaint = new Paint(Paint.DITHER_FLAG);
@@ -171,7 +168,7 @@ public class FingerPaint extends GraphicsActivity implements
 
         @Override
         protected void onDraw(Canvas canvas) {
-            canvas.drawColor(0xFFAAAAAA);
+            canvas.drawColor(Color.WHITE);
 
             canvas.drawBitmap(mBitmap, 0, 0, mBitmapPaint);
 
@@ -183,8 +180,8 @@ public class FingerPaint extends GraphicsActivity implements
         private static final float TOUCH_TOLERANCE = 4;
 
         private void touch_start(float x, float y) {
-            Random random = new Random();
-            mediaPlay.playSound(random.nextInt(10));
+            radomPlaySound();
+
             mPath.reset();
             mPath.moveTo(x, y);
             mX = x;
@@ -202,13 +199,19 @@ public class FingerPaint extends GraphicsActivity implements
         }
 
         private void touch_up() {
-            Random random = new Random();
-            mediaPlay.playSound(random.nextInt(10));
+            radomPlaySound();
+
             mPath.lineTo(mX, mY);
             // commit the path to our offscreen
             mCanvas.drawPath(mPath, mPaint);
             // kill this so we don't double draw
             mPath.reset();
+        }
+
+        //随机播放声音
+        private void radomPlaySound() {
+            Random random = new Random();
+            mediaPlay.playSound(random.nextInt(10));
         }
 
         @Override
@@ -259,11 +262,15 @@ public class FingerPaint extends GraphicsActivity implements
 
     private static final int SAVE_PIC_LIST_MENU_ID = Menu.FIRST + 6;
 
+    private static final int COLOR_MENU_CANVAS_ID = Menu.FIRST + 7;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
 
         menu.add(0, COLOR_MENU_ID, 0, getString(R.string.menu_color)).setShortcut('3', 'c');
+        menu.add(0, COLOR_MENU_CANVAS_ID, 0, getString(R.string.menu_color_canvas)).setShortcut(
+                '3', 'c');
         //        menu.add(0, EMBOSS_MENU_ID, 0, getString(R.string.menu_emboss)).setShortcut('4', 's');
         //        menu.add(0, BLUR_MENU_ID, 0, getString(R.string.menu_blur)).setShortcut('5', 'z');
         menu.add(0, ERASE_MENU_ID, 0, getString(R.string.menu_erase)).setShortcut('5', 'z');
@@ -295,7 +302,24 @@ public class FingerPaint extends GraphicsActivity implements
 
         switch (item.getItemId()) {
             case COLOR_MENU_ID:
-                new ColorPickerDialog(this, this, mPaint.getColor()).show();
+                new ColorPickerDialog(this, new OnColorChangedListener() {
+                    
+                    @Override
+                    public void colorChanged(int color) {
+                        mPaint.setColor(color);
+                    }
+                }, mPaint.getColor()).show();
+                return true;
+            case COLOR_MENU_CANVAS_ID:
+                new ColorPickerDialog(this, new OnColorChangedListener() {
+
+                    @Override
+                    public void colorChanged(int color) {
+                        mCanvas.drawColor(color);
+//                        myView.invalidate();
+                    }
+
+                }, Color.WHITE).show();
                 return true;
             case EMBOSS_MENU_ID:
                 if (mPaint.getMaskFilter() != mEmboss) {

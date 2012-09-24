@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +19,19 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import cn.babysee.picture.AppEnv;
 import cn.babysee.picture.R;
 import cn.babysee.utils.FileUtils;
 import cn.babysee.utils.ImageUtils;
 
 public class DrawPicListActivity extends ListActivity implements OnItemClickListener {
 
+    private boolean DEBUG = AppEnv.DEBUG;
+
+    private String TAG = "DrawPicListActivity";
+
     private Context mContext;
+
     private List<String> picList = new ArrayList<String>();
 
     private List<String> getPicList() {
@@ -56,6 +63,17 @@ public class DrawPicListActivity extends ListActivity implements OnItemClickList
             setListAdapter(new EfficientAdapter(this, picList));
         }
         getListView().setOnItemClickListener(this);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        String fileName = picList.get(position);
+        if (DEBUG) Log.d(TAG, FileUtils.getImageFolderPath() + fileName);
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(Uri.fromFile(new File(FileUtils.getImageFolderPath() + fileName)),
+                "image/*");
+        startActivity(Intent.createChooser(intent, getString(R.string.pic_view)));
     }
 
     private static class EfficientAdapter extends BaseAdapter {
@@ -154,14 +172,4 @@ public class DrawPicListActivity extends ListActivity implements OnItemClickList
         }
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-        String fileName = picList.get(position);
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_VIEW);
-        intent.setType("image/*");
-        intent.setData(Uri.fromFile(new File(FileUtils.getImageFolderPath() + fileName)));
-        startActivity(Intent.createChooser(intent, getString(R.string.pic_view)));
-    }
 }

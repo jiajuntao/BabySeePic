@@ -120,9 +120,8 @@ public final class R {
         public static final int item_2=0x7f09000b;
         public static final int item_3=0x7f09000c;
         public static final int item_4=0x7f09000d;
-        public static final int menu_about=0x7f090016;
-        public static final int menu_advice=0x7f090017;
-        public static final int menu_settings=0x7f090018;
+        public static final int menu_about=0x7f090017;
+        public static final int menu_advice=0x7f090016;
         public static final int pic_name=0x7f090001;
         public static final int pic_path=0x7f090000;
         public static final int pic_type=0x7f090002;
@@ -180,36 +179,38 @@ public final class R {
         public static final int dialog_cancel=0x7f06000f;
         public static final int dialog_ok=0x7f06000e;
         public static final int dialog_save_pic_title=0x7f06000d;
-        public static final int download_failed_generic_dlg_title=0x7f06001c;
-        public static final int download_failed_generic_msg=0x7f06001d;
-        public static final int download_file_error_dlg_msg=0x7f06001b;
+        public static final int download_failed_generic_dlg_title=0x7f06001d;
+        public static final int download_failed_generic_msg=0x7f06001e;
+        public static final int download_file_error_dlg_msg=0x7f06001c;
         /**  SD卡检查 
          */
-        public static final int download_file_error_dlg_title=0x7f06001a;
-        public static final int download_no_sdcard_dlg_msg=0x7f060020;
-        public static final int download_no_sdcard_dlg_title=0x7f06001f;
-        public static final int download_sdcard_busy_dlg_msg=0x7f060022;
-        public static final int download_sdcard_busy_dlg_title=0x7f060021;
-        public static final int download_success_generic_msg=0x7f06001e;
+        public static final int download_file_error_dlg_title=0x7f06001b;
+        public static final int download_no_sdcard_dlg_msg=0x7f060021;
+        public static final int download_no_sdcard_dlg_title=0x7f060020;
+        public static final int download_sdcard_busy_dlg_msg=0x7f060023;
+        public static final int download_sdcard_busy_dlg_title=0x7f060022;
+        public static final int download_success_generic_msg=0x7f06001f;
         public static final int hello=0x7f060000;
         public static final int help_singal=0x7f06000c;
         public static final int menu_about=0x7f060004;
         public static final int menu_advice=0x7f060005;
-        public static final int menu_blur=0x7f060015;
+        public static final int menu_blur=0x7f060016;
         /**  画板 
          */
         public static final int menu_color=0x7f060013;
-        public static final int menu_emboss=0x7f060014;
-        public static final int menu_erase=0x7f060016;
-        public static final int menu_save_pic=0x7f060017;
-        public static final int menu_save_pic_list=0x7f060018;
+        public static final int menu_color_canvas=0x7f060014;
+        public static final int menu_emboss=0x7f060015;
+        public static final int menu_erase=0x7f060017;
+        public static final int menu_save_pic=0x7f060018;
+        public static final int menu_save_pic_list=0x7f060019;
         public static final int menu_settings=0x7f060003;
-        public static final int menu_srcatop=0x7f060019;
+        public static final int menu_srcatop=0x7f06001a;
         public static final int pic_empty=0x7f060012;
         public static final int pic_type=0x7f060010;
         public static final int pic_view=0x7f060011;
     }
     public static final class style {
+        public static final int MainItem=0x7f070004;
         public static final int TextAppearance_Large=0x7f070000;
         public static final int TextAppearance_Medium=0x7f070001;
         public static final int TextAppearance_Small=0x7f070002;

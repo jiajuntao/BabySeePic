@@ -1,6 +1,5 @@
 package cn.babysee.picture;
 
-import cn.babysee.picture.draw.FingerPaint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -14,17 +13,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import cn.babysee.picture.draw.FingerPaint;
 
 public class MainActivity extends Activity implements OnClickListener {
 
     private boolean DEBUG = AppEnv.DEBUG;
+
     private String TAG = "MainActivity";
 
     private View title;
+
     private View view1;
+
     private View view2;
+
     private View view3;
+
     private View view4;
+
     private View brush;
 
     private Context context;
@@ -53,27 +59,27 @@ public class MainActivity extends Activity implements OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-        case R.id.title:
-            //                startActivity(new Intent(context, WebViewActivity.class));
-            break;
-        case R.id.item_1:
-            startActivity(new Intent(context, ViewPicActivity.class).putExtra("item", 0));
-            break;
-        case R.id.item_2:
-            startActivity(new Intent(context, ViewPicActivity.class).putExtra("item", 1));
-            break;
-        case R.id.item_3:
-            startActivity(new Intent(context, ViewPicActivity.class).putExtra("item", 2));
-            break;
-        case R.id.item_4:
-            startActivity(new Intent(context, ViewPicActivity.class).putExtra("item", 3));
-            break;
-        case R.id.brush:
-            startActivity(new Intent(context, FingerPaint.class));
-            break;
+            case R.id.title:
+                //                startActivity(new Intent(context, WebViewActivity.class));
+                break;
+            case R.id.item_1:
+                startActivity(new Intent(context, ViewPicActivity.class).putExtra("item", 0));
+                break;
+            case R.id.item_2:
+                startActivity(new Intent(context, ViewPicActivity.class).putExtra("item", 1));
+                break;
+            case R.id.item_3:
+                startActivity(new Intent(context, ViewPicActivity.class).putExtra("item", 2));
+                break;
+            case R.id.item_4:
+                startActivity(new Intent(context, ViewPicActivity.class).putExtra("item", 3));
+                break;
+            case R.id.brush:
+                startActivity(new Intent(context, FingerPaint.class));
+                break;
 
-        default:
-            break;
+            default:
+                break;
         }
     }
 
@@ -85,50 +91,48 @@ public class MainActivity extends Activity implements OnClickListener {
 
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
-        if (DEBUG)
-            Log.d(TAG, "onMenuItemSelected");
+        if (DEBUG) Log.d(TAG, "onMenuItemSelected");
 
         switch (item.getItemId()) {
-        case R.id.menu_about:
-            showDialog(0);
-            break;
-        case R.id.menu_advice:
+            case R.id.menu_about:
+                showDialog(0);
+                break;
+            case R.id.menu_advice:
 
-            try {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                Uri maiUri = Uri.parse("mailto:babyseepic@gmail.com");
-                intent.setData(maiUri);
-                startActivity(Intent.createChooser(intent, getString(R.string.menu_advice)));
-            } catch (Exception e) {
-                if (DEBUG)
-                    e.printStackTrace();
-            }
-            break;
-        case R.id.menu_settings:
+                try {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    Uri maiUri = Uri.parse("mailto:babyseepic@gmail.com");
+                    intent.setData(maiUri);
+                    startActivity(Intent.createChooser(intent, getString(R.string.menu_advice)));
+                } catch (Exception e) {
+                    if (DEBUG) e.printStackTrace();
+                }
+                break;
+            //        case R.id.menu_settings:
+            //
+            //            break;
 
-            break;
+            case R.id.title:
+                //                startActivity(new Intent(context, WebViewActivity.class));
+                break;
+            case R.id.item_1:
+                startActivity(new Intent(context, ViewPicActivity.class).putExtra("item", 0));
+                break;
+            case R.id.item_2:
+                startActivity(new Intent(context, ViewPicActivity.class).putExtra("item", 1));
+                break;
+            case R.id.item_3:
+                startActivity(new Intent(context, ViewPicActivity.class).putExtra("item", 2));
+                break;
+            case R.id.item_4:
+                startActivity(new Intent(context, ViewPicActivity.class).putExtra("item", 3));
+                break;
+            case R.id.brush:
+                startActivity(new Intent(context, FingerPaint.class));
+                break;
 
-        case R.id.title:
-            //                startActivity(new Intent(context, WebViewActivity.class));
-            break;
-        case R.id.item_1:
-            startActivity(new Intent(context, ViewPicActivity.class).putExtra("item", 0));
-            break;
-        case R.id.item_2:
-            startActivity(new Intent(context, ViewPicActivity.class).putExtra("item", 1));
-            break;
-        case R.id.item_3:
-            startActivity(new Intent(context, ViewPicActivity.class).putExtra("item", 2));
-            break;
-        case R.id.item_4:
-            startActivity(new Intent(context, ViewPicActivity.class).putExtra("item", 3));
-            break;
-        case R.id.brush:
-            startActivity(new Intent(context, FingerPaint.class));
-            break;
-
-        default:
-            break;
+            default:
+                break;
         }
 
         return super.onMenuItemSelected(featureId, item);
@@ -139,8 +143,10 @@ public class MainActivity extends Activity implements OnClickListener {
 
         View view = View.inflate(this, R.layout.about, null);
 
-        return new AlertDialog.Builder(this).setIcon(R.drawable.ic_launcher).setTitle(R.string.app_version)
-                .setView(view).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+        return new AlertDialog.Builder(this).setIcon(R.drawable.ic_launcher)
+                .setTitle(R.string.app_version).setView(view)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+
                     public void onClick(DialogInterface dialog, int whichButton) {
                         dismissDialog(0);
                     }
