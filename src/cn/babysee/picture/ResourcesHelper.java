@@ -18,7 +18,21 @@ public class ResourcesHelper {
                         R.drawable.fruit_3_apple, R.drawable.fruit_3_grape,
                         R.drawable.fruit_4_cherry, R.drawable.fruit_4_pear,
                         R.drawable.fruit_5_banana, R.drawable.fruit_5_watermelon,
-                        R.drawable.fruit_6_carambola, R.drawable.fruit_6_peach, };
+                        R.drawable.fruit_6_carambola, R.drawable.fruit_6_peach,
+                        R.drawable.fruit_7_apple, R.drawable.fruit_7_apricots,
+                        R.drawable.fruit_8_bananas, R.drawable.fruit_8_cantaloupe,
+                        R.drawable.fruit_9_carambola, R.drawable.fruit_9_cherry,
+                        R.drawable.fruit_10_coconut, R.drawable.fruit_10_dates,
+                        R.drawable.fruit_11_grapefruit, R.drawable.fruit_11_grapes,
+                        R.drawable.fruit_12_hawthorn, R.drawable.fruit_12_kiwifruit,
+                        R.drawable.fruit_13_lemon, R.drawable.fruit_13_loquat,
+                        R.drawable.fruit_14_mango, R.drawable.fruit_14_olives,
+                        R.drawable.fruit_15_peaches, R.drawable.fruit_15_pears,
+                        R.drawable.fruit_16_persimmon, R.drawable.fruit_16_pineapple,
+                        R.drawable.fruit_17_plums, R.drawable.fruit_17_pomegranate,
+                        R.drawable.fruit_18_strawberry, R.drawable.fruit_18_watermelon,
+
+                };
             case 2:
                 return new int[] { R.drawable.vegetable_1_celery, R.drawable.vegetable_1_tomato,
                         R.drawable.vegetable_2_cabbage, R.drawable.vegetable_2_onion,

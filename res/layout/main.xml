@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/bg"
+    android:background="@drawable/background2"
     android:gravity="center"
     android:orientation="vertical" >
 
@@ -11,17 +11,18 @@
         android:layout_height="0dip"
         android:layout_weight="1.0"
         android:gravity="center"
+        android:paddingLeft="30dip"
         android:orientation="vertical" >
 
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="40dip"
-            android:layout_marginTop="20dip"
+            android:layout_marginBottom="20dip"
+            android:layout_marginTop="40dip"
             android:gravity="center"
             android:text="@string/hello"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
             android:textSize="28sp"
             android:textStyle="bold" />
 
@@ -34,7 +35,6 @@
                 android:id="@+id/item_1"
                 style="@style/MainItem"
                 android:layout_marginRight="20dip"
-                android:drawableTop="@drawable/tab_animal"
                 android:text="动物"
                 android:textColor="@android:color/black" />
 
@@ -42,7 +42,6 @@
                 android:id="@+id/item_2"
                 style="@style/MainItem"
                 android:layout_marginRight="10dip"
-                android:drawableTop="@drawable/tab_fruit"
                 android:text="水果"
                 android:textColor="@android:color/black" />
         </LinearLayout>
@@ -57,7 +56,6 @@
                 android:id="@+id/item_3"
                 style="@style/MainItem"
                 android:layout_marginRight="20dip"
-                android:drawableTop="@drawable/tab_vegetable"
                 android:text="蔬菜"
                 android:textColor="@android:color/black" />
 
@@ -65,7 +63,6 @@
                 android:id="@+id/item_4"
                 style="@style/MainItem"
                 android:layout_marginRight="10dip"
-                android:drawableTop="@drawable/tab_transport"
                 android:text="交通工具" />
         </LinearLayout>
     </LinearLayout>

@@ -38,10 +38,11 @@
     </style>
     <style name="MainItem">
         <item name="android:textColor">@android:color/black</item>
-        <item name="android:textSize">15sp</item>
-        <item name="android:layout_width">120dp</item>
-        <item name="android:layout_height">120dp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">80dp</item>
         <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/dialog_bg</item>
+        <item name="android:background">@drawable/main_item_bg</item>
     </style>
 </resources>
