@@ -3,7 +3,7 @@ package cn.babysee.utils;
 import java.io.FileDescriptor;
 import java.util.WeakHashMap;
 
-import cn.babysee.picture.AppEnv;
+import cn.babysee.picture.env.AppEnv;
 
 import android.content.ContentResolver;
 import android.graphics.Bitmap;

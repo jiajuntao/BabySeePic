@@ -36,7 +36,7 @@ import android.text.format.Time;
 import android.util.Log;
 import android.view.Display;
 import android.widget.ImageView;
-import cn.babysee.picture.AppEnv;
+import cn.babysee.picture.env.AppEnv;
 
 public class Utils {
 

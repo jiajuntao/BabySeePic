@@ -2,7 +2,6 @@ package cn.babysee.picture;
 
 import java.util.Random;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,9 +10,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import cn.babysee.picture.env.AppEnv;
 import cn.babysee.utils.Utils;
 
-public class ViewPicActivity extends Activity implements OnClickListener {
+import com.baidu.mobstat.StatActivity;
+
+public class ViewPicActivity extends StatActivity implements OnClickListener {
 
     private boolean DEBUG = AppEnv.DEBUG;
 
@@ -39,7 +41,7 @@ public class ViewPicActivity extends Activity implements OnClickListener {
 
     private Context context;
 
-    private MediaPlay mediaPlay;
+    private MediaPlayHelper mediaPlay;
 
     private ImageView imageView1;
 
@@ -67,7 +69,7 @@ public class ViewPicActivity extends Activity implements OnClickListener {
         soundIds = ResourcesHelper.getSoundList(item);
         picCount = picIds.length;
 
-        mediaPlay = new MediaPlay(context);
+        mediaPlay = new MediaPlayHelper(context);
         mediaPlay.setSounds(soundIds);
 
         imageView1 = (ImageView) findViewById(R.id.imageView1);
@@ -95,12 +97,6 @@ public class ViewPicActivity extends Activity implements OnClickListener {
         } else {
             setImageView(currentIndex, currentIndex + 1);
         }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        //        SharePref.setInt(context, currentIndexStr, currentPic1Index);
     }
 
     @Override

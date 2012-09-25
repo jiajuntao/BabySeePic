@@ -12,7 +12,7 @@ import android.media.SoundPool;
  * @author Administrator
  * 
  */
-public class MediaPlay {
+public class MediaPlayHelper {
 
     private int[] soundIds = null;
 
@@ -25,7 +25,7 @@ public class MediaPlay {
 
     private Context context;
 
-    public MediaPlay(Context context) {
+    public MediaPlayHelper(Context context) {
         this.context = context;
         //        mMediaPlayer = MediaPlayer.create(context, R.raw.animal_1_duck);
         soundPool = new SoundPool(4, AudioManager.STREAM_MUSIC, 100);

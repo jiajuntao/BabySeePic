@@ -15,7 +15,7 @@ import android.net.Uri;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
-import cn.babysee.picture.AppEnv;
+import cn.babysee.picture.env.AppEnv;
 
 /**
  * @author Administrator

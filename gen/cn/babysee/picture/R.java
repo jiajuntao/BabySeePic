@@ -105,38 +105,40 @@ public final class R {
         public static final int vegetable_6_ginger=0x7f020040;
     }
     public static final class id {
-        public static final int brush=0x7f09000e;
-        public static final int dot1=0x7f09000f;
-        public static final int dot2=0x7f090010;
-        public static final int dot3=0x7f090011;
-        public static final int dot4=0x7f090012;
-        public static final int dot5=0x7f090013;
-        public static final int dot6=0x7f090014;
-        public static final int down=0x7f090008;
-        public static final int icon=0x7f090003;
-        public static final int imageView1=0x7f090006;
-        public static final int imageView2=0x7f090007;
-        public static final int item_1=0x7f09000a;
-        public static final int item_2=0x7f09000b;
-        public static final int item_3=0x7f09000c;
-        public static final int item_4=0x7f09000d;
-        public static final int menu_about=0x7f090017;
-        public static final int menu_advice=0x7f090016;
+        public static final int brush=0x7f09000b;
+        public static final int dot1=0x7f09000c;
+        public static final int dot2=0x7f09000d;
+        public static final int dot3=0x7f09000e;
+        public static final int dot4=0x7f09000f;
+        public static final int dot5=0x7f090010;
+        public static final int dot6=0x7f090011;
+        public static final int down=0x7f090013;
+        public static final int icon=0x7f090004;
+        public static final int imageView1=0x7f090014;
+        public static final int imageView2=0x7f090015;
+        public static final int item_1=0x7f090007;
+        public static final int item_2=0x7f090008;
+        public static final int item_3=0x7f090009;
+        public static final int item_4=0x7f09000a;
+        public static final int list=0x7f090003;
+        public static final int menu_about=0x7f090018;
+        public static final int menu_advice=0x7f090017;
         public static final int pic_name=0x7f090001;
         public static final int pic_path=0x7f090000;
         public static final int pic_type=0x7f090002;
-        public static final int text=0x7f090004;
-        public static final int title=0x7f090009;
-        public static final int up=0x7f090005;
-        public static final int webview=0x7f090015;
+        public static final int text=0x7f090005;
+        public static final int title=0x7f090006;
+        public static final int up=0x7f090012;
+        public static final int webview=0x7f090016;
     }
     public static final class layout {
         public static final int about=0x7f030000;
         public static final int alert_dialog_text_entry=0x7f030001;
-        public static final int list_item_icon_text=0x7f030002;
-        public static final int main=0x7f030003;
-        public static final int view_pic=0x7f030004;
-        public static final int webview=0x7f030005;
+        public static final int drawworks=0x7f030002;
+        public static final int list_item_icon_text=0x7f030003;
+        public static final int main=0x7f030004;
+        public static final int view_pic=0x7f030005;
+        public static final int webview=0x7f030006;
     }
     public static final class menu {
         public static final int activity_main=0x7f080000;

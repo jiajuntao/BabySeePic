@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -17,20 +16,27 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import cn.babysee.picture.AppEnv;
 import cn.babysee.picture.R;
+import cn.babysee.picture.env.AppEnv;
+import cn.babysee.picture.env.StatServiceEnv;
 import cn.babysee.utils.FileUtils;
 import cn.babysee.utils.ImageUtils;
 
-public class DrawPicListActivity extends ListActivity implements OnItemClickListener {
+import com.baidu.mobstat.StatActivity;
+import com.baidu.mobstat.StatService;
+
+public class DrawWorksActivity extends StatActivity implements OnItemClickListener {
 
     private boolean DEBUG = AppEnv.DEBUG;
 
-    private String TAG = "DrawPicListActivity";
+    private String TAG = "DrawWorksActivity";
 
     private Context mContext;
+
+    private ListView mListView;
 
     private List<String> picList = new ArrayList<String>();
 
@@ -54,25 +60,31 @@ public class DrawPicListActivity extends ListActivity implements OnItemClickList
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.drawworks);
+
+        mListView = (ListView) findViewById(R.id.list);
         mContext = getApplicationContext();
         getPicList();
         if (picList.size() <= 0) {
             Toast.makeText(mContext, R.string.pic_empty, Toast.LENGTH_LONG).show();
             finish();
         } else {
-            setListAdapter(new EfficientAdapter(this, picList));
+            mListView.setAdapter(new EfficientAdapter(this, picList));
         }
-        getListView().setOnItemClickListener(this);
+        mListView.setOnItemClickListener(this);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        StatService.onEvent(mContext, StatServiceEnv.BABYWORKS_VIEW_EVENT_ID, StatServiceEnv.BABYWORKS_VIEW_LABEL);
         String fileName = picList.get(position);
-        if (DEBUG) Log.d(TAG, FileUtils.getImageFolderPath() + fileName);
+        if (DEBUG)
+            Log.d(TAG, FileUtils.getImageFolderPath() + fileName);
+
+        Uri uri = Uri.fromFile(new File(FileUtils.getImageFolderPath() + fileName));
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.fromFile(new File(FileUtils.getImageFolderPath() + fileName)),
-                "image/*");
+        intent.setDataAndType(uri, "image/*");
         startActivity(Intent.createChooser(intent, getString(R.string.pic_view)));
     }
 
@@ -91,64 +103,30 @@ public class DrawPicListActivity extends ListActivity implements OnItemClickList
             this.filePath = FileUtils.getImageFolderPath();
         }
 
-        /**
-         * The number of items in the list is determined by the number of
-         * speeches in our array.
-         * 
-         * @see android.widget.ListAdapter#getCount()
-         */
         public int getCount() {
             return picList.size();
         }
 
-        /**
-         * Since the data comes from an array, just returning the index is
-         * sufficent to get at the data. If we were using a more complex
-         * data structure, we would return whatever object represents one
-         * row in the list.
-         * 
-         * @see android.widget.ListAdapter#getItem(int)
-         */
         public Object getItem(int position) {
             return position;
         }
 
-        /**
-         * Use the array index as a unique id.
-         * 
-         * @see android.widget.ListAdapter#getItemId(int)
-         */
         public long getItemId(int position) {
             return position;
         }
 
-        /**
-         * Make a view to hold each row.
-         * 
-         * @see android.widget.ListAdapter#getView(int, android.view.View,
-         *      android.view.ViewGroup)
-         */
         public View getView(int position, View convertView, ViewGroup parent) {
-            // A ViewHolder keeps references to children views to avoid unneccessary calls
-            // to findViewById() on each row.
             ViewHolder holder;
 
-            // When convertView is not null, we can reuse it directly, there is no need
-            // to reinflate it. We only inflate a new View when the convertView supplied
-            // by ListView is null.
             if (convertView == null) {
                 convertView = mInflater.inflate(R.layout.list_item_icon_text, null);
 
-                // Creates a ViewHolder and store references to the two children views
-                // we want to bind data to.
                 holder = new ViewHolder();
                 holder.text = (TextView) convertView.findViewById(R.id.text);
                 holder.icon = (ImageView) convertView.findViewById(R.id.icon);
 
                 convertView.setTag(holder);
             } else {
-                // Get the ViewHolder back to get fast access to the TextView
-                // and the ImageView.
                 holder = (ViewHolder) convertView.getTag();
             }
 

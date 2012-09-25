@@ -16,13 +16,13 @@
 
 package cn.babysee.picture.draw;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 
-class GraphicsActivity extends Activity {
+import com.baidu.mobstat.StatActivity;
+
+class GraphicsActivity extends StatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
