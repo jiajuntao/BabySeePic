@@ -1,6 +1,7 @@
 package cn.babysee.picture;
 
 import java.util.HashMap;
+import java.util.Random;
 
 import android.content.Context;
 import android.media.AudioManager;
@@ -50,12 +51,21 @@ public class MediaPlayHelper {
     /**
      * 播放音效的方法
      */
-    public void playSound(int sound, int loop) {
+    public void playSound(int soundIndex, int loop) {
         AudioManager mgr = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         float streamVolumeCurrent = mgr.getStreamVolume(AudioManager.STREAM_MUSIC);
         float streamVolumeMax = mgr.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
         float volume = streamVolumeCurrent / streamVolumeMax;
-        soundPool.play(soundPoolMap.get(sound), volume, volume, 1, loop, 1f);
+        
+        Integer ins = soundPoolMap.get(soundIndex);
+        if(ins == null) {
+            Random random = new Random();
+            int i = random.nextInt(10);
+            soundPool.play(soundPoolMap.get(i), volume, volume, 1, loop, 1f);
+        } else {
+            soundPool.play(ins, volume, volume, 1, loop, 1f);
+        }
+        
     }
 
     public void playSound(int id) {
