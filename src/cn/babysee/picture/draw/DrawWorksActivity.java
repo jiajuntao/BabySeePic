@@ -76,7 +76,7 @@ public class DrawWorksActivity extends StatActivity implements OnItemClickListen
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        StatService.onEvent(mContext, StatServiceEnv.BABYWORKS_VIEW_EVENT_ID, StatServiceEnv.BABYWORKS_VIEW_LABEL);
+        StatService.onEvent(mContext, StatServiceEnv.BABYWORKS_VIEW_EVENT_ID, StatServiceEnv.BABYWORKS_VIEW_LABEL, 1);
         String fileName = picList.get(position);
         if (DEBUG)
             Log.d(TAG, FileUtils.getImageFolderPath() + fileName);

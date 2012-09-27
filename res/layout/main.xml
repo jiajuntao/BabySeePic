@@ -65,12 +65,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="2dp"
-        android:layout_marginBottom="5dip"
-        android:layout_marginTop="8dip"
-        android:background="@color/grey_end" />
+    <include layout="@layout/divider"/>
 
     <Button
         android:id="@+id/brush"

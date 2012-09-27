@@ -67,23 +67,23 @@ public class MainActivity extends StatActivity implements OnClickListener {
             //                startActivity(new Intent(context, WebViewActivity.class));
             break;
         case R.id.item_1:
-            StatService.onEvent(mContext, StatServiceEnv.MAIN_ANIMAL_EVENT_ID, StatServiceEnv.MAIN_ANIMAL_LABEL);
+            StatService.onEvent(mContext, StatServiceEnv.MAIN_ANIMAL_EVENT_ID, StatServiceEnv.MAIN_ANIMAL_LABEL, 1);
             startActivity(new Intent(mContext, ViewPicActivity.class).putExtra("item", 0));
             break;
         case R.id.item_2:
-            StatService.onEvent(mContext, StatServiceEnv.MAIN_FRUIT_EVENT_ID, StatServiceEnv.MAIN_FRUIT_LABEL);
+            StatService.onEvent(mContext, StatServiceEnv.MAIN_FRUIT_EVENT_ID, StatServiceEnv.MAIN_FRUIT_LABEL, 1);
             startActivity(new Intent(mContext, ViewPicActivity.class).putExtra("item", 1));
             break;
         case R.id.item_3:
-            StatService.onEvent(mContext, StatServiceEnv.MAIN_VEGETABLE_EVENT_ID, StatServiceEnv.MAIN_VEGETABLE_LABEL);
+            StatService.onEvent(mContext, StatServiceEnv.MAIN_VEGETABLE_EVENT_ID, StatServiceEnv.MAIN_VEGETABLE_LABEL, 1);
             startActivity(new Intent(mContext, ViewPicActivity.class).putExtra("item", 2));
             break;
         case R.id.item_4:
-            StatService.onEvent(mContext, StatServiceEnv.MAIN_TRANSPORT_EVENT_ID, StatServiceEnv.MAIN_TRANSPORT_LABEL);
+            StatService.onEvent(mContext, StatServiceEnv.MAIN_TRANSPORT_EVENT_ID, StatServiceEnv.MAIN_TRANSPORT_LABEL, 1);
             startActivity(new Intent(mContext, ViewPicActivity.class).putExtra("item", 3));
             break;
         case R.id.brush:
-            StatService.onEvent(mContext, StatServiceEnv.MAIN_BABYDRAW_EVENT_ID, StatServiceEnv.MAIN_BABYDRAW_LABEL);
+            StatService.onEvent(mContext, StatServiceEnv.MAIN_BABYDRAW_EVENT_ID, StatServiceEnv.MAIN_BABYDRAW_LABEL, 1);
             startActivity(new Intent(mContext, DrawBoradActivity.class));
             break;
 
@@ -105,12 +105,12 @@ public class MainActivity extends StatActivity implements OnClickListener {
 
         switch (item.getItemId()) {
         case R.id.menu_about:
-            StatService.onEvent(mContext, StatServiceEnv.MAIN_MENU_ABOUT_EVENT_ID, StatServiceEnv.MAIN_MENU_ABOUT_LABEL);
+            StatService.onEvent(mContext, StatServiceEnv.MAIN_MENU_ABOUT_EVENT_ID, StatServiceEnv.MAIN_MENU_ABOUT_LABEL, 1);
             showDialog(0);
             break;
         case R.id.menu_advice:
 
-            StatService.onEvent(mContext, StatServiceEnv.MAIN_MENU_ADVICE_EVENT_ID, StatServiceEnv.MAIN_MENU_ADVICE_LABEL);
+            StatService.onEvent(mContext, StatServiceEnv.MAIN_MENU_ADVICE_EVENT_ID, StatServiceEnv.MAIN_MENU_ADVICE_LABEL, 1);
             try {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 Uri maiUri = Uri.parse("mailto:babyseepic@gmail.com");

@@ -1,54 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-  <!-- Copyright (C) 2007 The Android Open Source Project -->
-  
 <resources>
-    <color
-        name="white">#fff</color>
-    <color
-        name="purple_start">#9b256b</color>
-    <color
-        name="purple_end">#5d2761</color>
-        
-    <!-- 427BBA, 0f93b8 -->
-    <color
-        name="blue_start">#0f93b8</color>
-    <color
-        name="blue_end">#0f93b8</color>
-    <color
-        name="lgrey_start">#BFC0C0</color>
-    <color
-        name="lgrey_end">#AEB2B7</color>
-    <color
-        name="dgrey_start">#4E4F50</color>
-    <color
-        name="dgrey_end">#2C3137</color>
-    <color
-        name="item_grey_start">#B4B8BA</color>
-    <color
-        name="item_grey_end">#62707C</color>
-     <color
-        name="black_start">#333333</color>
-    <color
-        name="black_end">#181818</color>
-     <color
-        name="grey_start">#CBCBCB</color>
-    <color
-        name="grey_end">#8C9DAE</color>
-    <color
-        name="blue_badges_mayor">#095b72</color>
-    <color
-        name="vlgrey">#EEEEEE</color>
-    <color
-        name="color_score_list_adapter_highlight">#EEEEEE</color>
-    <color
-        name="color_score_mayor_section_background">#DDDDDD</color>
-    <color 
-        name="color_bright_green">#a6da00</color>
-    <color
-        name="tip_detail_actions_background">#c7c7c7</color>
-    <color
-        name="user_details_activity_general">#FF555555</color>
-    <color
-        name="transparent">#00000000</color>
-        
+    
+    <!-- 主页面tab文字颜色 -->
+    <color name="tab_green">#44d90f</color>
+
+    <!-- 新界面颜色 -->
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <!-- 深色文字 -->
+    <color name="dark">#333333</color>
+    <color name="text_color_dark">#6e777a</color>
+    <!-- 浅色文字 -->
+    <color name="grey">#999999</color>
+    <color name="text_color_mid_grey">#bbc3c5</color>
+    <!-- 软件中所有的红、绿、黄统一用下面的颜色 -->
+    <color name="green">#559817</color>
+    <color name="txt_label_black">#2E3D47</color>
+
+    <!-- 透明 -->
+    <color name="transparent">#00000000</color>
+
+    <!-- popup menu -->
+    <color name="menu_item_press_bg">#f9f8ed</color>
+    <color name="menu_divider">#c6b221</color>
+    <!-- Title Bar -->
+    <color name="title_bar_bg_grey">#e2e9ea</color>
+    <color name="title_bar_digit_color_green">#4daa0f</color>
+
+    <!-- 引导页颜色 -->
+    <color name="guide_page_main_bg">#f4f4f4</color>
+    <color name="guide_page_main_divider_top">#d2d2d2</color>
+    <color name="guide_page_main_divider_bottom">#ffffff</color>
+    <color name="guide_page_main_title">#4bb812</color>
+    <color name="guide_page_main_content">#515151</color>
+
+    <color name="disk_text">#646464</color>
+    <color name="disk_second_text">#838383</color>
+
+    <!-- listview使用的颜色，待整理 -->
+    <color name="btn_text_pressed">#ff7e5000</color>
+    <color name="btn_shadow">#ffddff79</color>
+    <color name="list_divider">#d0d5d9</color>
+    <color name="list_title_text">#626464</color>
+    <color name="listview_bg">#f0f4f5</color>
+    <color name="list_title_settings_text">#b4b6b7</color>
+
+
+    <!-- 对话框 -->
+    <color name="dialog_line_up">#c0ced2</color>
+    <color name="dialog_line_down">#ffffff</color>
+    <color name="dialog_text">#646464</color>
+    <color name="grey_disable">#d8e1e7</color>
+    <color name="btn_text_dialog">#007900</color>
+    <color name="list_title_bg">#e2e9ea</color>
+    <color name="list_title_highlight">#4daa0f</color>
+    <color name="num_color_orange">#e66505</color>
+    <color name="num_color_green">#44a110</color>
+    
+    <!-- root  -->
+    <color name="trone_background">#69bb29</color>
+    <color name="tv_background">#eaebef</color>
+    <!-- RGB [0, 60, 0]  -->
+    <color name="my_font">#003c00</color>
+    <color name="my_line">#aeaeae</color>
+    <color name="my_bn_font">#4e7f11</color>
+    
+    <!-- 换背景 -->
+    <color name="vertical_line">#b1b3b4</color>
+
 </resources>

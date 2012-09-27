@@ -309,7 +309,7 @@ public class DrawBoradActivity extends GraphicsActivity {
         switch (item.getItemId()) {
         case COLOR_MENU_ID:
             StatService.onEvent(mContext, StatServiceEnv.DRAWBOARD_MENU_BRUSH_COLOR_EVENT_ID,
-                    StatServiceEnv.DRAWBOARD_MENU_BRUSH_COLOR_LABEL);
+                    StatServiceEnv.DRAWBOARD_MENU_BRUSH_COLOR_LABEL, 1);
             new ColorPickerDialog(this, new OnColorChangedListener() {
 
                 @Override
@@ -320,7 +320,7 @@ public class DrawBoradActivity extends GraphicsActivity {
             return true;
         case COLOR_MENU_CANVAS_ID:
             StatService.onEvent(mContext, StatServiceEnv.DRAWBOARD_MENU_BG_COLOR_EVENT_ID,
-                    StatServiceEnv.DRAWBOARD_MENU_BG_COLOR_LABEL);
+                    StatServiceEnv.DRAWBOARD_MENU_BG_COLOR_LABEL, 1);
             new ColorPickerDialog(this, new OnColorChangedListener() {
 
                 @Override
@@ -347,7 +347,7 @@ public class DrawBoradActivity extends GraphicsActivity {
             return true;
         case ERASE_MENU_ID:
             StatService.onEvent(mContext, StatServiceEnv.DRAWBOARD_MENU_ERASER_EVENT_ID,
-                    StatServiceEnv.DRAWBOARD_MENU_ERASER_LABEL);
+                    StatServiceEnv.DRAWBOARD_MENU_ERASER_LABEL, 1);
             mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
             return true;
         case SRCATOP_MENU_ID:
@@ -357,12 +357,12 @@ public class DrawBoradActivity extends GraphicsActivity {
             return true;
         case SAVE_PIC_MENU_ID:
             StatService.onEvent(mContext, StatServiceEnv.DRAWBOARD_MENU_SAVE_EVENT_ID,
-                    StatServiceEnv.DRAWBOARD_MENU_SAVE_LABEL);
+                    StatServiceEnv.DRAWBOARD_MENU_SAVE_LABEL, 1);
             showDialog(DIALOG_TEXT_ENTRY);
             return true;
         case SAVE_PIC_LIST_MENU_ID:
             StatService.onEvent(mContext, StatServiceEnv.DRAWBOARD_MENU_BABYWORKS_EVENT_ID,
-                    StatServiceEnv.DRAWBOARD_MENU_BABYWORKS_LABEL);
+                    StatServiceEnv.DRAWBOARD_MENU_BABYWORKS_LABEL, 1);
             startActivity(new Intent(mContext, DrawWorksActivity.class));
             return true;
         }

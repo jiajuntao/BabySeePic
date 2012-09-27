@@ -11,31 +11,76 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
-        public static final int black_end=0x7f05000c;
-        public static final int black_start=0x7f05000b;
-        public static final int blue_badges_mayor=0x7f05000f;
-        public static final int blue_end=0x7f050004;
-        /**  427BBA, 0f93b8 
+        /**  新界面颜色 
          */
-        public static final int blue_start=0x7f050003;
-        public static final int color_bright_green=0x7f050013;
-        public static final int color_score_list_adapter_highlight=0x7f050011;
-        public static final int color_score_mayor_section_background=0x7f050012;
-        public static final int dgrey_end=0x7f050008;
-        public static final int dgrey_start=0x7f050007;
-        public static final int grey_end=0x7f05000e;
-        public static final int grey_start=0x7f05000d;
-        public static final int item_grey_end=0x7f05000a;
-        public static final int item_grey_start=0x7f050009;
-        public static final int lgrey_end=0x7f050006;
-        public static final int lgrey_start=0x7f050005;
-        public static final int purple_end=0x7f050002;
-        public static final int purple_start=0x7f050001;
-        public static final int tip_detail_actions_background=0x7f050014;
-        public static final int transparent=0x7f050016;
-        public static final int user_details_activity_general=0x7f050015;
-        public static final int vlgrey=0x7f050010;
-        public static final int white=0x7f050000;
+        public static final int black=0x7f050001;
+        public static final int btn_shadow=0x7f050016;
+        public static final int btn_text_dialog=0x7f05001f;
+        /**  listview使用的颜色，待整理 
+         */
+        public static final int btn_text_pressed=0x7f050015;
+        /**  深色文字 
+         */
+        public static final int dark=0x7f050003;
+        public static final int dialog_line_down=0x7f05001c;
+        /**  对话框 
+         */
+        public static final int dialog_line_up=0x7f05001b;
+        public static final int dialog_text=0x7f05001d;
+        public static final int disk_second_text=0x7f050014;
+        public static final int disk_text=0x7f050013;
+        /**  软件中所有的红、绿、黄统一用下面的颜色 
+         */
+        public static final int green=0x7f050007;
+        /**  浅色文字 
+         */
+        public static final int grey=0x7f050005;
+        public static final int grey_disable=0x7f05001e;
+        /**  引导页颜色 
+         */
+        public static final int guide_page_main_bg=0x7f05000e;
+        public static final int guide_page_main_content=0x7f050012;
+        public static final int guide_page_main_divider_bottom=0x7f050010;
+        public static final int guide_page_main_divider_top=0x7f05000f;
+        public static final int guide_page_main_title=0x7f050011;
+        public static final int list_divider=0x7f050017;
+        public static final int list_title_bg=0x7f050020;
+        public static final int list_title_highlight=0x7f050021;
+        public static final int list_title_settings_text=0x7f05001a;
+        public static final int list_title_text=0x7f050018;
+        public static final int listview_bg=0x7f050019;
+        public static final int menu_divider=0x7f05000b;
+        /**  popup menu 
+         */
+        public static final int menu_item_press_bg=0x7f05000a;
+        public static final int my_bn_font=0x7f050028;
+        /**  RGB [0, 60, 0]  
+         */
+        public static final int my_font=0x7f050026;
+        public static final int my_line=0x7f050027;
+        public static final int num_color_green=0x7f050023;
+        public static final int num_color_orange=0x7f050022;
+        /**  主页面tab文字颜色 
+         */
+        public static final int tab_green=0x7f050000;
+        public static final int text_color_dark=0x7f050004;
+        public static final int text_color_mid_grey=0x7f050006;
+        /**  Title Bar 
+         */
+        public static final int title_bar_bg_grey=0x7f05000c;
+        public static final int title_bar_digit_color_green=0x7f05000d;
+        /**  透明 
+         */
+        public static final int transparent=0x7f050009;
+        /**  root  
+         */
+        public static final int trone_background=0x7f050024;
+        public static final int tv_background=0x7f050025;
+        public static final int txt_label_black=0x7f050008;
+        /**  换背景 
+         */
+        public static final int vertical_line=0x7f050029;
+        public static final int white=0x7f050002;
     }
     public static final class drawable {
         public static final int animal_1_duck=0x7f020000;
@@ -53,85 +98,84 @@ public final class R {
         public static final int bar_bg=0x7f02000c;
         public static final int bg=0x7f02000d;
         public static final int dialog_bg=0x7f02000e;
-        public static final int disk_bg_normal=0x7f02000f;
-        public static final int disk_bg_pressed=0x7f020010;
-        public static final int down=0x7f020011;
-        public static final int fruit_10_coconut=0x7f020012;
-        public static final int fruit_10_dates=0x7f020013;
-        public static final int fruit_11_grapefruit=0x7f020014;
-        public static final int fruit_11_grapes=0x7f020015;
-        public static final int fruit_12_hawthorn=0x7f020016;
-        public static final int fruit_12_kiwifruit=0x7f020017;
-        public static final int fruit_13_lemon=0x7f020018;
-        public static final int fruit_13_loquat=0x7f020019;
-        public static final int fruit_14_mango=0x7f02001a;
-        public static final int fruit_14_olives=0x7f02001b;
-        public static final int fruit_15_peaches=0x7f02001c;
-        public static final int fruit_15_pears=0x7f02001d;
-        public static final int fruit_16_persimmon=0x7f02001e;
-        public static final int fruit_16_pineapple=0x7f02001f;
-        public static final int fruit_17_plums=0x7f020020;
-        public static final int fruit_17_pomegranate=0x7f020021;
-        public static final int fruit_18_strawberry=0x7f020022;
-        public static final int fruit_18_watermelon=0x7f020023;
-        public static final int fruit_1_pineapple=0x7f020024;
-        public static final int fruit_1_strawberry=0x7f020025;
-        public static final int fruit_2_mango=0x7f020026;
-        public static final int fruit_2_orange=0x7f020027;
-        public static final int fruit_3_apple=0x7f020028;
-        public static final int fruit_3_grape=0x7f020029;
-        public static final int fruit_4_cherry=0x7f02002a;
-        public static final int fruit_4_pear=0x7f02002b;
-        public static final int fruit_5_banana=0x7f02002c;
-        public static final int fruit_5_watermelon=0x7f02002d;
-        public static final int fruit_6_carambola=0x7f02002e;
-        public static final int fruit_6_peach=0x7f02002f;
-        public static final int fruit_7_apple=0x7f020030;
-        public static final int fruit_7_apricots=0x7f020031;
-        public static final int fruit_8_bananas=0x7f020032;
-        public static final int fruit_8_cantaloupe=0x7f020033;
-        public static final int fruit_9_carambola=0x7f020034;
-        public static final int fruit_9_cherry=0x7f020035;
-        public static final int grey_gradient=0x7f020036;
-        public static final int guide_dot_green=0x7f020037;
-        public static final int guide_dot_normal=0x7f020038;
-        public static final int ic_help=0x7f020039;
-        public static final int ic_launcher=0x7f02003a;
-        public static final int ic_right=0x7f02003b;
-        public static final int main_bg=0x7f02003c;
-        public static final int main_item_bg=0x7f02003d;
-        public static final int selector_disk_bg=0x7f02003e;
-        public static final int tab_animal=0x7f02003f;
-        public static final int tab_fruit=0x7f020040;
-        public static final int tab_transport=0x7f020041;
-        public static final int tab_vegetable=0x7f020042;
-        public static final int transport_1_motorcycle=0x7f020043;
-        public static final int transport_1_plane=0x7f020044;
-        public static final int transport_2_ambulance=0x7f020045;
-        public static final int transport_2_bicycle=0x7f020046;
-        public static final int transport_3_bus=0x7f020047;
-        public static final int transport_3_excavators=0x7f020048;
-        public static final int transport_4_fire_engines=0x7f020049;
-        public static final int transport_4_fireengines=0x7f02004a;
-        public static final int transport_4_ship=0x7f02004b;
-        public static final int transport_5_taxi=0x7f02004c;
-        public static final int transport_5_train=0x7f02004d;
-        public static final int transport_6_carriage=0x7f02004e;
-        public static final int transport_6_harvester=0x7f02004f;
-        public static final int up=0x7f020050;
-        public static final int vegetable_1_celery=0x7f020051;
-        public static final int vegetable_1_tomato=0x7f020052;
-        public static final int vegetable_2_cabbage=0x7f020053;
-        public static final int vegetable_2_onion=0x7f020054;
-        public static final int vegetable_3_carrot=0x7f020055;
-        public static final int vegetable_3_melon=0x7f020056;
-        public static final int vegetable_4_cucumber=0x7f020057;
-        public static final int vegetable_4_pepper=0x7f020058;
-        public static final int vegetable_5_eggplant=0x7f020059;
-        public static final int vegetable_5_lotus_root=0x7f02005a;
-        public static final int vegetable_5_lotusroot=0x7f02005b;
-        public static final int vegetable_6_cauliflowe=0x7f02005c;
-        public static final int vegetable_6_ginger=0x7f02005d;
+        public static final int down=0x7f02000f;
+        public static final int fruit_10_coconut=0x7f020010;
+        public static final int fruit_10_dates=0x7f020011;
+        public static final int fruit_11_grapefruit=0x7f020012;
+        public static final int fruit_11_grapes=0x7f020013;
+        public static final int fruit_12_hawthorn=0x7f020014;
+        public static final int fruit_12_kiwifruit=0x7f020015;
+        public static final int fruit_13_lemon=0x7f020016;
+        public static final int fruit_13_loquat=0x7f020017;
+        public static final int fruit_14_mango=0x7f020018;
+        public static final int fruit_14_olives=0x7f020019;
+        public static final int fruit_15_peaches=0x7f02001a;
+        public static final int fruit_15_pears=0x7f02001b;
+        public static final int fruit_16_persimmon=0x7f02001c;
+        public static final int fruit_16_pineapple=0x7f02001d;
+        public static final int fruit_17_plums=0x7f02001e;
+        public static final int fruit_17_pomegranate=0x7f02001f;
+        public static final int fruit_18_strawberry=0x7f020020;
+        public static final int fruit_18_watermelon=0x7f020021;
+        public static final int fruit_1_pineapple=0x7f020022;
+        public static final int fruit_1_strawberry=0x7f020023;
+        public static final int fruit_2_mango=0x7f020024;
+        public static final int fruit_2_orange=0x7f020025;
+        public static final int fruit_3_apple=0x7f020026;
+        public static final int fruit_3_grape=0x7f020027;
+        public static final int fruit_4_cherry=0x7f020028;
+        public static final int fruit_4_pear=0x7f020029;
+        public static final int fruit_5_banana=0x7f02002a;
+        public static final int fruit_5_watermelon=0x7f02002b;
+        public static final int fruit_6_carambola=0x7f02002c;
+        public static final int fruit_6_peach=0x7f02002d;
+        public static final int fruit_7_apple=0x7f02002e;
+        public static final int fruit_7_apricots=0x7f02002f;
+        public static final int fruit_8_bananas=0x7f020030;
+        public static final int fruit_8_cantaloupe=0x7f020031;
+        public static final int fruit_9_carambola=0x7f020032;
+        public static final int fruit_9_cherry=0x7f020033;
+        public static final int grey_gradient=0x7f020034;
+        public static final int guide_dot_green=0x7f020035;
+        public static final int guide_dot_normal=0x7f020036;
+        public static final int ic_help=0x7f020037;
+        public static final int ic_launcher=0x7f020038;
+        public static final int ic_right=0x7f020039;
+        public static final int main_bg=0x7f02003a;
+        public static final int main_item_bg=0x7f02003b;
+        public static final int main_item_bg_normal=0x7f02003c;
+        public static final int main_item_bg_pressed=0x7f02003d;
+        public static final int tab_animal=0x7f02003e;
+        public static final int tab_fruit=0x7f02003f;
+        public static final int tab_transport=0x7f020040;
+        public static final int tab_vegetable=0x7f020041;
+        public static final int transport_1_motorcycle=0x7f020042;
+        public static final int transport_1_plane=0x7f020043;
+        public static final int transport_2_ambulance=0x7f020044;
+        public static final int transport_2_bicycle=0x7f020045;
+        public static final int transport_3_bus=0x7f020046;
+        public static final int transport_3_excavators=0x7f020047;
+        public static final int transport_4_fire_engines=0x7f020048;
+        public static final int transport_4_fireengines=0x7f020049;
+        public static final int transport_4_ship=0x7f02004a;
+        public static final int transport_5_taxi=0x7f02004b;
+        public static final int transport_5_train=0x7f02004c;
+        public static final int transport_6_carriage=0x7f02004d;
+        public static final int transport_6_harvester=0x7f02004e;
+        public static final int up=0x7f02004f;
+        public static final int vegetable_1_celery=0x7f020050;
+        public static final int vegetable_1_tomato=0x7f020051;
+        public static final int vegetable_2_cabbage=0x7f020052;
+        public static final int vegetable_2_onion=0x7f020053;
+        public static final int vegetable_3_carrot=0x7f020054;
+        public static final int vegetable_3_melon=0x7f020055;
+        public static final int vegetable_4_cucumber=0x7f020056;
+        public static final int vegetable_4_pepper=0x7f020057;
+        public static final int vegetable_5_eggplant=0x7f020058;
+        public static final int vegetable_5_lotus_root=0x7f020059;
+        public static final int vegetable_5_lotusroot=0x7f02005a;
+        public static final int vegetable_6_cauliflowe=0x7f02005b;
+        public static final int vegetable_6_ginger=0x7f02005c;
     }
     public static final class id {
         public static final int brush=0x7f09000b;
@@ -163,11 +207,12 @@ public final class R {
     public static final class layout {
         public static final int about=0x7f030000;
         public static final int alert_dialog_text_entry=0x7f030001;
-        public static final int drawworks=0x7f030002;
-        public static final int list_item_icon_text=0x7f030003;
-        public static final int main=0x7f030004;
-        public static final int view_pic=0x7f030005;
-        public static final int webview=0x7f030006;
+        public static final int divider=0x7f030002;
+        public static final int drawworks=0x7f030003;
+        public static final int list_item_icon_text=0x7f030004;
+        public static final int main=0x7f030005;
+        public static final int view_pic=0x7f030006;
+        public static final int webview=0x7f030007;
     }
     public static final class menu {
         public static final int activity_main=0x7f080000;
