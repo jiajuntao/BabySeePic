@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">宝宝看图识物</string>
-    <string name="app_name">宝宝看图</string>
-    <string name="app_version">宝宝看图 V1.0.0</string>
+    <string name="hello">宝宝智能方程</string>
+    <string name="app_name">宝宝智能方程</string>
+    <string name="app_version">宝宝智能方程 V1.0.0</string>
     
      <string name="menu_settings">设置</string>
      <string name="menu_about">关于</string>

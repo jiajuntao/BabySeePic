@@ -15,6 +15,7 @@ import android.view.View.OnClickListener;
 import cn.babysee.picture.draw.DrawBoradActivity;
 import cn.babysee.picture.env.AppEnv;
 import cn.babysee.picture.env.StatServiceEnv;
+import cn.babysee.picture.game.GameListActivity;
 
 import com.baidu.mobstat.StatActivity;
 import com.baidu.mobstat.StatService;
@@ -27,15 +28,16 @@ public class MainActivity extends StatActivity implements OnClickListener {
 
     private View title;
 
-    private View view1;
+    private View animal;
 
-    private View view2;
+    private View fruit;
 
-    private View view3;
+    private View vegetable;
 
-    private View view4;
+    private View transport;
 
     private View brush;
+    private View game;
 
     private Context mContext;
 
@@ -48,16 +50,18 @@ public class MainActivity extends StatActivity implements OnClickListener {
 
         title = findViewById(R.id.title);
         title.setOnClickListener(this);
-        view1 = findViewById(R.id.item_1);
-        view1.setOnClickListener(this);
-        view2 = findViewById(R.id.item_2);
-        view2.setOnClickListener(this);
-        view3 = findViewById(R.id.item_3);
-        view3.setOnClickListener(this);
-        view4 = findViewById(R.id.item_4);
-        view4.setOnClickListener(this);
+        animal = findViewById(R.id.animal);
+        animal.setOnClickListener(this);
+        fruit = findViewById(R.id.fruit);
+        fruit.setOnClickListener(this);
+        vegetable = findViewById(R.id.vegetable);
+        vegetable.setOnClickListener(this);
+        transport = findViewById(R.id.transport);
+        transport.setOnClickListener(this);
         brush = findViewById(R.id.brush);
         brush.setOnClickListener(this);
+        game = findViewById(R.id.game);
+        game.setOnClickListener(this);
     }
 
     @Override
@@ -66,25 +70,31 @@ public class MainActivity extends StatActivity implements OnClickListener {
         case R.id.title:
             //                startActivity(new Intent(context, WebViewActivity.class));
             break;
-        case R.id.item_1:
+        case R.id.animal:
             StatService.onEvent(mContext, StatServiceEnv.MAIN_ANIMAL_EVENT_ID, StatServiceEnv.MAIN_ANIMAL_LABEL, 1);
             startActivity(new Intent(mContext, ViewPicActivity.class).putExtra("item", 0));
             break;
-        case R.id.item_2:
+        case R.id.fruit:
             StatService.onEvent(mContext, StatServiceEnv.MAIN_FRUIT_EVENT_ID, StatServiceEnv.MAIN_FRUIT_LABEL, 1);
             startActivity(new Intent(mContext, ViewPicActivity.class).putExtra("item", 1));
             break;
-        case R.id.item_3:
-            StatService.onEvent(mContext, StatServiceEnv.MAIN_VEGETABLE_EVENT_ID, StatServiceEnv.MAIN_VEGETABLE_LABEL, 1);
+        case R.id.vegetable:
+            StatService.onEvent(mContext, StatServiceEnv.MAIN_VEGETABLE_EVENT_ID, StatServiceEnv.MAIN_VEGETABLE_LABEL,
+                    1);
             startActivity(new Intent(mContext, ViewPicActivity.class).putExtra("item", 2));
             break;
-        case R.id.item_4:
-            StatService.onEvent(mContext, StatServiceEnv.MAIN_TRANSPORT_EVENT_ID, StatServiceEnv.MAIN_TRANSPORT_LABEL, 1);
+        case R.id.transport:
+            StatService.onEvent(mContext, StatServiceEnv.MAIN_TRANSPORT_EVENT_ID, StatServiceEnv.MAIN_TRANSPORT_LABEL,
+                    1);
             startActivity(new Intent(mContext, ViewPicActivity.class).putExtra("item", 3));
             break;
         case R.id.brush:
             StatService.onEvent(mContext, StatServiceEnv.MAIN_BABYDRAW_EVENT_ID, StatServiceEnv.MAIN_BABYDRAW_LABEL, 1);
             startActivity(new Intent(mContext, DrawBoradActivity.class));
+            break;
+        case R.id.game:
+            StatService.onEvent(mContext, StatServiceEnv.MAIN_BABYGAME_EVENT_ID, StatServiceEnv.MAIN_BABYGAME_LABEL, 1);
+            startActivity(new Intent(mContext, GameListActivity.class));
             break;
 
         default:
@@ -105,12 +115,14 @@ public class MainActivity extends StatActivity implements OnClickListener {
 
         switch (item.getItemId()) {
         case R.id.menu_about:
-            StatService.onEvent(mContext, StatServiceEnv.MAIN_MENU_ABOUT_EVENT_ID, StatServiceEnv.MAIN_MENU_ABOUT_LABEL, 1);
+            StatService.onEvent(mContext, StatServiceEnv.MAIN_MENU_ABOUT_EVENT_ID,
+                    StatServiceEnv.MAIN_MENU_ABOUT_LABEL, 1);
             showDialog(0);
             break;
         case R.id.menu_advice:
 
-            StatService.onEvent(mContext, StatServiceEnv.MAIN_MENU_ADVICE_EVENT_ID, StatServiceEnv.MAIN_MENU_ADVICE_LABEL, 1);
+            StatService.onEvent(mContext, StatServiceEnv.MAIN_MENU_ADVICE_EVENT_ID,
+                    StatServiceEnv.MAIN_MENU_ADVICE_LABEL, 1);
             try {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 Uri maiUri = Uri.parse("mailto:babyseepic@gmail.com");

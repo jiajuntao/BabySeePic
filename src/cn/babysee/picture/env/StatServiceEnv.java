@@ -23,6 +23,9 @@ public class StatServiceEnv {
     public static final String MAIN_MENU_ABOUT_EVENT_ID = "1007";
     public static final String MAIN_MENU_ABOUT_LABEL = "关于";
     
+    public static final String MAIN_BABYGAME_EVENT_ID = "1008";
+    public static final String MAIN_BABYGAME_LABEL = "首页亲字游戏";
+    
     public static final String DRAWBOARD_MENU_BRUSH_COLOR_EVENT_ID = "2001";
     public static final String DRAWBOARD_MENU_BRUSH_COLOR_LABEL = "画笔颜色";
     

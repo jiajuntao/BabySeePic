@@ -3,7 +3,7 @@ package cn.babysee.picture.env;
 
 public class AppEnv {
 
-    public static final boolean DEBUG = false;
+    public static final boolean DEBUG = true;
     public static final String TAG = "";
     /**
      * 百度统计appkey
