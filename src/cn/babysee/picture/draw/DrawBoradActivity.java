@@ -363,7 +363,7 @@ public class DrawBoradActivity extends GraphicsActivity {
         case SAVE_PIC_LIST_MENU_ID:
             StatService.onEvent(mContext, StatServiceEnv.DRAWBOARD_MENU_BABYWORKS_EVENT_ID,
                     StatServiceEnv.DRAWBOARD_MENU_BABYWORKS_LABEL, 1);
-            startActivity(new Intent(mContext, DrawWorksActivity.class));
+            startActivity(new Intent(mContext, DrawListActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);

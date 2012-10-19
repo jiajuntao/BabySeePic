@@ -28,11 +28,11 @@ import cn.babysee.utils.ImageUtils;
 import com.baidu.mobstat.StatActivity;
 import com.baidu.mobstat.StatService;
 
-public class DrawWorksActivity extends StatActivity implements OnItemClickListener {
+public class DrawListActivity extends StatActivity implements OnItemClickListener {
 
     private boolean DEBUG = AppEnv.DEBUG;
 
-    private String TAG = "DrawWorksActivity";
+    private String TAG = "DrawListActivity";
 
     private Context mContext;
 
@@ -60,7 +60,7 @@ public class DrawWorksActivity extends StatActivity implements OnItemClickListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.drawworks);
+        setContentView(R.layout.draw_list);
 
         mListView = (ListView) findViewById(R.id.list);
         mContext = getApplicationContext();

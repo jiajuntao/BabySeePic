@@ -4,5 +4,9 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry kind="lib" path="libs/org.eclipse.egit.github.core-2.1.0.jar"/>
+	<classpathentry kind="lib" path="libs/roboguice-2.0.jar"/>
+	<classpathentry kind="lib" path="libs/roboguice-sherlock-1.4.jar"/>
+	<classpathentry kind="lib" path="libs/http-request-3.0.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

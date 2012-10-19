@@ -44,4 +44,6 @@
     <string name="download_no_sdcard_dlg_msg">"您的设备没有安装 SD 卡！"</string>
     <string name="download_sdcard_busy_dlg_title">"SD 卡不可用"</string>
     <string name="download_sdcard_busy_dlg_msg">"您的SD卡正在用于其他用途，请在通知中选择“关闭 USB 存储设备”。"</string>
+    
+    <string name="list_navigation_content">List navigation requires the use of a special layout for the spinner item. Failure to use it will result in your spinner text being the same color as the action bar background on pre-3.0. See the source code of this demo for more information.</string>
 </resources>
