@@ -15,6 +15,7 @@ import android.view.View.OnClickListener;
 import cn.babysee.picture.draw.DrawBoradActivity;
 import cn.babysee.picture.env.AppEnv;
 import cn.babysee.picture.env.StatServiceEnv;
+import cn.babysee.picture.exam.IntelligenceExamActivity;
 import cn.babysee.picture.game.GameListActivity;
 
 import com.baidu.mobstat.StatActivity;
@@ -37,6 +38,7 @@ public class MainActivity extends StatActivity implements OnClickListener {
     private View transport;
 
     private View brush;
+    private View test;
     private View game;
 
     private Context mContext;
@@ -60,6 +62,8 @@ public class MainActivity extends StatActivity implements OnClickListener {
         transport.setOnClickListener(this);
         brush = findViewById(R.id.brush);
         brush.setOnClickListener(this);
+        test = findViewById(R.id.test);
+        test.setOnClickListener(this);
         game = findViewById(R.id.game);
         game.setOnClickListener(this);
     }
@@ -95,6 +99,10 @@ public class MainActivity extends StatActivity implements OnClickListener {
         case R.id.game:
             StatService.onEvent(mContext, StatServiceEnv.MAIN_BABYGAME_EVENT_ID, StatServiceEnv.MAIN_BABYGAME_LABEL, 1);
             startActivity(new Intent(mContext, GameListActivity.class));
+            break;
+        case R.id.test:
+            StatService.onEvent(mContext, StatServiceEnv.MAIN_TEST_EVENT_ID, StatServiceEnv.MAIN_TEST_LABEL, 1);
+            startActivity(new Intent(mContext, IntelligenceExamActivity.class));
             break;
 
         default:

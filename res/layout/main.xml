@@ -82,6 +82,13 @@
             android:text="宝宝画板" />
 
         <Button
+            android:id="@+id/test"
+            style="@style/ButtonLarge"
+            android:layout_marginRight="20dip"
+            android:visibility="gone"
+            android:text="智力测试" />
+        
+        <Button
             android:id="@+id/game"
             style="@style/ButtonLarge"
             android:text="亲子游戏" />

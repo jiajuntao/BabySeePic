@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<test version="1.0">
+	<stage>
+		<key>0-30天的测试</key>
+		<answer>结果分析
+			1、2、3题测认知能力，应得25分；4、5题测精细能力应得15分；6、7题测语言能力应得20分；8题测社交能力应得12分；9题测自理能力应得10分；10、11、12测大肌肉运动应得28分，共计可得110分，总分在90-110分之间正常，
+		</answer>
+		<topic>
+			<desc>1、 第一次注视离眼20厘米模拟母亲脸容的黑白图画：（记分：不眨眼连续注视的秒数，每秒可记1分   以10分为及格。）</desc>
+			<a>10秒以上</a>
+			<a_score>10</a_score>
+			<b>7秒以上</b>
+			<b_score>7</b_score>
+			<c>5秒以上</c>
+			<c_score>5</c_score>
+			<d>3秒以上</d>
+			<d_score>3</d_score>
+		</topic>
+		<topic>
+			<desc>2、 离耳15厘米摇动内装20粒黄豆的塑料瓶时：</desc>
+			<a>转头眨眼（10分） </a>
+			<a_score>10</a_score>
+			<b>皱眉（8分） </b>
+			<b_score>8</b_score>
+			<c>纵鼻张口（6分） </c>
+			<c_score>6</c_score>
+			<d>不动（0分）</d>
+			<d_score>0</d_score>
+		</topic>
+	</stage>
+</test>

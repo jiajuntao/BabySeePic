@@ -1,4 +1,4 @@
-package cn.babysee.picture.game;
+package cn.babysee.picture.exam;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,9 +12,9 @@ import android.util.Log;
 import android.util.Xml;
 import cn.babysee.picture.env.AppEnv;
 
-public class GameHelper {
+public class IntelligenceExamHelper {
 
-    private static final String TAG = "GameHelper";
+    private static final String TAG = "IntelligenceTestHelper";
 
     private boolean DEBUG = AppEnv.DEBUG;
 
@@ -26,24 +26,24 @@ public class GameHelper {
 
     private Context mContext;
 
-    private List<GameList> gameLists;
+    private List<TopicList> tipicLists;
 
-    public GameHelper(Context context) {
+    public IntelligenceExamHelper(Context context) {
         this.mContext = context;
     }
 
-    public List<GameList> getGameList(int type) {
+    public List<TopicList> getTopicList(int type) {
 
-        if (gameLists == null) {
-            gameLists = getGameList();
+        if (tipicLists == null) {
+            tipicLists = getTopicList();
         }
 
-        int size = gameLists.size();
+        int size = tipicLists.size();
 
         int startIndex = 0;
         int endIndex = size - 1;
 
-        List<GameList> sublist = new ArrayList<GameList>(13);
+        List<TopicList> sublist = new ArrayList<TopicList>(13);
         switch (type) {
             case TYPE_0_1:
                 startIndex = 0;
@@ -64,7 +64,7 @@ public class GameHelper {
                 break;
         }
         int i = 0;
-        for (GameList gameList : gameLists) {
+        for (TopicList gameList : tipicLists) {
             if (i >= startIndex && i <= endIndex) {
                 sublist.add(gameList);
             }
@@ -74,10 +74,10 @@ public class GameHelper {
         return sublist;
     }
 
-    public List<GameList> getGameList() {
+    public List<TopicList> getTopicList() {
         InputStream inStream = null;
         try {
-            inStream = mContext.getResources().getAssets().open("game.plist");
+            inStream = mContext.getResources().getAssets().open("intelligence_test");
             if (inStream == null) {
                 return null;
             }
@@ -86,61 +86,54 @@ public class GameHelper {
         }
 
         XmlPullParser parser = Xml.newPullParser();
-        List<GameList> gameLists = null;
-        GameList currentGameList = null;
-        Game currentGame = null;
+        List<TopicList> gameLists = null;
+        TopicList currentGameList = null;
+        Topic currentGame = null;
 
         try {
             parser.setInput(inStream, "UTF-8");
             int eventType = parser.getEventType();
 
-            boolean start = true;
-            int stringCount = 0;
-
             while (eventType != XmlPullParser.END_DOCUMENT) {
                 switch (eventType) {
                     case XmlPullParser.START_DOCUMENT://文档开始事件,可以进行数据初始化处理
-                        gameLists = new ArrayList<GameList>();
+                        gameLists = new ArrayList<TopicList>();
                         break;
                     case XmlPullParser.START_TAG://开始元素事件
                         String name = parser.getName();
-                        if (name.equalsIgnoreCase("key")) {
-                            if (start) {
-                                currentGameList = new GameList();
-                                start = false;
-                                currentGameList.title = parser.nextText();
-                            }
-                        } else if (currentGameList != null) {
-                            if (name.equalsIgnoreCase("string")) {
-
-                                switch (stringCount) {
-                                    case 0:
-                                        stringCount++;
-                                        currentGame = new Game();
-                                        currentGame.name = parser.nextText();
-                                        break;
-                                    case 1:
-                                        stringCount++;
-                                        currentGame.desc = parser.nextText();
-                                        break;
-                                    case 2:
-                                        currentGame.summary = parser.nextText();// 如果后面是Text元素,即返回它的值
-
-                                        currentGameList.addGame(currentGame);
-                                        stringCount = 0;
-                                        break;
-
-                                    default:
-                                        break;
-                                }
-                            }
+                        if (name.equalsIgnoreCase("stage")) {
+                            currentGameList = new TopicList();
+                        }  else if (name.equals("key")) {
+                            currentGameList.title = parser.nextText();
+                        } else if (name.equals("answer")) {
+                            currentGameList.answer = parser.nextText();
+                        }  else if (name.equals("topic")) {
+                            currentGame = new Topic();
+                        } else if (name.equals("desc")) {
+                            currentGame.desc = parser.nextText();
+                        } else if (name.equals("a")) {
+                            currentGame.a = parser.nextText();
+                        } else if (name.equals("a_score")) {
+                            currentGame.aScore = parser.nextText();
+                        } else if (name.equals("b")) {
+                            currentGame.b = parser.nextText();
+                        } else if (name.equals("b_score")) {
+                            currentGame.bScore = parser.nextText();
+                        } else if (name.equals("c")) {
+                            currentGame.c = parser.nextText();
+                        } else if (name.equals("c_score")) {
+                            currentGame.cScore = parser.nextText();
+                        } else if (name.equals("d")) {
+                            currentGame.d = parser.nextText();
+                        } else if (name.equals("d_score")) {
+                            currentGame.dScore = parser.nextText();
                         }
                         break;
                     case XmlPullParser.END_TAG://结束元素事件
-                        if (parser.getName().equals("array") && currentGameList != null) {
+                        if (parser.getName().equals("stage") && currentGameList != null) {
                             gameLists.add(currentGameList);
-                            currentGameList = null;
-                            start = true;
+                        } else if (parser.getName().equals("topic")) {
+                            currentGameList.addTopic(currentGame);
                         }
                         break;
                 }

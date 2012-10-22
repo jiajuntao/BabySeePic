@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.babysee.picture.game;
+package cn.babysee.picture.exam;
 
 import java.util.List;
 
@@ -33,13 +33,12 @@ import android.widget.TextView;
 import cn.babysee.picture.R;
 import cn.babysee.picture.base.BaseListNavigation;
 import cn.babysee.picture.env.AppEnv;
-import cn.babysee.picture.env.SharePref;
 import cn.babysee.picture.exam.IntelligenceExamHelper;
 
 /**
- * 亲子游戏
+ * 宝宝智力测试
  */
-public class GameListActivity extends BaseListNavigation implements
+public class IntelligenceExamActivity extends BaseListNavigation implements
         ExpandableListView.OnChildClickListener {
 
     private static final String TAG = "GameHelper";
@@ -48,38 +47,36 @@ public class GameListActivity extends BaseListNavigation implements
 
     private Context mContext;
 
-    private GameHelper mGameHelper;
+    private IntelligenceExamHelper mGameHelper;
 
     private ExpandableListView mExpandableListView;
 
     private ExpandableListAdapter mAdapter;
 
     private View progressView;
-    
-    private int mStagePosition;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_list);
+        mContext = getApplicationContext();
+        mGameHelper = new IntelligenceExamHelper(mContext);
 
         mExpandableListView = (ExpandableListView) findViewById(R.id.game_list);
         progressView = findViewById(R.id.pb_loading);
-        mContext = getApplicationContext();
-        mGameHelper = new GameHelper(mContext);
-//        mExpandableListView.getFirstVisiblePosition();.getSelectedPosition();
+
         mExpandableListView.setVisibility(View.VISIBLE);
         mExpandableListView.setOnChildClickListener(this);
         progressView.setVisibility(View.GONE);
         
-        int position = SharePref.getInt(mContext, SharePref.GAME_STAGE, 0);
-        getSupportActionBar().setSelectedNavigationItem(position);
+        if (DEBUG)
+            Log.d(TAG, new IntelligenceExamHelper(mContext).getTopicList().toString());
     }
 
     @Override
     public boolean onChildClick(ExpandableListView parent, View v, int groupPosition,
             int childPosition, long id) {
-        Game game = (Game) mAdapter.getChild(groupPosition, childPosition);
+        Topic game = (Topic) mAdapter.getChild(groupPosition, childPosition);
         showGameDescDialog(game.desc);
         return false;
     }
@@ -88,33 +85,26 @@ public class GameListActivity extends BaseListNavigation implements
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
 
         super.onNavigationItemSelected(itemPosition, itemId);
-        mAdapter = new MyExpandableListAdapter(mContext, mGameHelper.getGameList(itemPosition));
+        mAdapter = new MyExpandableListAdapter(mContext, mGameHelper.getTopicList(itemPosition));
         mExpandableListView.setAdapter(mAdapter);
-        mStagePosition = itemPosition;
         return true;
-    }
-    
-    @Override
-    protected void onPause() {
-        super.onPause();
-        SharePref.setInt(mContext, SharePref.GAME_STAGE, mStagePosition);
     }
 
     public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 
         private LayoutInflater mInflater;
 
-        private List<GameList> gameLists;
+        private List<TopicList> gameLists;
 
-        public MyExpandableListAdapter(Context context, List<GameList> gameLists) {
+        public MyExpandableListAdapter(Context context, List<TopicList> gameLists) {
             mInflater = LayoutInflater.from(context);
             this.gameLists = gameLists;
         }
 
-        public Game getChild(int groupPosition, int childPosition) {
+        public Topic getChild(int groupPosition, int childPosition) {
 
-            GameList gameList = gameLists.get(groupPosition);
-            Game game = gameList.get().get(childPosition);
+            TopicList gameList = gameLists.get(groupPosition);
+            Topic game = gameList.get().get(childPosition);
 
             return game;
         }
@@ -137,15 +127,15 @@ public class GameListActivity extends BaseListNavigation implements
             View view = mInflater.inflate(R.layout.game_list_item_sub_view, null);
             TextView title = (TextView) view.findViewById(R.id.title);
             TextView summary = (TextView) view.findViewById(R.id.summary);
-            Game game = getChild(groupPosition, childPosition);
+            Topic game = getChild(groupPosition, childPosition);
 
-            title.setText(game.name);
-            summary.setText(game.summary);
+            title.setText(game.desc);
+            summary.setText(game.a);
 
             return view;
         }
 
-        public GameList getGroup(int groupPosition) {
+        public TopicList getGroup(int groupPosition) {
             return gameLists.get(groupPosition);
         }
 

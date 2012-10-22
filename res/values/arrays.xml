@@ -15,7 +15,6 @@
     <string-array name="locations">
         <item>0-1岁</item>
         <item>1-2岁</item>
-        <item>2-3岁</item>
-        <item>3-6岁</item>
+        <item>2-6岁</item>
     </string-array>
 </resources>
