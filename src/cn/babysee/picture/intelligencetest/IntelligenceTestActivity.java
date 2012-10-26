@@ -13,14 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.babysee.picture.exam;
+package cn.babysee.picture.intelligencetest;
 
 import java.util.List;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,13 +31,11 @@ import android.widget.TextView;
 import cn.babysee.picture.R;
 import cn.babysee.picture.base.BaseListNavigation;
 import cn.babysee.picture.env.AppEnv;
-import cn.babysee.picture.exam.IntelligenceExamHelper;
 
 /**
  * 宝宝智力测试
  */
-public class IntelligenceExamActivity extends BaseListNavigation implements
-        ExpandableListView.OnChildClickListener {
+public class IntelligenceTestActivity extends BaseListNavigation implements ExpandableListView.OnChildClickListener {
 
     private static final String TAG = "GameHelper";
 
@@ -47,7 +43,7 @@ public class IntelligenceExamActivity extends BaseListNavigation implements
 
     private Context mContext;
 
-    private IntelligenceExamHelper mGameHelper;
+    private IntelligenceTestHelper mTestHelper;
 
     private ExpandableListView mExpandableListView;
 
@@ -60,7 +56,7 @@ public class IntelligenceExamActivity extends BaseListNavigation implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_list);
         mContext = getApplicationContext();
-        mGameHelper = new IntelligenceExamHelper(mContext);
+        mTestHelper = new IntelligenceTestHelper(mContext);
 
         mExpandableListView = (ExpandableListView) findViewById(R.id.game_list);
         progressView = findViewById(R.id.pb_loading);
@@ -68,16 +64,15 @@ public class IntelligenceExamActivity extends BaseListNavigation implements
         mExpandableListView.setVisibility(View.VISIBLE);
         mExpandableListView.setOnChildClickListener(this);
         progressView.setVisibility(View.GONE);
-        
+
         if (DEBUG)
-            Log.d(TAG, new IntelligenceExamHelper(mContext).getTopicList().toString());
+            Log.d(TAG, new IntelligenceTestHelper(mContext).getTopicList().toString());
     }
 
     @Override
-    public boolean onChildClick(ExpandableListView parent, View v, int groupPosition,
-            int childPosition, long id) {
-        Topic game = (Topic) mAdapter.getChild(groupPosition, childPosition);
-        showGameDescDialog(game.desc);
+    public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+        TestQuestion testQuestion = (TestQuestion) mAdapter.getChild(groupPosition, childPosition);
+        startActivity(new Intent(mContext, TestQuestionActivity.class));
         return false;
     }
 
@@ -85,7 +80,7 @@ public class IntelligenceExamActivity extends BaseListNavigation implements
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
 
         super.onNavigationItemSelected(itemPosition, itemId);
-        mAdapter = new MyExpandableListAdapter(mContext, mGameHelper.getTopicList(itemPosition));
+        mAdapter = new MyExpandableListAdapter(mContext, mTestHelper.getTopicList(itemPosition));
         mExpandableListView.setAdapter(mAdapter);
         return true;
     }
@@ -94,17 +89,17 @@ public class IntelligenceExamActivity extends BaseListNavigation implements
 
         private LayoutInflater mInflater;
 
-        private List<TopicList> gameLists;
+        private List<TestPhase> gameLists;
 
-        public MyExpandableListAdapter(Context context, List<TopicList> gameLists) {
+        public MyExpandableListAdapter(Context context, List<TestPhase> gameLists) {
             mInflater = LayoutInflater.from(context);
             this.gameLists = gameLists;
         }
 
-        public Topic getChild(int groupPosition, int childPosition) {
+        public TestQuestion getChild(int groupPosition, int childPosition) {
 
-            TopicList gameList = gameLists.get(groupPosition);
-            Topic game = gameList.get().get(childPosition);
+            TestPhase gameList = gameLists.get(groupPosition);
+            TestQuestion game = gameList.get().get(childPosition);
 
             return game;
         }
@@ -121,21 +116,21 @@ public class IntelligenceExamActivity extends BaseListNavigation implements
             return (TextView) mInflater.inflate(R.layout.game_list_item_title_view, null);
         }
 
-        public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
-                View convertView, ViewGroup parent) {
+        public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView,
+                ViewGroup parent) {
 
             View view = mInflater.inflate(R.layout.game_list_item_sub_view, null);
             TextView title = (TextView) view.findViewById(R.id.title);
             TextView summary = (TextView) view.findViewById(R.id.summary);
-            Topic game = getChild(groupPosition, childPosition);
+            TestQuestion testQuestion = getChild(groupPosition, childPosition);
 
-            title.setText(game.desc);
-            summary.setText(game.a);
+            title.setText(testQuestion.desc);
+            summary.setText(testQuestion.a);
 
             return view;
         }
 
-        public TopicList getGroup(int groupPosition) {
+        public TestPhase getGroup(int groupPosition) {
             return gameLists.get(groupPosition);
         }
 
@@ -147,8 +142,7 @@ public class IntelligenceExamActivity extends BaseListNavigation implements
             return groupPosition;
         }
 
-        public View getGroupView(int groupPosition, boolean isExpanded, View convertView,
-                ViewGroup parent) {
+        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
             TextView textView = getGenericView();
 
             String title = getGroup(groupPosition).title;
@@ -170,29 +164,5 @@ public class IntelligenceExamActivity extends BaseListNavigation implements
     @Override
     protected int getActionBarDropDownViewResource() {
         return R.array.locations;
-    }
-
-    private Dialog gameDialog;
-
-    private TextView gameDescView;
-
-    protected void showGameDescDialog(String msg) {
-
-        if (gameDialog == null) {
-            View view = View.inflate(this, R.layout.game_desc_dialog, null);
-            gameDescView = (TextView) view.findViewById(R.id.game_desc);
-
-            gameDialog = new AlertDialog.Builder(this).setIcon(R.drawable.ic_launcher)
-                    .setTitle(R.string.game_desc).setView(view)
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            gameDialog.dismiss();
-                        }
-                    }).create();
-
-        }
-        gameDescView.setText(msg);
-        gameDialog.show();
     }
 }

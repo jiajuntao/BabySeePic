@@ -85,7 +85,6 @@
             android:id="@+id/test"
             style="@style/ButtonLarge"
             android:layout_marginRight="20dip"
-            android:visibility="gone"
             android:text="智力测试" />
         
         <Button

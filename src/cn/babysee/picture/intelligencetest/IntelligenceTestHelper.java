@@ -1,18 +1,22 @@
-package cn.babysee.picture.exam;
+package cn.babysee.picture.intelligencetest;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.xmlpull.v1.XmlPullParser;
 
 import android.content.Context;
+import android.util.JsonReader;
+import android.util.JsonToken;
 import android.util.Log;
 import android.util.Xml;
 import cn.babysee.picture.env.AppEnv;
 
-public class IntelligenceExamHelper {
+public class IntelligenceTestHelper {
 
     private static final String TAG = "IntelligenceTestHelper";
 
@@ -26,13 +30,13 @@ public class IntelligenceExamHelper {
 
     private Context mContext;
 
-    private List<TopicList> tipicLists;
+    private List<TestPhase> tipicLists;
 
-    public IntelligenceExamHelper(Context context) {
+    public IntelligenceTestHelper(Context context) {
         this.mContext = context;
     }
 
-    public List<TopicList> getTopicList(int type) {
+    public List<TestPhase> getTopicList(int type) {
 
         if (tipicLists == null) {
             tipicLists = getTopicList();
@@ -43,7 +47,7 @@ public class IntelligenceExamHelper {
         int startIndex = 0;
         int endIndex = size - 1;
 
-        List<TopicList> sublist = new ArrayList<TopicList>(13);
+        List<TestPhase> sublist = new ArrayList<TestPhase>(13);
         switch (type) {
             case TYPE_0_1:
                 startIndex = 0;
@@ -64,7 +68,7 @@ public class IntelligenceExamHelper {
                 break;
         }
         int i = 0;
-        for (TopicList gameList : tipicLists) {
+        for (TestPhase gameList : tipicLists) {
             if (i >= startIndex && i <= endIndex) {
                 sublist.add(gameList);
             }
@@ -74,7 +78,8 @@ public class IntelligenceExamHelper {
         return sublist;
     }
 
-    public List<TopicList> getTopicList() {
+    public List<TestPhase> getTopicList() {
+        
         InputStream inStream = null;
         try {
             inStream = mContext.getResources().getAssets().open("intelligence_test");
@@ -84,11 +89,11 @@ public class IntelligenceExamHelper {
         } catch (IOException e) {
             if (DEBUG) e.printStackTrace();
         }
-
+        
         XmlPullParser parser = Xml.newPullParser();
-        List<TopicList> gameLists = null;
-        TopicList currentGameList = null;
-        Topic currentGame = null;
+        List<TestPhase> gameLists = null;
+        TestPhase currentGameList = null;
+        TestQuestion currentGame = null;
 
         try {
             parser.setInput(inStream, "UTF-8");
@@ -97,18 +102,18 @@ public class IntelligenceExamHelper {
             while (eventType != XmlPullParser.END_DOCUMENT) {
                 switch (eventType) {
                     case XmlPullParser.START_DOCUMENT://文档开始事件,可以进行数据初始化处理
-                        gameLists = new ArrayList<TopicList>();
+                        gameLists = new ArrayList<TestPhase>();
                         break;
                     case XmlPullParser.START_TAG://开始元素事件
                         String name = parser.getName();
                         if (name.equalsIgnoreCase("stage")) {
-                            currentGameList = new TopicList();
+                            currentGameList = new TestPhase();
                         }  else if (name.equals("key")) {
                             currentGameList.title = parser.nextText();
                         } else if (name.equals("answer")) {
                             currentGameList.answer = parser.nextText();
                         }  else if (name.equals("topic")) {
-                            currentGame = new Topic();
+                            currentGame = new TestQuestion();
                         } else if (name.equals("desc")) {
                             currentGame.desc = parser.nextText();
                         } else if (name.equals("a")) {

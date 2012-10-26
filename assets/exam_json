@@ -1,0 +1,66 @@
+{
+    "test_phases": [
+        {
+            "desc": "0-1月",
+            "test_questions": [
+                {
+                    "desc": "你多大了？",
+                    "options": [
+                        {
+                            "desc": "10岁",
+                            "score": "5"
+                        },
+                        {
+                            "desc": "7岁",
+                            "score": "3"
+                        }
+                    ]
+                },
+                {
+                    "desc": "你叫什么名字？",
+                    "options": [
+                        {
+                            "desc": "贾一选",
+                            "score": "10"
+                        },
+                        {
+                            "desc": "宣萱",
+                            "score": "6"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "desc": "1-2月",
+            "test_questions": [
+                {
+                    "desc": "叫爸爸？",
+                    "options": [
+                        {
+                            "desc": "吧吧",
+                            "score": "5"
+                        },
+                        {
+                            "desc": "妈妈",
+                            "score": "3"
+                        }
+                    ]
+                },
+                {
+                    "desc": "你叫什么名字？",
+                    "options": [
+                        {
+                            "desc": "大大",
+                            "score": "10"
+                        },
+                        {
+                            "desc": "哈哈",
+                            "score": "6"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

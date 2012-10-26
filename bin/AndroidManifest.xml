@@ -101,7 +101,11 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".exam.IntelligenceExamActivity"
+            android:name=".intelligencetest.IntelligenceTestActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".intelligencetest.TestQuestionActivity"
             android:screenOrientation="portrait" >
         </activity>
     </application>

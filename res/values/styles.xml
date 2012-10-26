@@ -256,4 +256,17 @@
         <item name="android:background">@drawable/main_item_bg</item>
     </style>
 
+    <style name="my_radio_button">
+        <item name="android:textSize">@dimen/dimen_16_dip</item>
+        <item name="android:textColor">#ff373737</item>
+        <item name="android:gravity">left|center</item>
+        <item name="android:background">@drawable/bg_radio_button</item>
+        <item name="android:padding">@dimen/dimen_5_dip</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:button">@null</item>
+        <item name="android:singleLine">false</item>
+        <item name="android:drawableLeft">@drawable/exercise_option</item>
+        <item name="android:drawablePadding">@dimen/dimen_10_dip</item>
+    </style>
 </resources>
