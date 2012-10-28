@@ -4,6 +4,8 @@
     <string name="hello">宝宝智力方程</string>
     <string name="app_name">宝宝智力方程</string>
     <string name="app_version">宝宝智力方程</string>
+    <string name="test">智力测试</string>
+    <string name="game">亲子游戏</string>
     
     <string name="game_desc">游戏描述</string>
     

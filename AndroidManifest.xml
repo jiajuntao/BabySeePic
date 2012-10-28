@@ -97,15 +97,18 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:label="@string/game"
             android:name=".game.GameListActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".intelligencetest.IntelligenceTestActivity"
+            android:label="@string/test"
+            android:name=".test.TestListActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".intelligencetest.TestQuestionActivity"
+            android:label="@string/test"
+            android:name=".test.TestQuestionActivity"
             android:screenOrientation="portrait" >
         </activity>
     </application>

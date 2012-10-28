@@ -1615,44 +1615,45 @@ containing a value of this type.
         public static final int btn_previous=0x7f05003e;
         public static final int content_bg=0x7f050044;
         public static final int disableHome=0x7f050009;
-        public static final int dot1=0x7f050053;
-        public static final int dot2=0x7f050054;
-        public static final int dot3=0x7f050055;
-        public static final int dot4=0x7f050056;
-        public static final int dot5=0x7f050057;
-        public static final int dot6=0x7f050058;
-        public static final int down=0x7f05005a;
-        public static final int explain_detail=0x7f05004c;
+        public static final int dot1=0x7f050054;
+        public static final int dot2=0x7f050055;
+        public static final int dot3=0x7f050056;
+        public static final int dot4=0x7f050057;
+        public static final int dot5=0x7f050058;
+        public static final int dot6=0x7f050059;
+        public static final int down=0x7f05005b;
+        public static final int explain_detail=0x7f05004d;
         public static final int fruit=0x7f050037;
         public static final int game=0x7f05003c;
         public static final int game_desc=0x7f050030;
         public static final int game_list=0x7f050031;
         public static final int homeAsUp=0x7f050006;
         public static final int icon=0x7f050032;
-        public static final int imageView1=0x7f05005b;
-        public static final int imageView2=0x7f05005c;
+        public static final int imageView1=0x7f05005c;
+        public static final int imageView2=0x7f05005d;
         public static final int list=0x7f05002e;
         public static final int listMode=0x7f050002;
         public static final int main_panel=0x7f050043;
-        public static final int menu_about=0x7f05005f;
-        public static final int menu_advice=0x7f05005e;
+        public static final int menu_about=0x7f050060;
+        public static final int menu_advice=0x7f05005f;
         public static final int normal=0x7f050001;
         public static final int pb_loading=0x7f05002f;
         public static final int pic_name=0x7f050028;
         public static final int pic_path=0x7f050027;
         public static final int pic_type=0x7f050029;
         public static final int question_content=0x7f050045;
-        public static final int question_finished_btn=0x7f05004b;
-        public static final int question_star1=0x7f05004d;
-        public static final int question_star2=0x7f05004e;
-        public static final int question_star3=0x7f05004f;
-        public static final int question_star4=0x7f050050;
-        public static final int question_star5=0x7f050051;
-        public static final int question_statistic=0x7f050052;
+        public static final int question_finished_btn=0x7f05004c;
+        public static final int question_star1=0x7f05004e;
+        public static final int question_star2=0x7f05004f;
+        public static final int question_star3=0x7f050050;
+        public static final int question_star4=0x7f050051;
+        public static final int question_star5=0x7f050052;
+        public static final int question_statistic=0x7f050053;
         public static final int radio1=0x7f050047;
         public static final int radio2=0x7f050048;
         public static final int radio3=0x7f050049;
         public static final int radio4=0x7f05004a;
+        public static final int radio5=0x7f05004b;
         public static final int radio_group=0x7f050046;
         public static final int showCustom=0x7f050008;
         public static final int showHome=0x7f050005;
@@ -1667,11 +1668,11 @@ containing a value of this type.
         public static final int title_bar_title=0x7f05002b;
         public static final int transport=0x7f050039;
         public static final int txt_label=0x7f050040;
-        public static final int up=0x7f050059;
+        public static final int up=0x7f05005a;
         public static final int useLogo=0x7f050004;
         public static final int v_header_separator=0x7f05002d;
         public static final int vegetable=0x7f050038;
-        public static final int webview=0x7f05005d;
+        public static final int webview=0x7f05005e;
         public static final int wrap_content=0x7f050000;
     }
     public static final class integer {
@@ -1712,10 +1713,11 @@ containing a value of this type.
         public static final int main=0x7f03001f;
         public static final int sherlock_spinner_dropdown_item=0x7f030020;
         public static final int sherlock_spinner_item=0x7f030021;
-        public static final int test_question=0x7f030022;
-        public static final int test_question_panel=0x7f030023;
-        public static final int view_pic=0x7f030024;
-        public static final int webview=0x7f030025;
+        public static final int test_list_item_sub_view=0x7f030022;
+        public static final int test_question=0x7f030023;
+        public static final int test_question_panel=0x7f030024;
+        public static final int view_pic=0x7f030025;
+        public static final int webview=0x7f030026;
     }
     public static final class menu {
         public static final int activity_main=0x7f0d0000;
@@ -1747,12 +1749,12 @@ containing a value of this type.
         public static final int radom_sound_9_=0x7f040017;
     }
     public static final class string {
-        public static final int about_copyright=0x7f0a0015;
-        public static final int about_description=0x7f0a0016;
-        public static final int about_mail=0x7f0a0013;
-        public static final int about_mail_url=0x7f0a0014;
-        public static final int about_office_web=0x7f0a0011;
-        public static final int about_office_web_url=0x7f0a0012;
+        public static final int about_copyright=0x7f0a0017;
+        public static final int about_description=0x7f0a0018;
+        public static final int about_mail=0x7f0a0015;
+        public static final int about_mail_url=0x7f0a0016;
+        public static final int about_office_web=0x7f0a0013;
+        public static final int about_office_web_url=0x7f0a0014;
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
          */
         public static final int abs__action_bar_home_description=0x7f0a0000;
@@ -1785,40 +1787,42 @@ containing a value of this type.
         public static final int abs__shareactionprovider_share_with_application=0x7f0a0009;
         public static final int app_name=0x7f0a000b;
         public static final int app_version=0x7f0a000c;
-        public static final int dialog_cancel=0x7f0a001a;
-        public static final int dialog_ok=0x7f0a0019;
-        public static final int dialog_save_pic_title=0x7f0a0018;
-        public static final int download_failed_generic_dlg_title=0x7f0a0028;
-        public static final int download_failed_generic_msg=0x7f0a0029;
-        public static final int download_file_error_dlg_msg=0x7f0a0027;
+        public static final int dialog_cancel=0x7f0a001c;
+        public static final int dialog_ok=0x7f0a001b;
+        public static final int dialog_save_pic_title=0x7f0a001a;
+        public static final int download_failed_generic_dlg_title=0x7f0a002a;
+        public static final int download_failed_generic_msg=0x7f0a002b;
+        public static final int download_file_error_dlg_msg=0x7f0a0029;
         /**  SD卡检查 
          */
-        public static final int download_file_error_dlg_title=0x7f0a0026;
-        public static final int download_no_sdcard_dlg_msg=0x7f0a002c;
-        public static final int download_no_sdcard_dlg_title=0x7f0a002b;
-        public static final int download_sdcard_busy_dlg_msg=0x7f0a002e;
-        public static final int download_sdcard_busy_dlg_title=0x7f0a002d;
-        public static final int download_success_generic_msg=0x7f0a002a;
-        public static final int game_desc=0x7f0a000d;
+        public static final int download_file_error_dlg_title=0x7f0a0028;
+        public static final int download_no_sdcard_dlg_msg=0x7f0a002e;
+        public static final int download_no_sdcard_dlg_title=0x7f0a002d;
+        public static final int download_sdcard_busy_dlg_msg=0x7f0a0030;
+        public static final int download_sdcard_busy_dlg_title=0x7f0a002f;
+        public static final int download_success_generic_msg=0x7f0a002c;
+        public static final int game=0x7f0a000e;
+        public static final int game_desc=0x7f0a000f;
         public static final int hello=0x7f0a000a;
-        public static final int help_singal=0x7f0a0017;
-        public static final int list_navigation_content=0x7f0a002f;
-        public static final int menu_about=0x7f0a000f;
-        public static final int menu_advice=0x7f0a0010;
-        public static final int menu_blur=0x7f0a0021;
+        public static final int help_singal=0x7f0a0019;
+        public static final int list_navigation_content=0x7f0a0031;
+        public static final int menu_about=0x7f0a0011;
+        public static final int menu_advice=0x7f0a0012;
+        public static final int menu_blur=0x7f0a0023;
         /**  画板 
          */
-        public static final int menu_color=0x7f0a001e;
-        public static final int menu_color_canvas=0x7f0a001f;
-        public static final int menu_emboss=0x7f0a0020;
-        public static final int menu_erase=0x7f0a0022;
-        public static final int menu_save_pic=0x7f0a0023;
-        public static final int menu_save_pic_list=0x7f0a0024;
-        public static final int menu_settings=0x7f0a000e;
-        public static final int menu_srcatop=0x7f0a0025;
-        public static final int pic_empty=0x7f0a001d;
-        public static final int pic_type=0x7f0a001b;
-        public static final int pic_view=0x7f0a001c;
+        public static final int menu_color=0x7f0a0020;
+        public static final int menu_color_canvas=0x7f0a0021;
+        public static final int menu_emboss=0x7f0a0022;
+        public static final int menu_erase=0x7f0a0024;
+        public static final int menu_save_pic=0x7f0a0025;
+        public static final int menu_save_pic_list=0x7f0a0026;
+        public static final int menu_settings=0x7f0a0010;
+        public static final int menu_srcatop=0x7f0a0027;
+        public static final int pic_empty=0x7f0a001f;
+        public static final int pic_type=0x7f0a001d;
+        public static final int pic_view=0x7f0a001e;
+        public static final int test=0x7f0a000d;
     }
     public static final class style {
         public static final int AvatarActionBar=0x7f0b0059;

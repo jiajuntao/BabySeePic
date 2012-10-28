@@ -34,7 +34,7 @@ import cn.babysee.picture.R;
 import cn.babysee.picture.base.BaseListNavigation;
 import cn.babysee.picture.env.AppEnv;
 import cn.babysee.picture.env.SharePref;
-import cn.babysee.picture.intelligencetest.IntelligenceTestHelper;
+import cn.babysee.picture.test.TestHelper;
 
 /**
  * 亲子游戏

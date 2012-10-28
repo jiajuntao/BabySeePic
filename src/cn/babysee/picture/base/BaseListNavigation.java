@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import cn.babysee.picture.R;
+import cn.babysee.picture.env.ThemeHelper;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
@@ -12,12 +13,11 @@ import com.actionbarsherlock.app.SherlockActivity;
 public abstract class BaseListNavigation extends SherlockActivity implements ActionBar.OnNavigationListener {
     private TextView mSelected;
     protected String[] mLocations;
-    public static int THEME = R.style.Theme_Sherlock;
     private int arrayRId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setTheme(THEME); //Used for theme switching in samples
+        setTheme(ThemeHelper.THEME); 
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.list_navigation);

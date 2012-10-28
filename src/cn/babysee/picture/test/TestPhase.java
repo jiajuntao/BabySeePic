@@ -1,12 +1,18 @@
-package cn.babysee.picture.intelligencetest;
+package cn.babysee.picture.test;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 测试阶段（如：11-12月）
  */
-public class TestPhase {
+public class TestPhase implements Serializable {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -2193050466059920100L;
 
     public String title;
 

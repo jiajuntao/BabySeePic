@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.babysee.picture.intelligencetest;
+package cn.babysee.picture.test;
 
 import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,19 +30,21 @@ import android.widget.TextView;
 import cn.babysee.picture.R;
 import cn.babysee.picture.base.BaseListNavigation;
 import cn.babysee.picture.env.AppEnv;
+import cn.babysee.picture.env.SharePref;
 
 /**
  * 宝宝智力测试
  */
-public class IntelligenceTestActivity extends BaseListNavigation implements ExpandableListView.OnChildClickListener {
+public class TestListActivity extends BaseListNavigation implements
+        ExpandableListView.OnChildClickListener {
 
-    private static final String TAG = "GameHelper";
+    private static final String TAG = "TestListActivity";
 
     private boolean DEBUG = AppEnv.DEBUG;
 
     private Context mContext;
 
-    private IntelligenceTestHelper mTestHelper;
+    private TestHelper mTestHelper;
 
     private ExpandableListView mExpandableListView;
 
@@ -51,12 +52,14 @@ public class IntelligenceTestActivity extends BaseListNavigation implements Expa
 
     private View progressView;
 
+    private int mStagePosition;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_list);
         mContext = getApplicationContext();
-        mTestHelper = new IntelligenceTestHelper(mContext);
+        mTestHelper = new TestHelper(mContext);
 
         mExpandableListView = (ExpandableListView) findViewById(R.id.game_list);
         progressView = findViewById(R.id.pb_loading);
@@ -65,13 +68,26 @@ public class IntelligenceTestActivity extends BaseListNavigation implements Expa
         mExpandableListView.setOnChildClickListener(this);
         progressView.setVisibility(View.GONE);
 
-        if (DEBUG)
-            Log.d(TAG, new IntelligenceTestHelper(mContext).getTopicList().toString());
+        int position = SharePref.getInt(mContext, SharePref.TEST_PHASE, 0);
+        getSupportActionBar().setSelectedNavigationItem(position);
     }
 
     @Override
-    public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+    protected void onPause() {
+        super.onPause();
+        SharePref.setInt(mContext, SharePref.TEST_PHASE, mStagePosition);
+    }
+
+    @Override
+    public boolean onChildClick(ExpandableListView parent, View v, int groupPosition,
+            int childPosition, long id) {
         TestQuestion testQuestion = (TestQuestion) mAdapter.getChild(groupPosition, childPosition);
+
+        Intent intent = new Intent();
+        intent.putExtra("groupPosition", groupPosition);
+        intent.putExtra("childPosition", childPosition);
+        intent.putExtra("stagePosition", mStagePosition);
+
         startActivity(new Intent(mContext, TestQuestionActivity.class));
         return false;
     }
@@ -82,6 +98,7 @@ public class IntelligenceTestActivity extends BaseListNavigation implements Expa
         super.onNavigationItemSelected(itemPosition, itemId);
         mAdapter = new MyExpandableListAdapter(mContext, mTestHelper.getTopicList(itemPosition));
         mExpandableListView.setAdapter(mAdapter);
+        mStagePosition = itemPosition;
         return true;
     }
 
@@ -116,16 +133,16 @@ public class IntelligenceTestActivity extends BaseListNavigation implements Expa
             return (TextView) mInflater.inflate(R.layout.game_list_item_title_view, null);
         }
 
-        public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView,
-                ViewGroup parent) {
+        public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
+                View convertView, ViewGroup parent) {
 
-            View view = mInflater.inflate(R.layout.game_list_item_sub_view, null);
+            View view = mInflater.inflate(R.layout.test_list_item_sub_view, null);
             TextView title = (TextView) view.findViewById(R.id.title);
             TextView summary = (TextView) view.findViewById(R.id.summary);
             TestQuestion testQuestion = getChild(groupPosition, childPosition);
 
             title.setText(testQuestion.desc);
-            summary.setText(testQuestion.a);
+            //            summary.setText(testQuestion.a);
 
             return view;
         }
@@ -142,7 +159,8 @@ public class IntelligenceTestActivity extends BaseListNavigation implements Expa
             return groupPosition;
         }
 
-        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+        public View getGroupView(int groupPosition, boolean isExpanded, View convertView,
+                ViewGroup parent) {
             TextView textView = getGenericView();
 
             String title = getGroup(groupPosition).title;

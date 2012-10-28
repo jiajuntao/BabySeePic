@@ -13,6 +13,10 @@ public class SharePref {
     public static final String GAME_STAGE = "game_stage";
 
     public static final String GAME_STAGE_POSITION = "game_stage_position";
+    
+    public static final String TEST_PHASE = "test_phase";
+    
+    public static final String TEST_PHASE_POSITION = "test_phase_position";
 
     public static void setString(Context context, String key, String value) {
         Editor sharedata = context.getSharedPreferences(PRE_NAME, 0).edit();

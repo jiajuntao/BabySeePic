@@ -27,5 +27,27 @@
 			<d>不动（0分）</d>
 			<d_score>0</d_score>
 		</topic>
+		<topic>
+			<desc>3、 第一次注视离眼20厘米模拟母亲脸容的黑白图画：（记分：不眨眼连续注视的秒数，每秒可记1分   以10分为及格。）</desc>
+			<a>10秒以上</a>
+			<a_score>10</a_score>
+			<b>7秒以上</b>
+			<b_score>7</b_score>
+			<c>5秒以上</c>
+			<c_score>5</c_score>
+			<d>3秒以上</d>
+			<d_score>3</d_score>
+		</topic>
+		<topic>
+			<desc>4、 离耳15厘米摇动内装20粒黄豆的塑料瓶时：</desc>
+			<a>转头眨眼（10分） </a>
+			<a_score>10</a_score>
+			<b>皱眉（8分） </b>
+			<b_score>8</b_score>
+			<c>纵鼻张口（6分） </c>
+			<c_score>6</c_score>
+			<d>不动（0分）</d>
+			<d_score>0</d_score>
+		</topic>
 	</stage>
 </test>
