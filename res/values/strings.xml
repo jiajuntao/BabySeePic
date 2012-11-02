@@ -28,6 +28,12 @@
     <string name="pic_view">预览宝宝作品</string>
     <string name="pic_empty">没有找到宝宝的作品\n赶快让您的宝宝来画画吧！</string>
     
+    <!-- 智力测试 -->
+    <string name="test_next">下一题</string>
+    <string name="test_up">上一题</string>
+    <string name="test_show_result">看结果</string>
+    <string name="test_save">收藏</string>
+    
     <!-- 画板 -->
     <string name="menu_color">画笔颜色</string>
     <string name="menu_color_canvas">背景颜色</string>

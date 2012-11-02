@@ -23,7 +23,6 @@
         style="@style/CommentListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/v_header_separator"
         android:visibility="gone" />
 
     <ProgressBar

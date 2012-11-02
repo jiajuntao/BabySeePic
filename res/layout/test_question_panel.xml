@@ -125,16 +125,7 @@
                 android:visibility="gone"
                 android:src="@drawable/icon_difficulty_star_s" />
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/question_statistic"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_5_dip"
-            android:singleLine="true"
-            android:text="统计：您共做对5次，做错4次，答对率55%"
-            android:textColor="#ff0769cb"
-            android:textSize="@dimen/dimen_14_dip" />
+        
     </LinearLayout>
 
 </LinearLayout>

@@ -174,12 +174,11 @@ public class GameListActivity extends BaseListNavigation implements
         public boolean hasStableIds() {
             return true;
         }
-
     }
 
     @Override
     protected int getActionBarDropDownViewResource() {
-        return R.array.locations;
+        return R.array.game_phases;
     }
 
     private Dialog gameDialog;

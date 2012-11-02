@@ -77,7 +77,7 @@ public class GameHelper {
     public List<GameList> getGameList() {
         InputStream inStream = null;
         try {
-            inStream = mContext.getResources().getAssets().open("game.plist");
+            inStream = mContext.getResources().getAssets().open("game/game.plist");
             if (inStream == null) {
                 return null;
             }

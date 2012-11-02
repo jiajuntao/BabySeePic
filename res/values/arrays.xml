@@ -12,9 +12,15 @@
         <item>charlie</item>  
     </string-array>
     
-    <string-array name="locations">
+    <string-array name="game_phases">
         <item>0-1岁</item>
         <item>1-2岁</item>
         <item>2-6岁</item>
+    </string-array>
+    
+    <string-array name="test_phases">
+        <item>0-1岁</item>
+        <item>1-2岁</item>
+        <item>2-3岁</item>
     </string-array>
 </resources>

@@ -1,20 +1,18 @@
 package cn.babysee.picture.test;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-import org.xmlpull.v1.XmlPullParser;
+import java.util.Map;
 
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
-import android.util.Xml;
 import cn.babysee.picture.env.AppEnv;
 import cn.babysee.picture.env.SharePref;
+import cn.babysee.utils.FileUtils;
 
-public class TestHelper {
+public class TestHelper implements ITest {
 
     private static final String TAG = "TestHelper";
 
@@ -27,7 +25,6 @@ public class TestHelper {
     private static final int TYPE_2_6 = 2;
 
     private Context mContext;
-    private List<TestPhase> mTipicLists;
     private TestPhase mTestPhase;
     private List<TestQuestion> mTestQuestions;
     private TestQuestion mTestQuestion;
@@ -36,105 +33,135 @@ public class TestHelper {
     private int mChildPosition;
     private int mTotalSize;
     private String mOperateSaveKey;
+    private Map<Integer, List<TestPhase>> mTestList = new HashMap<Integer, List<TestPhase>>();
 
     public TestHelper(Context context) {
         this.mContext = context;
     }
-    
+
     public TestHelper(Context context, int stagePosition, int groupPosition, int childPosition) {
         if (DEBUG)
-            Log.d(TAG, "IntelligenceTestHelper stagePosition:" + stagePosition + " groupPosition:" + groupPosition + " childPosition:" + childPosition);
+            Log.d(TAG, "IntelligenceTestHelper stagePosition:" + stagePosition + " groupPosition:" + groupPosition
+                    + " childPosition:" + childPosition);
         this.mContext = context;
         this.mStagePosition = stagePosition;
         this.mGroupPosition = groupPosition;
         this.mChildPosition = childPosition;
-        mOperateSaveKey = "test_select"+":" +mStagePosition + ":" + mGroupPosition;
-        
-        if (mTipicLists == null) {
-            mTipicLists = getTopicList(mStagePosition);
-        }
-        
+        mOperateSaveKey = "test_select" + ":" + mStagePosition + ":" + mGroupPosition;
+
         if (mTestPhase == null) {
-            mTestPhase = mTipicLists.get(mGroupPosition);
+            mTestPhase = getPhaseList(mStagePosition).get(mGroupPosition);
         }
-        
+
         if (mTestQuestions == null) {
-            mTestQuestions = getTopicList(mStagePosition).get(mGroupPosition).list;
+            mTestQuestions = getPhaseList(mStagePosition).get(mGroupPosition).list;
         }
-        
+
         mTotalSize = mTestQuestions.size();
-        
+
         List<String> saveSelect = getSelectOption();
         if (saveSelect != null) {
             int size = mTestQuestions.size();
-            for(int i=0; i<size; i++) {
-                TestQuestion testQuestion  = mTestQuestions.get(i);
+            for (int i = 0; i < size; i++) {
+                TestQuestion testQuestion = mTestQuestions.get(i);
                 testQuestion.select = saveSelect.get(i);
             }
         }
     }
-    
+
+    /* (non-Javadoc)
+     * @see cn.babysee.picture.test.ITest#setSelectOption(java.lang.String)
+     */
+    @Override
     public void setSelectOption(String option) {
         mTestQuestion.select = option;
     }
-    
+
+    /* (non-Javadoc)
+     * @see cn.babysee.picture.test.ITest#isFrist()
+     */
+    @Override
     public boolean isFrist() {
         if (mChildPosition == 0) {
             return true;
         }
         return false;
     }
-    
+
+    /* (non-Javadoc)
+     * @see cn.babysee.picture.test.ITest#isLast()
+     */
+    @Override
     public boolean isLast() {
         if (mChildPosition == (mTotalSize - 1)) {
             return true;
         }
         return false;
     }
-    
+
+    /* (non-Javadoc)
+     * @see cn.babysee.picture.test.ITest#getPreviousTestQuestion()
+     */
+    @Override
     public TestQuestion getPreviousTestQuestion() {
         if (DEBUG)
             Log.d(TAG, "getPreviousTestQuestion  childPosition:" + mChildPosition);
-        
+
         mChildPosition = mChildPosition - 1;
         if (mChildPosition < 0) {
             mChildPosition = 0;
-        } 
-        return getTestQuestion(); 
+        }
+        return getTestQuestion();
     }
-    
+
+    /* (non-Javadoc)
+     * @see cn.babysee.picture.test.ITest#getNextTestQuestion()
+     */
+    @Override
     public TestQuestion getNextTestQuestion() {
         if (DEBUG)
             Log.d(TAG, "getNextTestQuestion  childPosition:" + mChildPosition);
         int maxIndex = mTestQuestions.size() - 1;
         mChildPosition = mChildPosition + 1;
-        
+
         if (mChildPosition > maxIndex) {
             mChildPosition = maxIndex;
-        } 
-        
-        return getTestQuestion(); 
+        }
+
+        return getTestQuestion();
     }
-    
+
+    /* (non-Javadoc)
+     * @see cn.babysee.picture.test.ITest#getTestQuestion()
+     */
+    @Override
     public TestQuestion getTestQuestion() {
         if (DEBUG)
             Log.d(TAG, "getTestQuestion  childPosition:" + mChildPosition);
         mTestQuestion = mTestQuestions.get(mChildPosition);
-        
-        return mTestQuestion; 
+
+        return mTestQuestion;
     }
-    
+
+    /* (non-Javadoc)
+     * @see cn.babysee.picture.test.ITest#getCurrentPosition()
+     */
+    @Override
     public String getCurrentPosition() {
         if (DEBUG)
             Log.d(TAG, "getCurrentPosition ");
-        
-        return (mChildPosition + 1) + "/" + mTotalSize; 
+
+        return (mChildPosition + 1) + "/" + mTotalSize;
     }
-    
+
+    /* (non-Javadoc)
+     * @see cn.babysee.picture.test.ITest#save()
+     */
+    @Override
     public void save() {
         int size = mTestQuestions.size();
         StringBuffer sb = new StringBuffer();
-        for (int i=0; i< size; i++) {
+        for (int i = 0; i < size; i++) {
             TestQuestion testQuestion = mTestQuestions.get(i);
             if (TextUtils.isEmpty(testQuestion.select)) {
                 sb.append(i);
@@ -147,7 +174,11 @@ public class TestHelper {
             Log.d(TAG, "save: " + sb.toString());
         SharePref.setString(mContext, mOperateSaveKey, sb.toString());
     }
-    
+
+    /* (non-Javadoc)
+     * @see cn.babysee.picture.test.ITest#getSelectOption()
+     */
+    @Override
     public List<String> getSelectOption() {
         String saveSelect = SharePref.getString(mContext, mOperateSaveKey, null);
         if (DEBUG)
@@ -155,12 +186,12 @@ public class TestHelper {
         if (TextUtils.isEmpty(saveSelect)) {
             return null;
         }
-        
+
         String[] s = saveSelect.split(";");
         List<String> list = new ArrayList<String>();
         String[] temp = null;
         for (String string : s) {
-            if(string.contains(":")) {
+            if (string.contains(":")) {
                 temp = string.split(":");
                 list.add(temp[1]);
             } else {
@@ -171,129 +202,137 @@ public class TestHelper {
             Log.d(TAG, "getSelectOption: " + list.toString());
         return list;
     }
-    
-    public List<TestPhase> getTopicList(int type) {
 
-        if (mTipicLists == null) {
-            mTipicLists = getTopicList();
+    /* (non-Javadoc)
+     * @see cn.babysee.picture.test.ITest#getTopicList(int)
+     */
+    @Override
+    public List<TestPhase> getPhaseList(int phaseType) {
+        
+        List<TestPhase> list = mTestList.get(Integer.valueOf(phaseType));
+        if ( list != null) {
+            return list;
         }
-
-        int size = mTipicLists.size();
-
-        int startIndex = 0;
-        int endIndex = size - 1;
-
-        List<TestPhase> sublist = new ArrayList<TestPhase>(13);
-        switch (type) {
-            case TYPE_0_1:
-                startIndex = 0;
-                endIndex = 11;
-                break;
-            case TYPE_1_2:
-                startIndex = 12;
-                endIndex = 23;
-
-                break;
-            case TYPE_2_6:
-                startIndex = 24;
-                endIndex = size;
-
-                break;
-
-            default:
-                break;
+        
+        String filePath = "test/test_phase1";
+        switch (phaseType) {
+        case TYPE_0_1:
+            filePath = "test/test_phase1";
+            break;
+        case TYPE_1_2:
+            filePath = "test/test_phase2";
+            break;
+        case TYPE_2_6:
+            filePath = "test/test_phase3";
+            break;
+        default:
+            break;
         }
-        int i = 0;
-        for (TestPhase gameList : mTipicLists) {
-            if (i >= startIndex && i <= endIndex) {
-                sublist.add(gameList);
-            }
-            i++;
-        }
-
-        return sublist;
+        list = getPhaseList(filePath);
+        mTestList.put(phaseType, list);
+        return list;
     }
 
-    public List<TestPhase> getTopicList() {
+    /* (non-Javadoc)
+     * @see cn.babysee.picture.test.ITest#getTopicList()
+     * 
+     * #0-30天的测试：
+        *1、 第一次注视离眼20厘米模拟母亲脸容的黑白图画(记分：不眨眼连续注视的秒数，每秒可记1分,以10分为及格。)：
+        A 10秒以上:10
+        B 7秒以上:7
+        C 5秒以上:5
+        D 3秒以上:3
         
-        InputStream inStream = null;
-        try {
-            inStream = mContext.getResources().getAssets().open("test.plist");
-            if (inStream == null) {
-                return null;
-            }
-        } catch (IOException e) {
-            if (DEBUG) e.printStackTrace();
-        }
-        
-        XmlPullParser parser = Xml.newPullParser();
-        List<TestPhase> gameLists = null;
-        TestPhase currentGameList = null;
-        TestQuestion currentGame = null;
+        @结果分析1、2、3题测认知能力，应得25分；4、5题测精细能力应得15分；6、7题测语言能力应得20分；8题测社交能力应得12分；9题测自理能力应得10分；10、11、12测大肌肉运动应得28分，共计可得110分，总分在90-110分之间正常，
 
-        try {
-            parser.setInput(inStream, "UTF-8");
-            int eventType = parser.getEventType();
+     */
+    @Override
+    public List<TestPhase> getPhaseList(String filePath) {
 
-            while (eventType != XmlPullParser.END_DOCUMENT) {
-                switch (eventType) {
-                    case XmlPullParser.START_DOCUMENT://文档开始事件,可以进行数据初始化处理
-                        gameLists = new ArrayList<TestPhase>();
-                        break;
-                    case XmlPullParser.START_TAG://开始元素事件
-                        String name = parser.getName();
-                        if (name.equalsIgnoreCase("stage")) {
-                            currentGameList = new TestPhase();
-                        }  else if (name.equals("key")) {
-                            currentGameList.title = parser.nextText();
-                        } else if (name.equals("answer")) {
-                            currentGameList.answer = parser.nextText();
-                        }  else if (name.equals("topic")) {
-                            currentGame = new TestQuestion();
-                        } else if (name.equals("desc")) {
-                            currentGame.desc = parser.nextText();
-                        } else if (name.equals("a")) {
-                            currentGame.a = parser.nextText();
-                        } else if (name.equals("a_score")) {
-                            currentGame.aScore = Integer.valueOf(parser.nextText());
-                        } else if (name.equals("b")) {
-                            currentGame.b = parser.nextText();
-                        } else if (name.equals("b_score")) {
-                            currentGame.bScore = Integer.valueOf(parser.nextText());
-                        } else if (name.equals("c")) {
-                            currentGame.c = parser.nextText();
-                        } else if (name.equals("c_score")) {
-                            currentGame.cScore = Integer.valueOf(parser.nextText());
-                        } else if (name.equals("d")) {
-                            currentGame.d = parser.nextText();
-                        } else if (name.equals("d_score")) {
-                            currentGame.dScore = Integer.valueOf(parser.nextText());
-                        }
-                        break;
-                    case XmlPullParser.END_TAG://结束元素事件
-                        if (parser.getName().equals("stage") && currentGameList != null) {
-                            gameLists.add(currentGameList);
-                        } else if (parser.getName().equals("topic")) {
-                            currentGameList.addTopic(currentGame);
-                        }
-                        break;
+        List<String> lines = FileUtils.getAssetFileByLine(mContext, filePath);
+        List<TestPhase> testPhases = new ArrayList<TestPhase>();
+
+        TestPhase testPhase = null;
+        TestQuestion testQuestion = null;
+        String[] temp = null;
+        for (String string : lines) {
+            if (DEBUG)
+                Log.d(TAG, string);
+            if (string.startsWith("#")) {
+                testPhase = new TestPhase();
+                testPhase.title = string.substring(1);
+            } else if (string.startsWith("*")) {
+                if (testQuestion != null) {
+                    testPhase.addTopic(testQuestion);
                 }
-                eventType = parser.next();
+
+                testQuestion = new TestQuestion();
+                testQuestion.desc = string.substring(1);
+            } else if (string.startsWith("@")) {
+                testPhase.answer = string.substring(1);
+                testPhase.addTopic(testQuestion);
+                testPhases.add(testPhase);
+                testQuestion = null;
+                testPhase = null;
+            } else if (string.startsWith("A")) {
+                temp = string.split(":");
+                testQuestion.a = temp[0];
+                testQuestion.aScore = Integer.valueOf((temp[1].trim()));
+            } else if (string.startsWith("B")) {
+                temp = string.split(":");
+                testQuestion.b = temp[0];
+                testQuestion.bScore = Integer.valueOf((temp[1].trim()));
+            } else if (string.startsWith("C")) {
+                temp = string.split(":");
+                testQuestion.c = temp[0];
+                testQuestion.cScore = Integer.valueOf((temp[1].trim()));
+            } else if (string.startsWith("D")) {
+                temp = string.split(":");
+                testQuestion.d = temp[0];
+                testQuestion.dScore = Integer.valueOf((temp[1].trim()));
+            } else if (string.startsWith("E")) {
+                temp = string.split(":");
+                testQuestion.e = temp[0];
+                testQuestion.eScore = Integer.valueOf((temp[1].trim()));
+            } else {
+
             }
-        } catch (Exception e) {
-            if (DEBUG) e.printStackTrace();
-        } finally {
-            if (inStream != null) {
-                try {
-                    inStream.close();
-                } catch (IOException e) {
-                    if (DEBUG) e.printStackTrace();
-                }
-            }
+
         }
 
-        if (DEBUG) Log.d(TAG, gameLists.toString());
+        if (DEBUG)
+            Log.d(TAG, testPhases.toString());
 
-        return gameLists;
+        return testPhases;
+    }
+    
+    /**
+     * 获取测试结果
+     */
+    public TestPhase getResult() {
+        if (mTestPhase != null) {
+            List<TestQuestion> list = mTestPhase.list;
+            
+            int totalScore = 0;
+            int unTestItemCount = 0;
+            for (TestQuestion testQuestion : list) {
+                if(TextUtils.isEmpty(testQuestion.select)) {
+                    unTestItemCount++;
+                } else {
+                    totalScore += testQuestion.getScore();
+                }
+            }
+            mTestPhase.score = totalScore;
+            mTestPhase.unTestCount = unTestItemCount;
+        }
+        return mTestPhase;
+    }
+
+    @Override
+    public String getTestResult() {
+        if (mTestPhase != null) {
+            return mTestPhase.answer;
+        }
+        return null;
     }
 }

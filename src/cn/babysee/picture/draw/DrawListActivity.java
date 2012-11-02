@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import cn.babysee.picture.R;
+import cn.babysee.picture.base.BaseActivity;
 import cn.babysee.picture.env.AppEnv;
 import cn.babysee.picture.env.StatServiceEnv;
 import cn.babysee.utils.FileUtils;
@@ -28,7 +29,7 @@ import cn.babysee.utils.ImageUtils;
 import com.baidu.mobstat.StatActivity;
 import com.baidu.mobstat.StatService;
 
-public class DrawListActivity extends StatActivity implements OnItemClickListener {
+public class DrawListActivity extends BaseActivity implements OnItemClickListener {
 
     private boolean DEBUG = AppEnv.DEBUG;
 

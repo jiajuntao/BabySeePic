@@ -10,8 +10,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.nio.channels.FileChannel;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.zip.GZIPOutputStream;
 
 import android.content.Context;
@@ -20,6 +24,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.os.StatFs;
 import android.text.TextUtils;
+import android.util.Log;
 import android.webkit.CacheManager;
 import android.webkit.CacheManager.CacheResult;
 import android.webkit.MimeTypeMap;
@@ -671,5 +676,47 @@ public class FileUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    public static List<String> getAssetFileByLine(Context context, String filename) {
+        InputStream file;
+        try {
+            file = context.getAssets().open(filename);
+            if (file == null) {
+                return null;
+            }
+            return parseConfigFile(new InputStreamReader(file));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /** 读配置文件，获取配置列表，可能为null */
+    private static List<String> parseConfigFile(Reader in) {
+        List<String> configList = new ArrayList<String>();
+
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(in, 1024);
+            String line;
+            while ((line = br.readLine()) != null) {
+                configList.add(line.trim());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            configList = null;
+        } finally {
+            try {
+                br.close();
+            } catch (Exception e) {
+                // ignore
+            }
+        }
+
+        if (configList.size() > 0)
+            return configList;
+        else
+            return null;
     }
 }

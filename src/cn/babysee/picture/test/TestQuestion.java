@@ -27,6 +27,10 @@ public class TestQuestion implements Serializable {
     public int dScore;
     public int eScore;
     
+    public int getScore() {
+       return getScore(select);
+    }
+    
     public int getScore(String option) {
         if ("a".equals(option)) {
             return aScore;

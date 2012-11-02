@@ -35,8 +35,7 @@ import cn.babysee.picture.env.SharePref;
 /**
  * 宝宝智力测试
  */
-public class TestListActivity extends BaseListNavigation implements
-        ExpandableListView.OnChildClickListener {
+public class TestListActivity extends BaseListNavigation implements ExpandableListView.OnChildClickListener {
 
     private static final String TAG = "TestListActivity";
 
@@ -44,7 +43,7 @@ public class TestListActivity extends BaseListNavigation implements
 
     private Context mContext;
 
-    private TestHelper mTestHelper;
+    private ITest mTestHelper;
 
     private ExpandableListView mExpandableListView;
 
@@ -59,7 +58,6 @@ public class TestListActivity extends BaseListNavigation implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_list);
         mContext = getApplicationContext();
-        mTestHelper = new TestHelper(mContext);
 
         mExpandableListView = (ExpandableListView) findViewById(R.id.game_list);
         progressView = findViewById(R.id.pb_loading);
@@ -70,6 +68,8 @@ public class TestListActivity extends BaseListNavigation implements
 
         int position = SharePref.getInt(mContext, SharePref.TEST_PHASE, 0);
         getSupportActionBar().setSelectedNavigationItem(position);
+
+        mTestHelper = new TestHelper(mContext);
     }
 
     @Override
@@ -79,24 +79,22 @@ public class TestListActivity extends BaseListNavigation implements
     }
 
     @Override
-    public boolean onChildClick(ExpandableListView parent, View v, int groupPosition,
-            int childPosition, long id) {
-        TestQuestion testQuestion = (TestQuestion) mAdapter.getChild(groupPosition, childPosition);
+    public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+        //        TestQuestion testQuestion = (TestQuestion) mAdapter.getChild(groupPosition, childPosition);
 
-        Intent intent = new Intent();
+        Intent intent = new Intent(mContext, TestQuestionActivity.class);
+        intent.putExtra("stagePosition", mStagePosition);
         intent.putExtra("groupPosition", groupPosition);
         intent.putExtra("childPosition", childPosition);
-        intent.putExtra("stagePosition", mStagePosition);
 
-        startActivity(new Intent(mContext, TestQuestionActivity.class));
+        startActivity(intent);
         return false;
     }
 
     @Override
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-
         super.onNavigationItemSelected(itemPosition, itemId);
-        mAdapter = new MyExpandableListAdapter(mContext, mTestHelper.getTopicList(itemPosition));
+        mAdapter = new MyExpandableListAdapter(mContext, mTestHelper.getPhaseList(itemPosition));
         mExpandableListView.setAdapter(mAdapter);
         mStagePosition = itemPosition;
         return true;
@@ -133,8 +131,8 @@ public class TestListActivity extends BaseListNavigation implements
             return (TextView) mInflater.inflate(R.layout.game_list_item_title_view, null);
         }
 
-        public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
-                View convertView, ViewGroup parent) {
+        public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView,
+                ViewGroup parent) {
 
             View view = mInflater.inflate(R.layout.test_list_item_sub_view, null);
             TextView title = (TextView) view.findViewById(R.id.title);
@@ -159,8 +157,7 @@ public class TestListActivity extends BaseListNavigation implements
             return groupPosition;
         }
 
-        public View getGroupView(int groupPosition, boolean isExpanded, View convertView,
-                ViewGroup parent) {
+        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
             TextView textView = getGenericView();
 
             String title = getGroup(groupPosition).title;
@@ -181,6 +178,6 @@ public class TestListActivity extends BaseListNavigation implements
 
     @Override
     protected int getActionBarDropDownViewResource() {
-        return R.array.locations;
+        return R.array.test_phases;
     }
 }

@@ -17,6 +17,10 @@ public class TestPhase implements Serializable {
     public String title;
 
     public String answer;
+    
+    public int score;
+    
+    public int unTestCount;
 
     public List<TestQuestion> list = new ArrayList<TestQuestion>();
 

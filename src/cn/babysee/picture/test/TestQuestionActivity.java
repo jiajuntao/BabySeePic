@@ -57,12 +57,18 @@ public class TestQuestionActivity extends BaseActivity implements OnClickListene
     private View mPrevious;
 
     private View mNext;
+    private View mShowResult;
 
     private TextView mTextLabel;
 
     private View mFavor;
+    
+    private View mTestQuestionView;
+    
+    private View mTestResultPanelView;
+    private TextView mTestResultView;
 
-    private TestHelper mTestHelper;
+    private ITest mTestHelper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,24 +85,24 @@ public class TestQuestionActivity extends BaseActivity implements OnClickListene
                 int radioButtonId = group.getCheckedRadioButtonId();
 
                 switch (radioButtonId) {
-                    case R.id.radio1:
-                        mTestHelper.setSelectOption("a");
-                        break;
-                    case R.id.radio2:
-                        mTestHelper.setSelectOption("b");
-                        break;
-                    case R.id.radio3:
-                        mTestHelper.setSelectOption("c");
-                        break;
-                    case R.id.radio4:
-                        mTestHelper.setSelectOption("d");
-                        break;
-                    case R.id.radio5:
-                        mTestHelper.setSelectOption("e");
-                        break;
+                case R.id.radio1:
+                    mTestHelper.setSelectOption("a");
+                    break;
+                case R.id.radio2:
+                    mTestHelper.setSelectOption("b");
+                    break;
+                case R.id.radio3:
+                    mTestHelper.setSelectOption("c");
+                    break;
+                case R.id.radio4:
+                    mTestHelper.setSelectOption("d");
+                    break;
+                case R.id.radio5:
+                    mTestHelper.setSelectOption("e");
+                    break;
 
-                    default:
-                        break;
+                default:
+                    break;
                 }
             }
         });
@@ -110,17 +116,24 @@ public class TestQuestionActivity extends BaseActivity implements OnClickListene
         mPrevious.setOnClickListener(this);
         mNext = findViewById(R.id.btn_next);
         mNext.setOnClickListener(this);
+        mShowResult = findViewById(R.id.btn_show_result);
+        mShowResult.setOnClickListener(this);
         mTextLabel = (TextView) findViewById(R.id.txt_label);
         mTextLabel.setOnClickListener(this);
         mFavor = findViewById(R.id.btn_favor);
         mFavor.setOnClickListener(this);
 
+        mTestQuestionView = findViewById(R.id.test_question_panel);
+        mTestResultPanelView = findViewById(R.id.test_result_panel);
+        mTestResultView = (TextView)findViewById(R.id.test_result);
+        
         Intent intent = getIntent();
         int stagePosition = intent.getIntExtra("stagePosition", 0);
         int groupPosition = intent.getIntExtra("groupPosition", 0);
         int childPosition = intent.getIntExtra("childPosition", 0);
-        if (DEBUG) Log.d(TAG, "stagePosition:" + stagePosition + " groupPosition:" + groupPosition
-                + " childPosition:" + childPosition);
+        if (DEBUG)
+            Log.d(TAG, "stagePosition:" + stagePosition + " groupPosition:" + groupPosition + " childPosition:"
+                    + childPosition);
 
         mTestHelper = new TestHelper(mContext, stagePosition, groupPosition, childPosition);
 
@@ -137,11 +150,22 @@ public class TestQuestionActivity extends BaseActivity implements OnClickListene
         mQuestionContent.setText(testQuestion.desc);
         mOptionA.setText(testQuestion.a);
         mOptionB.setText(testQuestion.b);
-        mOptionC.setText(testQuestion.c);
-        mOptionD.setText(testQuestion.d);
+        if (TextUtils.isEmpty(testQuestion.c)) {
+            mOptionC.setVisibility(View.GONE);
+        } else {
+            mOptionC.setText(testQuestion.c);
+            mOptionC.setVisibility(View.VISIBLE);
+        }
+        if (TextUtils.isEmpty(testQuestion.d)) {
+            mOptionD.setVisibility(View.GONE);
+        } else {
+            mOptionD.setText(testQuestion.d);
+            mOptionD.setVisibility(View.VISIBLE);
+        }
         if (TextUtils.isEmpty(testQuestion.e)) {
             mOptionE.setVisibility(View.GONE);
         } else {
+            mOptionE.setText(testQuestion.e);
             mOptionE.setVisibility(View.VISIBLE);
         }
 
@@ -154,9 +178,11 @@ public class TestQuestionActivity extends BaseActivity implements OnClickListene
         }
 
         if (mTestHelper.isLast()) {
-            mNext.setVisibility(View.INVISIBLE);
+            mNext.setVisibility(View.GONE);
+            mShowResult.setVisibility(View.VISIBLE);
         } else {
             mNext.setVisibility(View.VISIBLE);
+            mShowResult.setVisibility(View.GONE);
         }
 
         if ("a".equals(testQuestion.select)) {
@@ -177,19 +203,19 @@ public class TestQuestionActivity extends BaseActivity implements OnClickListene
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_previous:
-                setView(mTestHelper.getPreviousTestQuestion());
-                break;
-            case R.id.btn_next:
-                setView(mTestHelper.getNextTestQuestion());
-                break;
-            case R.id.txt_label:
-                break;
-            case R.id.btn_favor:
-                break;
+        case R.id.btn_previous:
+            setView(mTestHelper.getPreviousTestQuestion());
+            break;
+        case R.id.btn_next:
+            setView(mTestHelper.getNextTestQuestion());
+            break;
+        case R.id.txt_label:
+            break;
+        case R.id.btn_favor:
+            break;
 
-            default:
-                break;
+        default:
+            break;
         }
     }
 }
