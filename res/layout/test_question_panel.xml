@@ -2,29 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="#ffeeeeee"
+    android:background="@color/background_test"
     android:orientation="vertical"
     android:paddingBottom="@dimen/dimen_20_dip" >
 
-    <LinearLayout
-        android:id="@+id/content_bg"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/exercise_bg_n"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/question_content"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dimen_15_dip"
-            android:layout_marginLeft="@dimen/dimen_15_dip"
-            android:layout_marginRight="@dimen/dimen_15_dip"
-            android:layout_marginTop="@dimen/dimen_15_dip"
-            android:text="题目"
-            android:textColor="#ff373737"
-            android:textSize="@dimen/dimen_16_dip" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/question_content"
+        style="@style/divider_text"
+        android:text="题目" />
 
     <RadioGroup
         android:id="@+id/radio_group"
@@ -67,10 +52,10 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dimen_10_dip"
         android:background="@drawable/pie_check_btn_bg"
-        android:visibility="gone"
         android:text="确认"
         android:textColor="#ff4e7f11"
-        android:textSize="@dimen/dimen_14_dip" />
+        android:textSize="@dimen/dimen_14_dip"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/explain_detail"
@@ -78,9 +63,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_20_dip"
         android:orientation="vertical"
-        android:visibility="gone"
         android:paddingLeft="@dimen/dimen_5_dip"
-        android:paddingRight="@dimen/dimen_5_dip" >
+        android:paddingRight="@dimen/dimen_5_dip"
+        android:visibility="gone" >
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -122,10 +107,9 @@
                 android:id="@+id/question_star5"
                 android:layout_width="@dimen/dimen_17_dip"
                 android:layout_height="@dimen/dimen_14_dip"
-                android:visibility="gone"
-                android:src="@drawable/icon_difficulty_star_s" />
+                android:src="@drawable/icon_difficulty_star_s"
+                android:visibility="gone" />
         </LinearLayout>
-        
     </LinearLayout>
 
 </LinearLayout>

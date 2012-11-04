@@ -12,6 +12,8 @@ public class TestQuestion implements Serializable {
      * 
      */
     private static final long serialVersionUID = 4905797962559898948L;
+    
+    public int id;
 
     public String desc;
     public String select;

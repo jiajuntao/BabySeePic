@@ -29,6 +29,9 @@ public class StatServiceEnv {
     public static final String MAIN_TEST_EVENT_ID = "1009";
     public static final String MAIN_TEST_LABEL = "首页智力测试";
     
+    public static final String MAIN_SEE_PIC_EVENT_ID = "1010";
+    public static final String MAIN_SEE_PIC_LABEL = "首页宝宝看图";
+    
     public static final String DRAWBOARD_MENU_BRUSH_COLOR_EVENT_ID = "2001";
     public static final String DRAWBOARD_MENU_BRUSH_COLOR_LABEL = "画笔颜色";
     

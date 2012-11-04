@@ -2,7 +2,6 @@ package cn.babysee.picture;
 
 import java.util.Random;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -10,18 +9,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import cn.babysee.picture.base.BaseListNavigation;
 import cn.babysee.picture.env.AppEnv;
+import cn.babysee.picture.env.SharePref;
 import cn.babysee.utils.Utils;
 
-import com.baidu.mobstat.StatActivity;
-
-public class ViewPicActivity extends StatActivity implements OnClickListener {
+public class SeePicActivity extends BaseListNavigation implements OnClickListener {
 
     private boolean DEBUG = AppEnv.DEBUG;
 
     private static final String TAG = "BabySeePicActivity";
-
-    private String currentIndexStr = "currentIndex";
 
     private int[] picIds = null;
 
@@ -29,17 +26,15 @@ public class ViewPicActivity extends StatActivity implements OnClickListener {
 
     private int picCount;
 
+    private int currentIndex;
+
     private int currentPic1Index;
 
     private int currentPic2Index;
 
-    private int currentIndex;
-
     private boolean isUp;
 
     private boolean isGoNext = false;
-
-    private Context context;
 
     private MediaPlayHelper mediaPlay;
 
@@ -55,22 +50,11 @@ public class ViewPicActivity extends StatActivity implements OnClickListener {
 
     private Handler mHandler = new Handler();
 
-    private int item;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_pic);
-        context = getApplicationContext();
-
-        item = getIntent().getExtras().getInt("item");
-
-        picIds = ResourcesHelper.getPicList(item);
-        soundIds = ResourcesHelper.getSoundList(item);
-        picCount = picIds.length;
-
-        mediaPlay = new MediaPlayHelper(context);
-        mediaPlay.setSounds(soundIds);
+        setContentView(R.layout.see_pic);
 
         imageView1 = (ImageView) findViewById(R.id.imageView1);
         imageView1.setOnClickListener(this);
@@ -88,15 +72,14 @@ public class ViewPicActivity extends StatActivity implements OnClickListener {
         dotViews[4] = (ImageView) findViewById(R.id.dot5);
         dotViews[5] = (ImageView) findViewById(R.id.dot6);
 
-        //        currentIndex = SharePref.getInt(context, currentIndexStr, 0);
-
-        if (currentIndex == 0) {
-            setImageView(0, 1);
-            up.setVisibility(View.GONE);
-            playRadomSound();
-        } else {
-            setImageView(currentIndex, currentIndex + 1);
-        }
+        int position = SharePref.getInt(mContext, SharePref.SEEPIC_PHASE, 0);
+        getSupportActionBar().setSelectedNavigationItem(position);
+    }
+    
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SharePref.setInt(mContext, SharePref.SEEPIC_PHASE, mNavigationItemPosition);
     }
 
     @Override
@@ -105,18 +88,9 @@ public class ViewPicActivity extends StatActivity implements OnClickListener {
         switch (v.getId()) {
             case R.id.imageView1:
                 mediaPlay.playSound(currentPic1Index);
-                //                if (currentIndex == currentPic1Index) {
-                //                    imageView2.setVisibility(View.GONE);
-                //                    goToNext();
-                //                }
                 break;
             case R.id.imageView2:
                 mediaPlay.playSound(currentPic2Index);
-                //                if (currentIndex == currentPic2Index) {
-                //                    imageView1.setVisibility(View.GONE);
-                //                    goToNext();
-                //                }
-
                 break;
             case R.id.up:
                 up();
@@ -135,9 +109,6 @@ public class ViewPicActivity extends StatActivity implements OnClickListener {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-        //        if (!isOver) {
-        //            return true;
-        //        }
 
         // 只有遇到图片组时，才需要判断是否横向划屏（横向划屏会切换图片）
         switch (event.getAction()) {
@@ -150,11 +121,11 @@ public class ViewPicActivity extends StatActivity implements OnClickListener {
             case MotionEvent.ACTION_UP:
                 upX = (int) event.getX();
                 int totalMove = upX - downX;
-                if (totalMove > Utils.dip2px(context, 100)) {
+                if (totalMove > Utils.dip2px(mContext, 100)) {
                     up();
                     // 向前
                     return true;
-                } else if (totalMove < -Utils.dip2px(context, 100)) {
+                } else if (totalMove < -Utils.dip2px(mContext, 100)) {
                     down();
                     // 向后
                     return true;
@@ -164,10 +135,7 @@ public class ViewPicActivity extends StatActivity implements OnClickListener {
         return super.dispatchTouchEvent(event);
     }
 
-    private boolean isOver = false;
-
     private void up() {
-        isOver = false;
         isUp = true;
         if (DEBUG) Log.v(TAG, "up currentPic1Index:" + currentPic1Index);
         if (currentPic1Index == 2) {
@@ -179,12 +147,10 @@ public class ViewPicActivity extends StatActivity implements OnClickListener {
         down.setVisibility(View.VISIBLE);
         setImageView(currentPic1Index - 2, currentPic1Index - 1);
         playRadomSound();
-        isOver = true;
 
     }
 
     private void down() {
-        isOver = false;
         isUp = false;
         if (DEBUG) Log.v(TAG, "down currentPic2Index:" + currentPic2Index);
         if (currentPic2Index == (picCount - 3)) {
@@ -196,7 +162,6 @@ public class ViewPicActivity extends StatActivity implements OnClickListener {
         up.setVisibility(View.VISIBLE);
         setImageView(currentPic2Index + 1, currentPic2Index + 2);
         playRadomSound();
-        isOver = true;
     }
 
     private void setImageView(int pic1Index, int pic2Index) {
@@ -253,5 +218,26 @@ public class ViewPicActivity extends StatActivity implements OnClickListener {
                 isGoNext = false;
             }
         }, 3000);
+    }
+
+    @Override
+    protected int getActionBarDropDownViewResource() {
+        return R.array.seepics;
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+        super.onNavigationItemSelected(itemPosition, itemId);
+        picIds = ResourcesHelper.getPicList(itemPosition);
+        soundIds = ResourcesHelper.getSoundList(itemPosition);
+        picCount = picIds.length;
+
+        mediaPlay = new MediaPlayHelper(mContext);
+        mediaPlay.setSounds(soundIds);
+
+        setImageView(0, 1);
+        up.setVisibility(View.GONE);
+        playRadomSound();
+        return true;
     }
 }

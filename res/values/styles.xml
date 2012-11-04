@@ -252,7 +252,21 @@
         <item name="android:textStyle">bold</item>
         <item name="android:layout_width">80dp</item>
         <item name="android:layout_height">80dp</item>
-        <item name="android:gravity">center</item>
+        <item name="android:gravity">center </item>
+        <item name="android:background">@drawable/main_item_bg</item>
+    </style>
+
+    <style name="MainItem2">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">20dip</item>
+        <item name="android:paddingRight">20dip</item>
+        <item name="android:paddingTop">20dip</item>
+        <item name="android:paddingBottom">20dip</item>
+        <item name="android:gravity">center </item>
         <item name="android:background">@drawable/main_item_bg</item>
     </style>
 
@@ -269,4 +283,30 @@
         <item name="android:drawableLeft">@drawable/exercise_option</item>
         <item name="android:drawablePadding">@dimen/dimen_10_dip</item>
     </style>
+
+    <style name="test_text">
+        <item name="android:textSize">@dimen/dimen_16_dip</item>
+        <item name="android:textColor">#ff373737</item>
+        <item name="android:gravity">left|center</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">false</item>
+        <item name="android:lineSpacingMultiplier">1.2</item>
+        <item name="android:singleLine">false</item>
+    </style>
+
+    <style name="divider_text">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/dimen_16_dip</item>
+        <item name="android:textColor">#ff373737</item>
+        <item name="android:lineSpacingMultiplier">1.2</item>
+        <item name="android:gravity">left|center</item>
+        <item name="android:paddingLeft">@dimen/dimen_15_dip</item>
+        <item name="android:paddingRight">@dimen/dimen_15_dip</item>
+        <item name="android:paddingTop">@dimen/dimen_9_dip</item>
+        <item name="android:paddingBottom">@dimen/dimen_9_dip</item>
+        <item name="android:background">@drawable/exercise_bg_n</item>
+    </style>
+
 </resources>

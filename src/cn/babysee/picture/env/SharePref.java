@@ -16,6 +16,8 @@ public class SharePref {
     
     public static final String TEST_PHASE = "test_phase";
     
+    public static final String SEEPIC_PHASE = "seepic_phase";
+    
     public static final String TEST_PHASE_POSITION = "test_phase_position";
 
     public static void setString(Context context, String key, String value) {

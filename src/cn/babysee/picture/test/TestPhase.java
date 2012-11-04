@@ -2,6 +2,7 @@ package cn.babysee.picture.test;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -20,21 +21,39 @@ public class TestPhase implements Serializable {
     
     public int score;
     
-    public int unTestCount;
+    public List<TestQuestion> unTestQuestionList;
 
-    public List<TestQuestion> list = new ArrayList<TestQuestion>();
+    public List<TestQuestion> questionList = new ArrayList<TestQuestion>();
+
+    public TestAnalysis[] testAnalysis;
 
     public void addTopic(TestQuestion topic) {
-        list.add(topic);
+        questionList.add(topic);
     }
 
     public List<TestQuestion> get() {
-        return list;
+        return questionList;
+    }
+    
+    public void initTestAnalysis() {
+        
+        for (TestAnalysis t : testAnalysis) {
+            List<Integer> i = t.getList();
+            int totalScore = 0;
+            for (Integer integer : i) {
+                totalScore += questionList.get(integer).getScore();
+            }
+            t.realScore = totalScore;
+        }
+        
     }
 
     @Override
     public String toString() {
-        return "TestPhase [title=" + title + ", answer=" + answer + ", list=" + list + "]";
+        return "TestPhase [title=" + title + ", answer=" + answer + ", score=" + score
+                + ", unTestQuestionList=" + unTestQuestionList + ", questionList=" + questionList
+                + ", testAnalysisList=" + Arrays.toString(testAnalysis) + "]";
     }
 
+    
 }

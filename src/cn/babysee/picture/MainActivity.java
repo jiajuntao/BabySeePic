@@ -29,17 +29,10 @@ public class MainActivity extends StatActivity implements OnClickListener {
 
     private View title;
 
-    private View animal;
-
-    private View fruit;
-
-    private View vegetable;
-
-    private View transport;
-
     private View brush;
     private View test;
     private View game;
+    private View seepic;
 
     private Context mContext;
 
@@ -52,20 +45,14 @@ public class MainActivity extends StatActivity implements OnClickListener {
 
         title = findViewById(R.id.title);
         title.setOnClickListener(this);
-        animal = findViewById(R.id.animal);
-        animal.setOnClickListener(this);
-        fruit = findViewById(R.id.fruit);
-        fruit.setOnClickListener(this);
-        vegetable = findViewById(R.id.vegetable);
-        vegetable.setOnClickListener(this);
-        transport = findViewById(R.id.transport);
-        transport.setOnClickListener(this);
         brush = findViewById(R.id.brush);
         brush.setOnClickListener(this);
         test = findViewById(R.id.test);
         test.setOnClickListener(this);
         game = findViewById(R.id.game);
         game.setOnClickListener(this);
+        seepic = findViewById(R.id.seepic);
+        seepic.setOnClickListener(this);
     }
 
     @Override
@@ -73,24 +60,6 @@ public class MainActivity extends StatActivity implements OnClickListener {
         switch (v.getId()) {
         case R.id.title:
             //                startActivity(new Intent(context, WebViewActivity.class));
-            break;
-        case R.id.animal:
-            StatService.onEvent(mContext, StatServiceEnv.MAIN_ANIMAL_EVENT_ID, StatServiceEnv.MAIN_ANIMAL_LABEL, 1);
-            startActivity(new Intent(mContext, ViewPicActivity.class).putExtra("item", 0));
-            break;
-        case R.id.fruit:
-            StatService.onEvent(mContext, StatServiceEnv.MAIN_FRUIT_EVENT_ID, StatServiceEnv.MAIN_FRUIT_LABEL, 1);
-            startActivity(new Intent(mContext, ViewPicActivity.class).putExtra("item", 1));
-            break;
-        case R.id.vegetable:
-            StatService.onEvent(mContext, StatServiceEnv.MAIN_VEGETABLE_EVENT_ID, StatServiceEnv.MAIN_VEGETABLE_LABEL,
-                    1);
-            startActivity(new Intent(mContext, ViewPicActivity.class).putExtra("item", 2));
-            break;
-        case R.id.transport:
-            StatService.onEvent(mContext, StatServiceEnv.MAIN_TRANSPORT_EVENT_ID, StatServiceEnv.MAIN_TRANSPORT_LABEL,
-                    1);
-            startActivity(new Intent(mContext, ViewPicActivity.class).putExtra("item", 3));
             break;
         case R.id.brush:
             StatService.onEvent(mContext, StatServiceEnv.MAIN_BABYDRAW_EVENT_ID, StatServiceEnv.MAIN_BABYDRAW_LABEL, 1);
@@ -103,6 +72,10 @@ public class MainActivity extends StatActivity implements OnClickListener {
         case R.id.test:
             StatService.onEvent(mContext, StatServiceEnv.MAIN_TEST_EVENT_ID, StatServiceEnv.MAIN_TEST_LABEL, 1);
             startActivity(new Intent(mContext, TestListActivity.class));
+            break;
+        case R.id.seepic:
+            StatService.onEvent(mContext, StatServiceEnv.MAIN_SEE_PIC_EVENT_ID, StatServiceEnv.MAIN_SEE_PIC_LABEL, 1);
+            startActivity(new Intent(mContext, SeePicActivity.class));
             break;
 
         default:

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cn.babysee.picture"
-    android:versionCode="5"
-    android:versionName="1.3.0" >
+    android:versionCode="6"
+    android:versionName="1.4.0" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -83,7 +83,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ViewPicActivity"
+            android:name=".SeePicActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".WebViewActivity"
@@ -97,18 +97,18 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:label="@string/game"
             android:name=".game.GameListActivity"
+            android:label="@string/game"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:label="@string/test"
             android:name=".test.TestListActivity"
+            android:label="@string/test"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:label="@string/test"
             android:name=".test.TestQuestionActivity"
+            android:label="@string/test"
             android:screenOrientation="portrait" >
         </activity>
     </application>

@@ -6,7 +6,13 @@
     <string name="app_version">宝宝智力方程</string>
     <string name="test">智力测试</string>
     <string name="game">亲子游戏</string>
+    <string name="seepic">宝宝看图</string>
+    <string name="animal">动物</string>
+    <string name="fruit">水果</string>
+    <string name="vegetable">蔬菜</string>
+    <string name="transport">交通</string>
     
+    <!-- 智力测试 -->
     <string name="game_desc">游戏描述</string>
     
      <string name="menu_settings">设置</string>
@@ -33,6 +39,10 @@
     <string name="test_up">上一题</string>
     <string name="test_show_result">看结果</string>
     <string name="test_save">收藏</string>
+    <string name="test_option">%1$s(%2$d分)</string>
+    <string name="test_score">您宝宝的得分为：%1$s分\n(%2$s)</string>
+    <string name="test_untest_finish_tip">您的宝宝还有几项没测试呢，测试完成后才能看结果呦！</string>
+    <string name="test_analysis">"%1$s题主要%2$s\n应得%3$d分(实得%4$d分)"</string>
     
     <!-- 画板 -->
     <string name="menu_color">画笔颜色</string>

@@ -12,7 +12,7 @@ import cn.babysee.picture.env.AppEnv;
 import cn.babysee.picture.env.SharePref;
 import cn.babysee.utils.FileUtils;
 
-public class TestHelper implements ITest {
+public class TestHelper{
 
     private static final String TAG = "TestHelper";
 
@@ -25,14 +25,27 @@ public class TestHelper implements ITest {
     private static final int TYPE_2_6 = 2;
 
     private Context mContext;
+
     private TestPhase mTestPhase;
+
     private List<TestQuestion> mTestQuestions;
+
     private TestQuestion mTestQuestion;
+
     private int mStagePosition;
+
     private int mGroupPosition;
-    private int mChildPosition;
+
+    private int mPosition;
+    
+    public void setPosition(int mChildPosition) {
+        this.mPosition = mChildPosition;
+    }
+
     private int mTotalSize;
+
     private String mOperateSaveKey;
+
     private Map<Integer, List<TestPhase>> mTestList = new HashMap<Integer, List<TestPhase>>();
 
     public TestHelper(Context context) {
@@ -40,13 +53,12 @@ public class TestHelper implements ITest {
     }
 
     public TestHelper(Context context, int stagePosition, int groupPosition, int childPosition) {
-        if (DEBUG)
-            Log.d(TAG, "IntelligenceTestHelper stagePosition:" + stagePosition + " groupPosition:" + groupPosition
-                    + " childPosition:" + childPosition);
+        if (DEBUG) Log.d(TAG, "IntelligenceTestHelper stagePosition:" + stagePosition
+                + " groupPosition:" + groupPosition + " childPosition:" + childPosition);
         this.mContext = context;
         this.mStagePosition = stagePosition;
         this.mGroupPosition = groupPosition;
-        this.mChildPosition = childPosition;
+        this.mPosition = childPosition;
         mOperateSaveKey = "test_select" + ":" + mStagePosition + ":" + mGroupPosition;
 
         if (mTestPhase == null) {
@@ -54,7 +66,7 @@ public class TestHelper implements ITest {
         }
 
         if (mTestQuestions == null) {
-            mTestQuestions = getPhaseList(mStagePosition).get(mGroupPosition).list;
+            mTestQuestions = getPhaseList(mStagePosition).get(mGroupPosition).questionList;
         }
 
         mTotalSize = mTestQuestions.size();
@@ -69,95 +81,59 @@ public class TestHelper implements ITest {
         }
     }
 
-    /* (non-Javadoc)
-     * @see cn.babysee.picture.test.ITest#setSelectOption(java.lang.String)
-     */
-    @Override
     public void setSelectOption(String option) {
         mTestQuestion.select = option;
     }
 
-    /* (non-Javadoc)
-     * @see cn.babysee.picture.test.ITest#isFrist()
-     */
-    @Override
     public boolean isFrist() {
-        if (mChildPosition == 0) {
+        if (mPosition == 0) {
             return true;
         }
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see cn.babysee.picture.test.ITest#isLast()
-     */
-    @Override
     public boolean isLast() {
-        if (mChildPosition == (mTotalSize - 1)) {
+        if (mPosition == (mTotalSize - 1)) {
             return true;
         }
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see cn.babysee.picture.test.ITest#getPreviousTestQuestion()
-     */
-    @Override
     public TestQuestion getPreviousTestQuestion() {
-        if (DEBUG)
-            Log.d(TAG, "getPreviousTestQuestion  childPosition:" + mChildPosition);
+        if (DEBUG) Log.d(TAG, "getPreviousTestQuestion  childPosition:" + mPosition);
 
-        mChildPosition = mChildPosition - 1;
-        if (mChildPosition < 0) {
-            mChildPosition = 0;
+        mPosition = mPosition - 1;
+        if (mPosition < 0) {
+            mPosition = 0;
         }
         return getTestQuestion();
     }
 
-    /* (non-Javadoc)
-     * @see cn.babysee.picture.test.ITest#getNextTestQuestion()
-     */
-    @Override
     public TestQuestion getNextTestQuestion() {
-        if (DEBUG)
-            Log.d(TAG, "getNextTestQuestion  childPosition:" + mChildPosition);
+        if (DEBUG) Log.d(TAG, "getNextTestQuestion  childPosition:" + mPosition);
         int maxIndex = mTestQuestions.size() - 1;
-        mChildPosition = mChildPosition + 1;
+        mPosition = mPosition + 1;
 
-        if (mChildPosition > maxIndex) {
-            mChildPosition = maxIndex;
+        if (mPosition > maxIndex) {
+            mPosition = maxIndex;
         }
 
         return getTestQuestion();
     }
 
-    /* (non-Javadoc)
-     * @see cn.babysee.picture.test.ITest#getTestQuestion()
-     */
-    @Override
     public TestQuestion getTestQuestion() {
-        if (DEBUG)
-            Log.d(TAG, "getTestQuestion  childPosition:" + mChildPosition);
-        mTestQuestion = mTestQuestions.get(mChildPosition);
+        if (DEBUG) Log.d(TAG, "getTestQuestion  childPosition:" + mPosition);
+        mTestQuestion = mTestQuestions.get(mPosition);
 
         return mTestQuestion;
     }
 
-    /* (non-Javadoc)
-     * @see cn.babysee.picture.test.ITest#getCurrentPosition()
-     */
-    @Override
     public String getCurrentPosition() {
-        if (DEBUG)
-            Log.d(TAG, "getCurrentPosition ");
+        if (DEBUG) Log.d(TAG, "getCurrentPosition ");
 
-        return (mChildPosition + 1) + "/" + mTotalSize;
+        return (mPosition + 1) + "/" + mTotalSize;
     }
 
-    /* (non-Javadoc)
-     * @see cn.babysee.picture.test.ITest#save()
-     */
-    @Override
     public void save() {
         int size = mTestQuestions.size();
         StringBuffer sb = new StringBuffer();
@@ -170,19 +146,13 @@ public class TestHelper implements ITest {
             }
             sb.append(";");
         }
-        if (DEBUG)
-            Log.d(TAG, "save: " + sb.toString());
+        if (DEBUG) Log.d(TAG, "save: " + sb.toString());
         SharePref.setString(mContext, mOperateSaveKey, sb.toString());
     }
 
-    /* (non-Javadoc)
-     * @see cn.babysee.picture.test.ITest#getSelectOption()
-     */
-    @Override
     public List<String> getSelectOption() {
         String saveSelect = SharePref.getString(mContext, mOperateSaveKey, null);
-        if (DEBUG)
-            Log.d(TAG, "getSelectOption: " + saveSelect);
+        if (DEBUG) Log.d(TAG, "getSelectOption: " + saveSelect);
         if (TextUtils.isEmpty(saveSelect)) {
             return null;
         }
@@ -198,35 +168,30 @@ public class TestHelper implements ITest {
                 list.add(null);
             }
         }
-        if (DEBUG)
-            Log.d(TAG, "getSelectOption: " + list.toString());
+        if (DEBUG) Log.d(TAG, "getSelectOption: " + list.toString());
         return list;
     }
 
-    /* (non-Javadoc)
-     * @see cn.babysee.picture.test.ITest#getTopicList(int)
-     */
-    @Override
     public List<TestPhase> getPhaseList(int phaseType) {
-        
+
         List<TestPhase> list = mTestList.get(Integer.valueOf(phaseType));
-        if ( list != null) {
+        if (list != null) {
             return list;
         }
-        
+
         String filePath = "test/test_phase1";
         switch (phaseType) {
-        case TYPE_0_1:
-            filePath = "test/test_phase1";
-            break;
-        case TYPE_1_2:
-            filePath = "test/test_phase2";
-            break;
-        case TYPE_2_6:
-            filePath = "test/test_phase3";
-            break;
-        default:
-            break;
+            case TYPE_0_1:
+                filePath = "test/test_phase1";
+                break;
+            case TYPE_1_2:
+                filePath = "test/test_phase2";
+                break;
+            case TYPE_2_6:
+                filePath = "test/test_phase3";
+                break;
+            default:
+                break;
         }
         list = getPhaseList(filePath);
         mTestList.put(phaseType, list);
@@ -234,7 +199,6 @@ public class TestHelper implements ITest {
     }
 
     /* (non-Javadoc)
-     * @see cn.babysee.picture.test.ITest#getTopicList()
      * 
      * #0-30天的测试：
         *1、 第一次注视离眼20厘米模拟母亲脸容的黑白图画(记分：不眨眼连续注视的秒数，每秒可记1分,以10分为及格。)：
@@ -246,7 +210,6 @@ public class TestHelper implements ITest {
         @结果分析1、2、3题测认知能力，应得25分；4、5题测精细能力应得15分；6、7题测语言能力应得20分；8题测社交能力应得12分；9题测自理能力应得10分；10、11、12测大肌肉运动应得28分，共计可得110分，总分在90-110分之间正常，
 
      */
-    @Override
     public List<TestPhase> getPhaseList(String filePath) {
 
         List<String> lines = FileUtils.getAssetFileByLine(mContext, filePath);
@@ -255,19 +218,37 @@ public class TestHelper implements ITest {
         TestPhase testPhase = null;
         TestQuestion testQuestion = null;
         String[] temp = null;
+        int id = 0;
         for (String string : lines) {
-            if (DEBUG)
-                Log.d(TAG, string);
+            if (DEBUG) Log.d(TAG, string);
             if (string.startsWith("#")) {
                 testPhase = new TestPhase();
                 testPhase.title = string.substring(1);
+                id = 0;
             } else if (string.startsWith("*")) {
                 if (testQuestion != null) {
                     testPhase.addTopic(testQuestion);
                 }
 
                 testQuestion = new TestQuestion();
+                testQuestion.id = id++;
                 testQuestion.desc = string.substring(1);
+            } else if (string.startsWith("$")) {
+                //$1、2、3:测认知能力:25;4、5:测精细能力:15;6、7:测语言能力:20;8:测社交能力:12;9:测自理能力:10;10、11、12:测大肌肉运动:28;
+                String analysisStr = string.substring(1);
+                String[] allAnalysis = analysisStr.split(";");
+                int len = allAnalysis.length;
+                TestAnalysis[] testAnalysises = new TestAnalysis[len];
+                TestAnalysis testAnalysis = null;
+                for (int i = 0; i < len; i++) {
+                    String[] ll = allAnalysis[i].split(":");
+                    testAnalysis = new TestAnalysis();
+                    testAnalysis.questions = ll[0];
+                    testAnalysis.desc = ll[1];
+                    testAnalysis.scroe = Integer.valueOf(ll[2]);
+                    testAnalysises[i] = testAnalysis;
+                }
+                testPhase.testAnalysis = testAnalysises;
             } else if (string.startsWith("@")) {
                 testPhase.answer = string.substring(1);
                 testPhase.addTopic(testQuestion);
@@ -294,45 +275,39 @@ public class TestHelper implements ITest {
                 temp = string.split(":");
                 testQuestion.e = temp[0];
                 testQuestion.eScore = Integer.valueOf((temp[1].trim()));
-            } else {
-
             }
 
         }
 
-        if (DEBUG)
-            Log.d(TAG, testPhases.toString());
+        if (DEBUG) Log.d(TAG, testPhases.toString());
 
         return testPhases;
     }
-    
+
     /**
      * 获取测试结果
      */
-    public TestPhase getResult() {
+    public TestPhase getTestResult() {
         if (mTestPhase != null) {
-            List<TestQuestion> list = mTestPhase.list;
-            
+            List<TestQuestion> list = mTestPhase.questionList;
+
             int totalScore = 0;
-            int unTestItemCount = 0;
-            for (TestQuestion testQuestion : list) {
-                if(TextUtils.isEmpty(testQuestion.select)) {
-                    unTestItemCount++;
+            List<TestQuestion> unTestList = null;
+
+            for (int i = 0, len = list.size(); i < len; i++) {
+                TestQuestion testQuestion = list.get(i);
+                if (TextUtils.isEmpty(testQuestion.select)) {
+                    if (unTestList == null) {
+                        unTestList = new ArrayList<TestQuestion>();
+                    }
+                    unTestList.add(testQuestion);
                 } else {
                     totalScore += testQuestion.getScore();
                 }
             }
             mTestPhase.score = totalScore;
-            mTestPhase.unTestCount = unTestItemCount;
+            mTestPhase.unTestQuestionList = unTestList;
         }
         return mTestPhase;
-    }
-
-    @Override
-    public String getTestResult() {
-        if (mTestPhase != null) {
-            return mTestPhase.answer;
-        }
-        return null;
     }
 }

@@ -23,4 +23,11 @@
         <item>1-2岁</item>
         <item>2-3岁</item>
     </string-array>
+    
+    <string-array name="seepics">
+        <item>动物</item>
+        <item>水果</item>
+        <item>蔬菜</item>
+        <item>交通工具</item>
+    </string-array>
 </resources>

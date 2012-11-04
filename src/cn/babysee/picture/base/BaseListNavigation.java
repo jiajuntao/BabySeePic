@@ -14,12 +14,14 @@ public abstract class BaseListNavigation extends SherlockActivity implements Act
     private TextView mSelected;
     protected String[] mLocations;
     private int arrayRId;
+    protected Context mContext;
+    protected int mNavigationItemPosition;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setTheme(ThemeHelper.THEME); 
         super.onCreate(savedInstanceState);
-
+        mContext = getApplicationContext();
         setContentView(R.layout.list_navigation);
         mSelected = (TextView)findViewById(R.id.text);
 
@@ -39,6 +41,7 @@ public abstract class BaseListNavigation extends SherlockActivity implements Act
     @Override
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
         mSelected.setText("Selected: " + mLocations[itemPosition]);
+        mNavigationItemPosition = itemPosition;
         return true;
     }
 }

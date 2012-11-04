@@ -43,7 +43,7 @@ public class TestListActivity extends BaseListNavigation implements ExpandableLi
 
     private Context mContext;
 
-    private ITest mTestHelper;
+    private TestHelper mTestHelper;
 
     private ExpandableListView mExpandableListView;
 

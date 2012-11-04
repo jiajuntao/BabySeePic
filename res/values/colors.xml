@@ -3,6 +3,7 @@
     <color name="background">#F9F9F9</color>
     <color name="background_id">#E3E3E3</color>
     <color name="background_selected">#E8E8E8</color>
+    <color name="background_test">#ffeeeeee</color>
     <color name="inset_background">#F8F8F8</color>
     <color name="inset_outer">#C7C7C7</color>
     <color name="inset_inner">#FFFFFF</color>
@@ -60,6 +61,7 @@
     <!-- 主页面tab文字颜色 -->
     <color name="tab_green">#44d90f</color>
     <color name="main_bg">#CDCD00</color>
+    <color name="main_item_bg">#B0CDCD00</color>
 
     <!-- 新界面颜色 -->
     <color name="black">#000000</color>
