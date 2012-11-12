@@ -128,6 +128,8 @@ public class TestQuestionActivity extends BaseActivity implements OnClickListene
                 + " childPosition:" + childPosition);
 
         mTestHelper = new TestHelper(mContext, stagePosition, groupPosition, childPosition);
+        
+        setTitle(mTestHelper.getTestPhase().title);
 
         setTestQuestionView(mTestHelper.getTestQuestion());
     }

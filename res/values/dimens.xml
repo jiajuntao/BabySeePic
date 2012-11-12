@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <dimen name="seepic_width">280dip</dimen>
+    <dimen name="seepic_height">240dip</dimen>
+    <dimen name="main_tab_height">20dip</dimen>
+    <dimen name="main_tab_height">260dip</dimen>
     <dimen name="dimen_1_dip">1.0dip</dimen>
     <dimen name="dimen_2_dip">2.0dip</dimen>
     <dimen name="dimen_3_dip">3.0dip</dimen>
@@ -517,4 +522,5 @@
     <dimen name="exam2_timer_txt_size">22.0dip</dimen>
     <dimen name="main_exercise_margin_top">@dimen/dimen_20_dip</dimen>
     <dimen name="vip_view_exam_bottom_text_padding_bottom">@dimen/dimen_10_dip</dimen>
+
 </resources>

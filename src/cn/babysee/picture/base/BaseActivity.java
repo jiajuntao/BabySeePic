@@ -5,6 +5,7 @@ import android.os.Bundle;
 import cn.babysee.picture.env.ThemeHelper;
 
 import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.MenuItem;
 import com.baidu.mobstat.StatService;
 
 public class BaseActivity extends SherlockActivity {
@@ -15,6 +16,7 @@ public class BaseActivity extends SherlockActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(ThemeHelper.THEME);
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mContext = getApplicationContext();
     }
 
@@ -28,5 +30,16 @@ public class BaseActivity extends SherlockActivity {
     protected void onPause() {
         super.onPause();
         StatService.onPause(this);
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

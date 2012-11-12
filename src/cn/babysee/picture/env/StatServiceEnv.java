@@ -32,6 +32,12 @@ public class StatServiceEnv {
     public static final String MAIN_SEE_PIC_EVENT_ID = "1010";
     public static final String MAIN_SEE_PIC_LABEL = "首页宝宝看图";
     
+    public static final String MAIN_GUIDE_EVENT_ID = "1011";
+    public static final String MAIN_GUIDE_LABEL = "首页成长向导";
+    
+    public static final String MAIN_NUTRITION_EVENT_ID = "1012";
+    public static final String MAIN_NUTRITION_LABEL = "首页宝宝营养";
+    
     public static final String DRAWBOARD_MENU_BRUSH_COLOR_EVENT_ID = "2001";
     public static final String DRAWBOARD_MENU_BRUSH_COLOR_LABEL = "画笔颜色";
     

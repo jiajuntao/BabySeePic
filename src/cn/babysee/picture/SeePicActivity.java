@@ -42,28 +42,26 @@ public class SeePicActivity extends BaseListNavigation implements OnClickListene
 
     private ImageView imageView2;
 
-    private ImageView up;
+    private View loading;
 
-    private ImageView down;
+    private View contentView;
 
     private ImageView[] dotViews = new ImageView[6];
 
     private Handler mHandler = new Handler();
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.see_pic);
+        setTitle(getString(R.string.seepic));
 
         imageView1 = (ImageView) findViewById(R.id.imageView1);
         imageView1.setOnClickListener(this);
         imageView2 = (ImageView) findViewById(R.id.imageView2);
         imageView2.setOnClickListener(this);
-        up = (ImageView) findViewById(R.id.up);
-        up.setOnClickListener(this);
-        down = (ImageView) findViewById(R.id.down);
-        down.setOnClickListener(this);
+        loading = findViewById(R.id.pb_loading);
+        contentView = findViewById(R.id.content);
 
         dotViews[0] = (ImageView) findViewById(R.id.dot1);
         dotViews[1] = (ImageView) findViewById(R.id.dot2);
@@ -74,8 +72,9 @@ public class SeePicActivity extends BaseListNavigation implements OnClickListene
 
         int position = SharePref.getInt(mContext, SharePref.SEEPIC_PHASE, 0);
         getSupportActionBar().setSelectedNavigationItem(position);
+        mediaPlay = new MediaPlayHelper(mContext);
     }
-    
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -91,12 +90,6 @@ public class SeePicActivity extends BaseListNavigation implements OnClickListene
                 break;
             case R.id.imageView2:
                 mediaPlay.playSound(currentPic2Index);
-                break;
-            case R.id.up:
-                up();
-                break;
-            case R.id.down:
-                down();
                 break;
 
             default:
@@ -138,13 +131,9 @@ public class SeePicActivity extends BaseListNavigation implements OnClickListene
     private void up() {
         isUp = true;
         if (DEBUG) Log.v(TAG, "up currentPic1Index:" + currentPic1Index);
-        if (currentPic1Index == 2) {
-            up.setVisibility(View.GONE);
-        }
         if (currentPic1Index == 0) {
             return;
         }
-        down.setVisibility(View.VISIBLE);
         setImageView(currentPic1Index - 2, currentPic1Index - 1);
         playRadomSound();
 
@@ -153,13 +142,9 @@ public class SeePicActivity extends BaseListNavigation implements OnClickListene
     private void down() {
         isUp = false;
         if (DEBUG) Log.v(TAG, "down currentPic2Index:" + currentPic2Index);
-        if (currentPic2Index == (picCount - 3)) {
-            down.setVisibility(View.GONE);
-        }
         if (currentPic2Index == (picCount - 1)) {
             return;
         }
-        up.setVisibility(View.VISIBLE);
         setImageView(currentPic2Index + 1, currentPic2Index + 2);
         playRadomSound();
     }
@@ -226,18 +211,46 @@ public class SeePicActivity extends BaseListNavigation implements OnClickListene
     }
 
     @Override
-    public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+    public boolean onNavigationItemSelected(final int itemPosition, long itemId) {
         super.onNavigationItemSelected(itemPosition, itemId);
-        picIds = ResourcesHelper.getPicList(itemPosition);
-        soundIds = ResourcesHelper.getSoundList(itemPosition);
-        picCount = picIds.length;
 
-        mediaPlay = new MediaPlayHelper(mContext);
-        mediaPlay.setSounds(soundIds);
+        new Thread(new Runnable() {
 
-        setImageView(0, 1);
-        up.setVisibility(View.GONE);
-        playRadomSound();
+            @Override
+            public void run() {
+
+                mHandler.post(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        loading.setVisibility(View.VISIBLE);
+                        contentView.setVisibility(View.GONE);
+                    }
+                });
+                picIds = ResourcesHelper.getPicList(itemPosition);
+                soundIds = ResourcesHelper.getSoundList(itemPosition);
+                picCount = picIds.length;
+                mediaPlay.setSounds(soundIds);
+                playRadomSound();
+
+                mHandler.post(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        loading.setVisibility(View.GONE);
+                        contentView.setVisibility(View.VISIBLE);
+                    }
+                });
+
+                mHandler.post(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        setImageView(0, 1);
+                    }
+                });
+            }
+        }).start();
         return true;
     }
 }

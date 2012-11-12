@@ -22,7 +22,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +33,6 @@ import cn.babysee.picture.R;
 import cn.babysee.picture.base.BaseListNavigation;
 import cn.babysee.picture.env.AppEnv;
 import cn.babysee.picture.env.SharePref;
-import cn.babysee.picture.test.TestHelper;
 
 /**
  * 亲子游戏
@@ -50,13 +48,15 @@ public class GameListActivity extends BaseListNavigation implements
 
     private GameHelper mGameHelper;
 
+    private int mStagePosition;
+    
     private ExpandableListView mExpandableListView;
 
     private ExpandableListAdapter mAdapter;
 
-    private View progressView;
-    
-    private int mStagePosition;
+    private Dialog gameDialog;
+
+    private TextView gameDescView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,14 +64,10 @@ public class GameListActivity extends BaseListNavigation implements
         setContentView(R.layout.game_list);
 
         mExpandableListView = (ExpandableListView) findViewById(R.id.game_list);
-        progressView = findViewById(R.id.pb_loading);
         mContext = getApplicationContext();
         mGameHelper = new GameHelper(mContext);
-//        mExpandableListView.getFirstVisiblePosition();.getSelectedPosition();
-        mExpandableListView.setVisibility(View.VISIBLE);
         mExpandableListView.setOnChildClickListener(this);
-        progressView.setVisibility(View.GONE);
-        
+
         int position = SharePref.getInt(mContext, SharePref.GAME_STAGE, 0);
         getSupportActionBar().setSelectedNavigationItem(position);
     }
@@ -86,19 +82,45 @@ public class GameListActivity extends BaseListNavigation implements
 
     @Override
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-
         super.onNavigationItemSelected(itemPosition, itemId);
+
         mAdapter = new MyExpandableListAdapter(mContext, mGameHelper.getGameList(itemPosition));
         mExpandableListView.setAdapter(mAdapter);
         mStagePosition = itemPosition;
         return true;
     }
-    
+
     @Override
     protected void onPause() {
         super.onPause();
         SharePref.setInt(mContext, SharePref.GAME_STAGE, mStagePosition);
     }
+
+    @Override
+    protected int getActionBarDropDownViewResource() {
+        return R.array.game_phases;
+    }
+
+    protected void showGameDescDialog(String msg) {
+
+        if (gameDialog == null) {
+            View view = View.inflate(this, R.layout.game_desc_dialog, null);
+            gameDescView = (TextView) view.findViewById(R.id.game_desc);
+
+            gameDialog = new AlertDialog.Builder(this).setIcon(R.drawable.ic_launcher)
+                    .setTitle(R.string.game_desc).setView(view)
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            gameDialog.dismiss();
+                        }
+                    }).create();
+
+        }
+        gameDescView.setText(msg);
+        gameDialog.show();
+    }
+    
 
     public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 
@@ -174,34 +196,5 @@ public class GameListActivity extends BaseListNavigation implements
         public boolean hasStableIds() {
             return true;
         }
-    }
-
-    @Override
-    protected int getActionBarDropDownViewResource() {
-        return R.array.game_phases;
-    }
-
-    private Dialog gameDialog;
-
-    private TextView gameDescView;
-
-    protected void showGameDescDialog(String msg) {
-
-        if (gameDialog == null) {
-            View view = View.inflate(this, R.layout.game_desc_dialog, null);
-            gameDescView = (TextView) view.findViewById(R.id.game_desc);
-
-            gameDialog = new AlertDialog.Builder(this).setIcon(R.drawable.ic_launcher)
-                    .setTitle(R.string.game_desc).setView(view)
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            gameDialog.dismiss();
-                        }
-                    }).create();
-
-        }
-        gameDescView.setText(msg);
-        gameDialog.show();
     }
 }
