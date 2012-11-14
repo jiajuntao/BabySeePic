@@ -1813,9 +1813,15 @@ containing a value of this type.
         /**  智力测试 
          */
         public static final int game_desc=0x7f0a0014;
+        public static final int goto_market_dialog_btn_cancel=0x7f0a0041;
+        public static final int goto_market_dialog_btn_ok=0x7f0a0040;
+        public static final int goto_market_dialog_content=0x7f0a003f;
+        /**  市场推广 
+         */
+        public static final int goto_market_dialog_title=0x7f0a003e;
         public static final int hello=0x7f0a000a;
         public static final int help_singal=0x7f0a001e;
-        public static final int list_navigation_content=0x7f0a003e;
+        public static final int list_navigation_content=0x7f0a0042;
         public static final int menu_about=0x7f0a0016;
         public static final int menu_advice=0x7f0a0017;
         public static final int menu_blur=0x7f0a0030;

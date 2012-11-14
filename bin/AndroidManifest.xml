@@ -44,12 +44,12 @@
         android:theme="@style/Theme.BabySee" >
 
         <!-- 您从百度网站获取的APP KEY -->
-        <meta-data
-            android:name="BaiduMobAd_STAT_ID"
-            android:value="f0234c2f5c" />
         <!-- <meta-data -->
         <!-- android:name="BaiduMobAd_STAT_ID" -->
-        <!-- android:value="none" /> -->
+        <!-- android:value="f0234c2f5c" /> -->
+        <meta-data
+            android:name="BaiduMobAd_STAT_ID"
+            android:value="none" />
         <!-- 渠道商编号 -->
         <meta-data
             android:name="BaiduMobAd_CHANNEL"
