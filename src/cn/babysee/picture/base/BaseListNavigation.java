@@ -9,6 +9,7 @@ import cn.babysee.picture.env.ThemeHelper;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.MenuItem;
 
 public abstract class BaseListNavigation extends SherlockActivity implements ActionBar.OnNavigationListener {
     private TextView mSelected;
@@ -21,6 +22,7 @@ public abstract class BaseListNavigation extends SherlockActivity implements Act
     public void onCreate(Bundle savedInstanceState) {
         setTheme(ThemeHelper.THEME); 
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mContext = getApplicationContext();
         setContentView(R.layout.list_navigation);
         mSelected = (TextView)findViewById(R.id.text);
@@ -43,5 +45,16 @@ public abstract class BaseListNavigation extends SherlockActivity implements Act
         mSelected.setText("Selected: " + mLocations[itemPosition]);
         mNavigationItemPosition = itemPosition;
         return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

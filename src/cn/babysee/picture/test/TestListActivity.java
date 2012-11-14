@@ -17,6 +17,8 @@ package cn.babysee.picture.test;
 
 import java.util.List;
 
+import com.baidu.mobstat.StatService;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -49,8 +51,6 @@ public class TestListActivity extends BaseListNavigation implements ExpandableLi
 
     private ExpandableListAdapter mAdapter;
 
-    private View progressView;
-
     private int mStagePosition;
 
     @Override
@@ -60,11 +60,7 @@ public class TestListActivity extends BaseListNavigation implements ExpandableLi
         mContext = getApplicationContext();
 
         mExpandableListView = (ExpandableListView) findViewById(R.id.game_list);
-        progressView = findViewById(R.id.pb_loading);
-
-        mExpandableListView.setVisibility(View.VISIBLE);
         mExpandableListView.setOnChildClickListener(this);
-        progressView.setVisibility(View.GONE);
 
         int position = SharePref.getInt(mContext, SharePref.TEST_PHASE, 0);
         getSupportActionBar().setSelectedNavigationItem(position);
@@ -80,7 +76,6 @@ public class TestListActivity extends BaseListNavigation implements ExpandableLi
 
     @Override
     public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-        //        TestQuestion testQuestion = (TestQuestion) mAdapter.getChild(groupPosition, childPosition);
 
         Intent intent = new Intent(mContext, TestQuestionActivity.class);
         intent.putExtra("stagePosition", mStagePosition);

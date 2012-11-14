@@ -81,6 +81,10 @@ public class TestHelper{
         }
     }
 
+    public TestPhase getTestPhase() {
+        return mTestPhase;
+    }
+    
     public void setSelectOption(String option) {
         mTestQuestion.select = option;
     }
