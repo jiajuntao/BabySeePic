@@ -1,38 +1,24 @@
 package cn.babysee.picture.draw;
 
-import java.io.FileNotFoundException;
-import java.util.Random;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BlurMaskFilter;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.EmbossMaskFilter;
-import android.graphics.MaskFilter;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Xfermode;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
-import cn.babysee.picture.MediaPlayHelper;
 import cn.babysee.picture.R;
-import cn.babysee.picture.ResourcesHelper;
 import cn.babysee.picture.draw.ColorPickerDialog.OnColorChangedListener;
+import cn.babysee.picture.env.AppEnv;
 import cn.babysee.picture.env.StatServiceEnv;
 import cn.babysee.utils.FileUtils;
 
@@ -44,12 +30,6 @@ public class DrawBoradActivity extends GraphicsActivity {
 
     private DrawBoradView myView = null;
 
-    private MediaPlayHelper mediaPlay;
-
-    private int screenWeight;
-
-    private int screenHeight;
-
     private static final int DIALOG_TEXT_ENTRY = 0;
 
     private String filePath = FileUtils.getImageFolderPath();
@@ -60,15 +40,17 @@ public class DrawBoradActivity extends GraphicsActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        
         super.onCreate(savedInstanceState);
-        mContext = getApplicationContext();
-        mediaPlay = new MediaPlayHelper(mContext);
-        mediaPlay.setSounds(ResourcesHelper.getSoundList(3));
+
         DisplayMetrics DM = new DisplayMetrics();
         //获取窗口管理器,获取当前的窗口,调用getDefaultDisplay()后，其将关于屏幕的一些信息写进DM对象中,最后通过getMetrics(DM)获取
         getWindowManager().getDefaultDisplay().getMetrics(DM);
-        screenWeight = DM.widthPixels;
-        screenHeight = DM.heightPixels;
+        AppEnv.screenWeight = DM.widthPixels;
+        AppEnv.screenHeight = DM.heightPixels;
+
+        mContext = getApplicationContext();
         myView = new DrawBoradView(this);
         setContentView(myView);
 
@@ -115,7 +97,6 @@ public class DrawBoradActivity extends GraphicsActivity {
             break;
         }
     }
-
 
     private static final int COLOR_MENU_ID = Menu.FIRST;
 
@@ -164,8 +145,8 @@ public class DrawBoradActivity extends GraphicsActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        mPaint.setXfermode(null);
-//        mPaint.setAlpha(0xFF);
+        //        mPaint.setXfermode(null);
+        //        mPaint.setAlpha(0xFF);
 
         switch (item.getItemId()) {
         case COLOR_MENU_ID:
@@ -202,11 +183,11 @@ public class DrawBoradActivity extends GraphicsActivity {
                     StatServiceEnv.DRAWBOARD_MENU_ERASER_LABEL, 1);
             myView.setXfermodeClear();
             return true;
-//        case SRCATOP_MENU_ID:
-//            //画完就清除
-//            mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP));
-//            mPaint.setAlpha(0x80);
-//            return true;
+            //        case SRCATOP_MENU_ID:
+            //            //画完就清除
+            //            mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP));
+            //            mPaint.setAlpha(0x80);
+            //            return true;
         case SAVE_PIC_MENU_ID:
             StatService.onEvent(mContext, StatServiceEnv.DRAWBOARD_MENU_SAVE_EVENT_ID,
                     StatServiceEnv.DRAWBOARD_MENU_SAVE_LABEL, 1);
@@ -220,175 +201,5 @@ public class DrawBoradActivity extends GraphicsActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    
 
-    public class DrawBoradView extends View {
-        private Paint mPaint;
-
-        private static final float MINP = 0.25f;
-
-        private static final float MAXP = 0.75f;
-        
-        private MaskFilter mEmboss;
-        
-        private MaskFilter mBlur;
-        
-        private Canvas mCanvas;
-
-        private Bitmap mBitmap;
-
-        private Path mPath;
-
-        private Paint mBitmapPaint;
-        
-        private boolean isClearMode = false;
-
-        public DrawBoradView(Context c) {
-            super(c);
-
-            mBitmap = Bitmap.createBitmap(screenWeight, screenHeight, Bitmap.Config.ARGB_8888);
-
-            mCanvas = new Canvas(mBitmap);
-            mCanvas.drawColor(Color.WHITE);
-            
-            mBitmapPaint = new Paint(Paint.DITHER_FLAG);
-            
-            mPaint = new Paint();
-            mPaint.setAntiAlias(true);
-            mPaint.setDither(true);
-            mPaint.setColor(0xFFFF0000);
-            mPaint.setStyle(Paint.Style.STROKE);
-            mPaint.setStrokeJoin(Paint.Join.ROUND);
-            mPaint.setStrokeCap(Paint.Cap.ROUND);
-            mPaint.setStrokeWidth(14);
-
-            mPath = new Path();
-            mEmboss = new EmbossMaskFilter(new float[] { 1, 1, 1 }, 0.4f, 6, 3.5f);
-            mBlur = new BlurMaskFilter(8, BlurMaskFilter.Blur.NORMAL);
-        }
-
-        @Override
-        protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-            super.onSizeChanged(w, h, oldw, oldh);
-        }
-
-        @Override
-        protected void onDraw(Canvas canvas) {
-
-            canvas.drawBitmap(mBitmap, 0, 0, mBitmapPaint);
-            canvas.drawPath(mPath, mPaint);
-        }
-
-        private float mX, mY;
-
-        private static final float TOUCH_TOLERANCE = 4;
-
-        private void touch_start(float x, float y) {
-            radomPlaySound();
-
-            mPath.reset();
-            mPath.moveTo(x, y);
-            mX = x;
-            mY = y;
-        }
-
-        private void touch_move(float x, float y) {
-            float dx = Math.abs(x - mX);
-            float dy = Math.abs(y - mY);
-            if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
-                mPath.quadTo(mX, mY, (x + mX) / 2, (y + mY) / 2);
-                mX = x;
-                mY = y;
-            }
-        }
-
-        private void touch_up() {
-            radomPlaySound();
-
-            mPath.lineTo(mX, mY);
-            // commit the path to our offscreen
-            mCanvas.drawPath(mPath, mPaint);
-            // kill this so we don't double draw
-            mPath.reset();
-        }
-
-        @Override
-        public boolean onTouchEvent(MotionEvent event) {
-            float x = event.getX();
-            float y = event.getY();
-
-            switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                touch_start(x, y);
-                invalidate();
-                break;
-            case MotionEvent.ACTION_MOVE:
-                touch_move(x, y);
-                invalidate();
-                break;
-            case MotionEvent.ACTION_UP:
-                touch_up();
-                invalidate();
-                break;
-            }
-            return true;
-        }
-        
-        public void setPaintColor(int color) {
-            mPaint.setColor(color);
-        }
-        
-        public int getPaintColor() {
-            return mPaint.getColor();
-        }
-        
-        public void setCanvasColor(int color) {
-            mCanvas.drawColor(color);
-            invalidate();
-        }
-
-        public void setXfermodeClear() {
-            if (isClearMode) {
-                mPaint.setXfermode(null);
-                isClearMode = false;
-            } else {
-                isClearMode = true;
-                mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-            }
-        }
-        
-        public void setMaskFilterEmboss() {
-            if (mPaint.getMaskFilter() != mEmboss) {
-                mPaint.setMaskFilter(mEmboss);
-            } else {
-                mPaint.setMaskFilter(null);
-            }
-        }
-        
-        public void setMaskFilterBlur() {
-            if (mPaint.getMaskFilter() != mBlur) {
-                mPaint.setMaskFilter(mBlur);
-            } else {
-                mPaint.setMaskFilter(null);
-            }
-        }
-        
-        //随机播放声音
-        private void radomPlaySound() {
-            Random random = new Random();
-            mediaPlay.playSound(random.nextInt(10));
-        }
-
-        //保存画图
-        public void savePic(String filePath) {
-
-            if (FileUtils.isSdcardValid(mContext)) {
-                try {
-                    FileUtils.saveFile(filePath, mBitmap);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
 }

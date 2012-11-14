@@ -1,10 +1,16 @@
 package cn.babysee.picture.env;
 
 
+
 public class AppEnv {
 
     public static final boolean DEBUG = false;
     public static final String TAG = "";
+    
+    public static int screenWeight;
+
+    public static int screenHeight;
+    
     /**
      * 百度统计appkey
      */
