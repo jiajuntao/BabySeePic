@@ -85,7 +85,7 @@
             android:name=".WebViewActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".draw.DrawBoradActivity"
+            android:name=".draw.DrawBoardActivity"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

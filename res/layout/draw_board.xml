@@ -1,0 +1,164 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <cn.babysee.picture.draw.DrawBoardView
+        android:id="@+id/draw_board"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+    <cn.babysee.picture.draw.DrawSlidingDrawer
+        android:id="@+id/slidingDrawer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:allowSingleTap="true"
+        android:animateOnClick="true"
+        android:background="@android:color/transparent"
+        android:content="@+id/content"
+        android:handle="@+id/handle"
+        android:orientation="vertical" >
+
+        <FrameLayout
+            android:id="@+id/handle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dip" >
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="16dp"
+                android:background="@color/black" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <GridView
+                android:id="@+id/colors"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnWidth="36dp"
+                android:gravity="center"
+                android:horizontalSpacing="3dp"
+                android:numColumns="auto_fit"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="5dp" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="粗细： " />
+
+                <ImageView
+                    android:id="@+id/thickness_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_draw_circle_1" />
+
+                <ImageView
+                    android:id="@+id/thickness_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_draw_circle_2" />
+
+                <ImageView
+                    android:id="@+id/thickness_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_draw_circle_3" />
+
+                <ImageView
+                    android:id="@+id/thickness_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_draw_circle_4" />
+
+                <RadioGroup
+                    android:id="@+id/radio_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:gravity="right"
+                    android:orientation="horizontal" >
+
+                    <RadioButton
+                        android:id="@+id/radio1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="浮雕" />
+
+                    <RadioButton
+                        android:id="@+id/radio2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="羽化" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <HorizontalScrollView
+                android:id="@+id/horizontalScrollView1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="2dip"
+                    android:paddingLeft="8dip"
+                    android:paddingRight="8dip"
+                    android:paddingTop="2dip" >
+
+                    <TextView
+                        android:id="@+id/draw_pen"
+                        style="@style/draw_tool_item"
+                        android:drawableTop="@drawable/ic_draw_pen"
+                        android:text="画笔" />
+
+                    <TextView
+                        android:id="@+id/draw_bg"
+                        style="@style/draw_tool_item"
+                        android:drawableTop="@drawable/ic_draw_bg"
+                        android:text="背景" />
+
+                    <TextView
+                        android:id="@+id/draw_eraser"
+                        style="@style/draw_tool_item"
+                        android:drawableTop="@drawable/ic_draw_eraser"
+                        android:text="橡皮" />
+
+                    <TextView
+                        android:id="@+id/draw_clear"
+                        style="@style/draw_tool_item"
+                        android:drawableTop="@drawable/ic_draw_clear_screen"
+                        android:text="清除" />
+
+                    <TextView
+                        android:id="@+id/draw_save"
+                        style="@style/draw_tool_item"
+                        android:drawableTop="@drawable/ic_draw_save"
+                        android:text="保存" />
+
+                    <TextView
+                        android:id="@+id/draw_list"
+                        style="@style/draw_tool_item"
+                        android:drawableTop="@drawable/ic_draw_pen"
+                        android:text="作品" />
+                </LinearLayout>
+            </HorizontalScrollView>
+        </LinearLayout>
+    </cn.babysee.picture.draw.DrawSlidingDrawer>
+
+</RelativeLayout>

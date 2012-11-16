@@ -15,6 +15,8 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import cn.babysee.picture.MediaPlayHelper;
@@ -22,7 +24,10 @@ import cn.babysee.picture.ResourcesHelper;
 import cn.babysee.picture.env.AppEnv;
 import cn.babysee.utils.FileUtils;
 
-public class DrawBoradView extends View {
+public class DrawBoardView extends View {
+    private String TAG = "DrawBoardView";
+    private boolean DEBUG = AppEnv.DEBUG;
+
     private Paint mPaint;
 
     private static final float MINP = 0.25f;
@@ -39,35 +44,19 @@ public class DrawBoradView extends View {
 
     private Context mContext;
     private MediaPlayHelper mediaPlay;
-    private int[] colors = { Color.BLACK, Color.BLUE, Color.CYAN, Color.DKGRAY, Color.GRAY, Color.GREEN, Color.LTGRAY,
-            Color.MAGENTA, Color.RED, Color.WHITE, Color.YELLOW };
 
     private int mBgColor = Color.WHITE;
     private int mPaintColor = Color.RED;
-    /*    1.将背景图片在屏幕的canvas画布上先画好，例如canvas.drawBitmap(bgBitmap,0,0,null);
-    
-        2.新建一个Bitmap，例如Bitmap tempBitmap=Bitmap.createBitmap(100,100,Config.ARGB_4444);并以此Bitmap新建一个临时画布canvas例如：Canvas temptCanvas=new Canvas(tempBitmap);
-    然后再执行一步把tempBitmap的背景色画成透明的temptCanvas.drawColor(Color.TRANSPARENT);这样做的目的是把新建的那个临时画布的目标定位在哪个tempBitmap上，这样做以后，
-    调用temptCanvas的一切draw函数，都会把相应的图像画在临时的tempBitmap上，而不是
-        在原先的屏幕上。
-    
-        3.临时画布temptCanvas和临时Bitmap建好后，下面就是开始绘画了，要注意的是现在的画点，画线什么的都是调用temptCanvas而不是原先屏幕上的canvas，
-        比如应该是temptCanvas.drawPoint ,temptCanvasRect, temptCanvas.drawLine等等，如果现在要画橡皮的痕迹，那么先要设置画笔的颜色mPaint.setColor(Color.BLACK);这里只要不设置成Color.TRANSPARENT透明色就行，
-        颜色任意；再设置画笔的模式paint.setXfermode(new PorterDuffXfermode(Mode.DST_OUT));这一步非常重要，它的作用是用此画笔后，画笔划过的痕迹就变成透明色了。
-        画笔设置好了后，就可以调用该画笔进行橡皮痕迹的绘制了，例如temptCanvas.drawPath(eraPath,mPaint);
-    
-        4.在所有的画笔痕迹和橡皮痕迹绘制完成后，执行最后一步，canvas.drawBitmap(tempBitmap,0,0,null);这里要注意的是canvas而不是temptCanvas了！temptCanvas负责的是将各种画笔痕迹画在tempBitmap上，
-        而canvas负责将tempBitmap绘制到屏幕上。
-        */
+
     private Paint mBitmapPaint;
     private Bitmap mBitmap;
     private Canvas mCanvas;
     private Bitmap tempBitmap;
     private Canvas temptCanvas;
+    private int[] colors = AppEnv.COLORS;
 
-    public DrawBoradView(Context c) {
-        super(c);
-        mContext = c;
+    private void init(Context context) {
+        mContext = context;
         //产生随机背景
         Random random = new Random(System.currentTimeMillis());
         mBgColor = colors[random.nextInt(11)];
@@ -76,15 +65,18 @@ public class DrawBoradView extends View {
             mPaintColor = colors[random.nextInt(11)];
         }
 
+        if (DEBUG)
+            Log.d(TAG, "" + AppEnv.screenWeight + " " + AppEnv.screenHeight);
+
+        //        mBitmap = Bitmap.createBitmap(200, 200, Config.ARGB_8888);
         mBitmap = Bitmap.createBitmap(AppEnv.screenWeight, AppEnv.screenHeight, Config.ARGB_8888);
         mCanvas = new Canvas(mBitmap);
         mCanvas.drawColor(mBgColor);
 
         tempBitmap = Bitmap.createBitmap(AppEnv.screenWeight, AppEnv.screenHeight, Config.ARGB_8888);
+        //        tempBitmap = Bitmap.createBitmap(200, 200, Config.ARGB_8888);
         temptCanvas = new Canvas(tempBitmap);
         temptCanvas.drawColor(Color.TRANSPARENT);
-
-        //        this.setBackgroundColor(mBgColor);
 
         mBitmapPaint = new Paint(Paint.DITHER_FLAG);
 
@@ -105,6 +97,16 @@ public class DrawBoradView extends View {
         mediaPlay.setSounds(ResourcesHelper.getSoundList(3));
     }
 
+    public DrawBoardView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init(context);
+    }
+
+    public DrawBoardView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        init(context);
+    }
+
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
@@ -112,7 +114,7 @@ public class DrawBoradView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-
+//        mCanvas.drawColor(mBgColor);
         canvas.drawBitmap(mBitmap, 0, 0, mBitmapPaint);
         canvas.drawPath(mPath, mPaint);
     }
@@ -142,6 +144,7 @@ public class DrawBoradView extends View {
 
     private void touch_up() {
         radomPlaySound();
+        mCanvas.drawColor(mBgColor);
 
         mPath.lineTo(mX, mY);
         // commit the path to our offscreen
@@ -186,19 +189,26 @@ public class DrawBoradView extends View {
 
     //设置背景颜色
     public void setCanvasColor(int color) {
-
-        mCanvas.drawColor(color);
+        mBgColor = color;
+        mCanvas.drawColor(mBgColor);
         mCanvas.drawBitmap(tempBitmap, 0, 0, null);
         invalidate();
     }
 
+    //    如果现在要画橡皮的痕迹，那么先要设置画笔的颜色mPaint.setColor(Color.BLACK);这里只要不设置成Color.TRANSPARENT透明色就行，
+    //    颜色任意；再设置画笔的模式paint.setXfermode(new PorterDuffXfermode(Mode.DST_OUT));这一步非常重要，它的作用是用此画笔后，画笔划过的痕迹就变成透明色了。
+    //    画笔设置好了后，就可以调用该画笔进行橡皮痕迹的绘制了，例如temptCanvas.drawPath(eraPath,mPaint);
+    //橡皮
     public void setXfermodeClear() {
         if (isClearMode) {
             mPaint.setXfermode(null);
             isClearMode = false;
+            mPaint.setColor(mPaintColor);
         } else {
             isClearMode = true;
-            mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+            //            mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+            mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
+            mPaint.setColor(Color.RED);
         }
     }
 

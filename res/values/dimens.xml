@@ -4,7 +4,6 @@
     <dimen name="seepic_width">280dip</dimen>
     <dimen name="seepic_height">240dip</dimen>
     <dimen name="main_tab_height">20dip</dimen>
-    <dimen name="main_tab_height">260dip</dimen>
     <dimen name="dimen_1_dip">1.0dip</dimen>
     <dimen name="dimen_2_dip">2.0dip</dimen>
     <dimen name="dimen_3_dip">3.0dip</dimen>

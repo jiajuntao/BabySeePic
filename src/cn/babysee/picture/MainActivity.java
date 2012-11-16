@@ -7,12 +7,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import cn.babysee.picture.draw.DrawBoradActivity;
+import cn.babysee.picture.draw.DrawBoardActivity;
 import cn.babysee.picture.env.AppEnv;
 import cn.babysee.picture.env.StatServiceEnv;
 import cn.babysee.picture.game.GameListActivity;
@@ -46,6 +47,8 @@ public class MainActivity extends StatActivity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        AppEnv.initScreen(this);
+
         mContext = getApplicationContext();
 
         title = findViewById(R.id.title);
@@ -71,7 +74,7 @@ public class MainActivity extends StatActivity implements OnClickListener {
             case R.id.brush:
                 StatService.onEvent(mContext, StatServiceEnv.MAIN_BABYDRAW_EVENT_ID,
                         StatServiceEnv.MAIN_BABYDRAW_LABEL, 1);
-                startActivity(new Intent(mContext, DrawBoradActivity.class));
+                startActivity(new Intent(mContext, DrawBoardActivity.class));
                 break;
             case R.id.game:
                 StatService.onEvent(mContext, StatServiceEnv.MAIN_BABYGAME_EVENT_ID,
