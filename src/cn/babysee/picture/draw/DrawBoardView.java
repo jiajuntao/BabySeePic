@@ -54,48 +54,10 @@ public class DrawBoardView extends View {
     private Bitmap tempBitmap;
     private Canvas temptCanvas;
     private int[] colors = AppEnv.COLORS;
-
-    private void init(Context context) {
-        mContext = context;
-        //产生随机背景
-        Random random = new Random(System.currentTimeMillis());
-        mBgColor = colors[random.nextInt(11)];
-        mPaintColor = colors[random.nextInt(11)];
-        if (mBgColor == mPaintColor) {
-            mPaintColor = colors[random.nextInt(11)];
-        }
-
-        if (DEBUG)
-            Log.d(TAG, "" + AppEnv.screenWeight + " " + AppEnv.screenHeight);
-
-        //        mBitmap = Bitmap.createBitmap(200, 200, Config.ARGB_8888);
-        mBitmap = Bitmap.createBitmap(AppEnv.screenWeight, AppEnv.screenHeight, Config.ARGB_8888);
-        mCanvas = new Canvas(mBitmap);
-        mCanvas.drawColor(mBgColor);
-
-        tempBitmap = Bitmap.createBitmap(AppEnv.screenWeight, AppEnv.screenHeight, Config.ARGB_8888);
-        //        tempBitmap = Bitmap.createBitmap(200, 200, Config.ARGB_8888);
-        temptCanvas = new Canvas(tempBitmap);
-        temptCanvas.drawColor(Color.TRANSPARENT);
-
-        mBitmapPaint = new Paint(Paint.DITHER_FLAG);
-
-        mPaint = new Paint();
-        mPaint.setAntiAlias(true);
-        mPaint.setDither(true);
-        mPaint.setColor(mPaintColor);
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeJoin(Paint.Join.ROUND);
-        mPaint.setStrokeCap(Paint.Cap.ROUND);
-        mPaint.setStrokeWidth(14);
-
-        mPath = new Path();
-        mEmboss = new EmbossMaskFilter(new float[] { 1, 1, 1 }, 0.4f, 6, 3.5f);
-        mBlur = new BlurMaskFilter(8, BlurMaskFilter.Blur.NORMAL);
-
-        mediaPlay = new MediaPlayHelper(mContext);
-        mediaPlay.setSounds(ResourcesHelper.getSoundList(3));
-    }
+    //声音开关
+    private boolean isSoundEnabled = true;
+    private int mStrokeWidth = 14;
+    private int soundIndex;
 
     public DrawBoardView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -105,6 +67,61 @@ public class DrawBoardView extends View {
     public DrawBoardView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context);
+    }
+    
+    private int soundsLen = 0;
+    private Random random;
+    private void init(Context context) {
+        mContext = context;
+        //产生随机背景
+        random = new Random(System.currentTimeMillis());
+        mBgColor = colors[random.nextInt(11)];
+        mPaintColor = colors[random.nextInt(11)];
+        if (mBgColor == mPaintColor) {
+            mPaintColor = colors[random.nextInt(11)];
+        }
+
+        if (DEBUG)
+            Log.d(TAG, "" + AppEnv.screenWeight + " " + AppEnv.screenHeight);
+        
+        newDraw();
+
+        mediaPlay = new MediaPlayHelper(mContext);
+        
+        int[] soundIds = ResourcesHelper.getSoundList(3);
+        mediaPlay.setSounds(soundIds);
+        soundsLen = soundIds.length-1;
+    }
+
+    private void newDraw() {
+        mBitmapPaint = new Paint(Paint.DITHER_FLAG);
+
+        mBitmap = Bitmap.createBitmap(AppEnv.screenWeight, AppEnv.screenHeight, Config.ARGB_8888);
+        mCanvas = new Canvas(mBitmap);
+        mCanvas.drawColor(mBgColor);
+
+        tempBitmap = Bitmap.createBitmap(AppEnv.screenWeight, AppEnv.screenHeight, Config.ARGB_8888);
+        temptCanvas = new Canvas(tempBitmap);
+        temptCanvas.drawColor(Color.TRANSPARENT);
+
+        mPaint = new Paint();
+        mPaint.setAntiAlias(true);
+        mPaint.setDither(true);
+        mPaint.setColor(mPaintColor);
+        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setStrokeJoin(Paint.Join.ROUND);
+        mPaint.setStrokeCap(Paint.Cap.ROUND);
+        mPaint.setStrokeWidth(mStrokeWidth);
+
+        mPath = new Path();
+        
+        mEmboss = new EmbossMaskFilter(new float[] { 1, 1, 1 }, 0.4f, 6, 3.5f);
+        mBlur = new BlurMaskFilter(8, BlurMaskFilter.Blur.NORMAL);
+    }
+    
+    public void setStrokeWidth(int size) {
+        mStrokeWidth = size;
+        mPaint.setStrokeWidth(mStrokeWidth);
     }
 
     @Override
@@ -143,7 +160,6 @@ public class DrawBoardView extends View {
     }
 
     private void touch_up() {
-        radomPlaySound();
         mCanvas.drawColor(mBgColor);
 
         mPath.lineTo(mX, mY);
@@ -194,6 +210,12 @@ public class DrawBoardView extends View {
         mCanvas.drawBitmap(tempBitmap, 0, 0, null);
         invalidate();
     }
+    
+    //清除
+    public void clear() {
+        newDraw();
+        invalidate();
+    }
 
     //    如果现在要画橡皮的痕迹，那么先要设置画笔的颜色mPaint.setColor(Color.BLACK);这里只要不设置成Color.TRANSPARENT透明色就行，
     //    颜色任意；再设置画笔的模式paint.setXfermode(new PorterDuffXfermode(Mode.DST_OUT));这一步非常重要，它的作用是用此画笔后，画笔划过的痕迹就变成透明色了。
@@ -211,31 +233,55 @@ public class DrawBoardView extends View {
             mPaint.setColor(Color.RED);
         }
     }
+    
+    public boolean isClearMode() {
+        return isClearMode;
+    }
 
     public void setMaskFilterEmboss() {
         if (mPaint.getMaskFilter() != mEmboss) {
             mPaint.setMaskFilter(mEmboss);
-        } else {
-            mPaint.setMaskFilter(null);
+//        } else {
+//            mPaint.setMaskFilter(null);
         }
     }
 
     public void setMaskFilterBlur() {
         if (mPaint.getMaskFilter() != mBlur) {
             mPaint.setMaskFilter(mBlur);
-        } else {
-            mPaint.setMaskFilter(null);
+//        } else {
+//            mPaint.setMaskFilter(null);
         }
+    }
+    
+    public void setNormal() {
+        mPaint.setMaskFilter(null);
+        mPaint.setXfermode(null);
+        isClearMode = false;
+        mPaint.setColor(mPaintColor);
+    }
+    
+    public void setSoundEnabled(boolean enabled) {
+        isSoundEnabled = enabled;
+    }
+    
+    public boolean isSoundEnabled() {
+        return isSoundEnabled;
     }
 
     //随机播放声音
     private void radomPlaySound() {
-        Random random = new Random();
-        mediaPlay.playSound(random.nextInt(10));
+        if (!isSoundEnabled) {
+            return;
+        }
+        soundIndex = random.nextInt((soundsLen));
+        mediaPlay.playSound(soundIndex);
     }
 
     //保存画图
     public void savePic(String filePath) {
+        if (DEBUG)
+            Log.d(TAG, "savePic: " + filePath);
 
         if (FileUtils.isSdcardValid(mContext)) {
             try {

@@ -37,7 +37,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@color/black"
-            android:gravity="center"
+            android:gravity="bottom"
+            android:paddingTop="3dip"
             android:orientation="vertical" >
 
             <GridView
@@ -49,113 +50,154 @@
                 android:horizontalSpacing="3dp"
                 android:numColumns="auto_fit"
                 android:stretchMode="columnWidth"
-                android:verticalSpacing="5dp" />
+                android:verticalSpacing="5dp"
+                android:visibility="gone" />
 
             <LinearLayout
+                android:id="@+id/draw_brush_size_view"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone" >
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
                     android:text="粗细： " />
 
-                <ImageView
-                    android:id="@+id/thickness_1"
+                <TextView
+                    android:id="@+id/draw_brush_size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_draw_circle_1" />
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:text="14" />
 
-                <ImageView
-                    android:id="@+id/thickness_2"
-                    android:layout_width="wrap_content"
+                <SeekBar
+                    android:id="@+id/draw_brush_size_seekBar"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_draw_circle_2" />
-
-                <ImageView
-                    android:id="@+id/thickness_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_draw_circle_3" />
-
-                <ImageView
-                    android:id="@+id/thickness_4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_draw_circle_4" />
-
-                <RadioGroup
-                    android:id="@+id/radio_group"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:gravity="right"
-                    android:orientation="horizontal" >
-
-                    <RadioButton
-                        android:id="@+id/radio1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="浮雕" />
-
-                    <RadioButton
-                        android:id="@+id/radio2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="羽化" />
-                </RadioGroup>
+                    android:layout_marginRight="20dp"
+                    android:max="100"
+                    android:progress="14" />
             </LinearLayout>
 
+            <RadioGroup
+                android:id="@+id/draw_style_view"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:text="样式： " />
+
+                <RadioButton
+                    android:id="@+id/style_normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="正常" />
+
+                <RadioButton
+                    android:id="@+id/style_emboss"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="浮雕" />
+
+                <RadioButton
+                    android:id="@+id/style_blur"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="羽化" />
+            </RadioGroup>
+
             <HorizontalScrollView
-                android:id="@+id/horizontalScrollView1"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" >
 
                 <LinearLayout
-                    android:layout_width="fill_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:paddingBottom="2dip"
                     android:paddingLeft="8dip"
-                    android:paddingRight="8dip"
-                    android:paddingTop="2dip" >
+                    android:paddingRight="8dip" >
 
-                    <TextView
+                    <FrameLayout
                         android:id="@+id/draw_pen"
-                        style="@style/draw_tool_item"
-                        android:drawableTop="@drawable/ic_draw_pen"
-                        android:text="画笔" />
+                        style="@style/draw_tool_item_bg" >
 
-                    <TextView
+                        <TextView
+                            style="@style/draw_tool_item"
+                            android:drawableTop="@drawable/ic_draw_pen"
+                            android:text="画笔" />
+                    </FrameLayout>
+
+                    <FrameLayout
                         android:id="@+id/draw_bg"
-                        style="@style/draw_tool_item"
-                        android:drawableTop="@drawable/ic_draw_bg"
-                        android:text="背景" />
+                        style="@style/draw_tool_item_bg" >
 
-                    <TextView
+                        <TextView
+                            style="@style/draw_tool_item"
+                            android:drawableTop="@drawable/ic_draw_bg"
+                            android:text="背景" />
+                    </FrameLayout>
+
+                    <FrameLayout
                         android:id="@+id/draw_eraser"
-                        style="@style/draw_tool_item"
-                        android:drawableTop="@drawable/ic_draw_eraser"
-                        android:text="橡皮" />
+                        style="@style/draw_tool_item_bg" >
 
-                    <TextView
+                        <TextView
+                            style="@style/draw_tool_item"
+                            android:drawableTop="@drawable/ic_draw_eraser"
+                            android:text="橡皮" />
+                    </FrameLayout>
+
+                    <FrameLayout
                         android:id="@+id/draw_clear"
-                        style="@style/draw_tool_item"
-                        android:drawableTop="@drawable/ic_draw_clear_screen"
-                        android:text="清除" />
+                        style="@style/draw_tool_item_bg" >
 
-                    <TextView
+                        <TextView
+                            style="@style/draw_tool_item"
+                            android:drawableTop="@drawable/ic_draw_clear_screen"
+                            android:text="清除" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/draw_sound"
+                        style="@style/draw_tool_item_bg" >
+
+                        <TextView
+                            android:id="@+id/draw_sound_ic"
+                            style="@style/draw_tool_item"
+                            android:drawableTop="@drawable/ic_draw_sound"
+                            android:text="声音" />
+                    </FrameLayout>
+
+                    <FrameLayout
                         android:id="@+id/draw_save"
-                        style="@style/draw_tool_item"
-                        android:drawableTop="@drawable/ic_draw_save"
-                        android:text="保存" />
+                        style="@style/draw_tool_item_bg" >
 
-                    <TextView
+                        <TextView
+                            style="@style/draw_tool_item"
+                            android:drawableTop="@drawable/ic_draw_save"
+                            android:text="保存" />
+                    </FrameLayout>
+
+                    <FrameLayout
                         android:id="@+id/draw_list"
-                        style="@style/draw_tool_item"
-                        android:drawableTop="@drawable/ic_draw_pen"
-                        android:text="作品" />
+                        style="@style/draw_tool_item_bg" >
+
+                        <TextView
+                            style="@style/draw_tool_item"
+                            android:drawableTop="@drawable/ic_draw_pen"
+                            android:text="作品" />
+                    </FrameLayout>
                 </LinearLayout>
             </HorizontalScrollView>
         </LinearLayout>

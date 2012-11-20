@@ -16,9 +16,11 @@
 package cn.babysee.utils;
 
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
-import android.text.format.DateUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import android.text.format.DateUtils;
 
 /**
  * Utilities for dealing with dates and times
@@ -27,16 +29,26 @@ public class TimeUtils {
 
     /**
      * Get relative time for date
-     *
+     * 
      * @param date
      * @return relative time
      */
     public static CharSequence getRelativeTime(final Date date) {
         long now = System.currentTimeMillis();
-        if (Math.abs(now - date.getTime()) > 60000)
-            return DateUtils.getRelativeTimeSpanString(date.getTime(), now,
-                    MINUTE_IN_MILLIS);
-        else
-            return "just now";
+        if (Math.abs(now - date.getTime()) > 60000) return DateUtils.getRelativeTimeSpanString(
+                date.getTime(), now, MINUTE_IN_MILLIS);
+        else return "just now";
+    }
+
+    /**
+     * 获取现在时间
+     * 
+     * @return 返回时间类型 yyyy-MM-dd HH:mm:ss
+     */
+    public static String getNowDate() {
+        Date currentTime = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateString = formatter.format(currentTime);
+        return dateString;
     }
 }

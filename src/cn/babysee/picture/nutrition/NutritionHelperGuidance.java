@@ -12,9 +12,9 @@ import android.util.Log;
 import android.util.Xml;
 import cn.babysee.picture.env.AppEnv;
 
-public class NutritionHelper {
+public class NutritionHelperGuidance implements INutrionHelper {
 
-    private static final String TAG = "NutritionHelper";
+    private static final String TAG = "NutritionHelperGuidance";
 
     private boolean DEBUG = AppEnv.DEBUG;
 
@@ -22,10 +22,14 @@ public class NutritionHelper {
 
     private List<Nutrition> list;
 
-    public NutritionHelper(Context context) {
+    public NutritionHelperGuidance(Context context) {
         this.mContext = context;
     }
 
+    /* (non-Javadoc)
+     * @see cn.babysee.picture.nutrition.INutrionHelper#getList()
+     */
+    @Override
     public List<Nutrition> getList() {
         if (list != null) {
             return list;
@@ -33,7 +37,7 @@ public class NutritionHelper {
 
         InputStream inStream = null;
         try {
-            inStream = mContext.getResources().getAssets().open("nutrition/baby_nutrition");
+            inStream = mContext.getResources().getAssets().open("nutrition/nutrition_guidance");
             if (inStream == null) {
                 return null;
             }
@@ -83,8 +87,15 @@ public class NutritionHelper {
             }
         }
 
+        this.list = list;
         if (DEBUG) Log.d(TAG, "list: " + list);
 
         return list;
+    }
+
+    @Override
+    public List<NutritionCategory> getNutritionCategoryList() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

@@ -26,7 +26,6 @@ import cn.babysee.picture.env.StatServiceEnv;
 import cn.babysee.utils.FileUtils;
 import cn.babysee.utils.ImageUtils;
 
-import com.baidu.mobstat.StatActivity;
 import com.baidu.mobstat.StatService;
 
 public class DrawListActivity extends BaseActivity implements OnItemClickListener {
@@ -34,8 +33,6 @@ public class DrawListActivity extends BaseActivity implements OnItemClickListene
     private boolean DEBUG = AppEnv.DEBUG;
 
     private String TAG = "DrawListActivity";
-
-    private Context mContext;
 
     private ListView mListView;
 
@@ -64,7 +61,6 @@ public class DrawListActivity extends BaseActivity implements OnItemClickListene
         setContentView(R.layout.draw_list);
 
         mListView = (ListView) findViewById(R.id.list);
-        mContext = getApplicationContext();
         getPicList();
         if (picList.size() <= 0) {
             Toast.makeText(mContext, R.string.pic_empty, Toast.LENGTH_LONG).show();
@@ -77,10 +73,10 @@ public class DrawListActivity extends BaseActivity implements OnItemClickListene
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        StatService.onEvent(mContext, StatServiceEnv.BABYWORKS_VIEW_EVENT_ID, StatServiceEnv.BABYWORKS_VIEW_LABEL, 1);
+        StatService.onEvent(mContext, StatServiceEnv.BABYWORKS_VIEW_EVENT_ID,
+                StatServiceEnv.BABYWORKS_VIEW_LABEL, 1);
         String fileName = picList.get(position);
-        if (DEBUG)
-            Log.d(TAG, FileUtils.getImageFolderPath() + fileName);
+        if (DEBUG) Log.d(TAG, FileUtils.getImageFolderPath() + fileName);
 
         Uri uri = Uri.fromFile(new File(FileUtils.getImageFolderPath() + fileName));
 

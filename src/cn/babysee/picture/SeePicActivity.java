@@ -2,6 +2,8 @@ package cn.babysee.picture;
 
 import java.util.Random;
 
+import com.baidu.mobstat.StatService;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -12,6 +14,7 @@ import android.widget.ImageView;
 import cn.babysee.picture.base.BaseListNavigation;
 import cn.babysee.picture.env.AppEnv;
 import cn.babysee.picture.env.SharePref;
+import cn.babysee.picture.env.StatServiceEnv;
 import cn.babysee.utils.Utils;
 
 public class SeePicActivity extends BaseListNavigation implements OnClickListener {
@@ -177,7 +180,7 @@ public class SeePicActivity extends BaseListNavigation implements OnClickListene
         Random random = new Random();
 
         //用这种方式随机选择正确项目
-        if ((random.nextInt(10) % 2) == 0) {
+        if ((random.nextInt(soundLen) % 2) == 0) {
             currentIndex = currentPic1Index;
         } else {
             currentIndex = currentPic2Index;
@@ -209,6 +212,8 @@ public class SeePicActivity extends BaseListNavigation implements OnClickListene
     protected int getActionBarDropDownViewResource() {
         return R.array.seepics;
     }
+    
+    private int soundLen = 0;
 
     @Override
     public boolean onNavigationItemSelected(final int itemPosition, long itemId) {
@@ -218,6 +223,29 @@ public class SeePicActivity extends BaseListNavigation implements OnClickListene
 
             @Override
             public void run() {
+                
+                //打点
+                switch (itemPosition) {
+                    case 0:
+                        StatService.onEvent(mContext, StatServiceEnv.MAIN_ANIMAL_EVENT_ID,
+                                StatServiceEnv.MAIN_ANIMAL_LABEL, 1);
+                        break;
+                    case 1:
+                        StatService.onEvent(mContext, StatServiceEnv.MAIN_FRUIT_EVENT_ID,
+                                StatServiceEnv.MAIN_FRUIT_LABEL, 1);
+                        break;
+                    case 2:
+                        StatService.onEvent(mContext, StatServiceEnv.MAIN_VEGETABLE_EVENT_ID,
+                                StatServiceEnv.MAIN_VEGETABLE_LABEL, 1);
+                        break;
+                    case 3:
+                        StatService.onEvent(mContext, StatServiceEnv.MAIN_TRANSPORT_EVENT_ID,
+                                StatServiceEnv.MAIN_TRANSPORT_LABEL, 1);
+                        break;
+
+                    default:
+                        break;
+                }
 
                 mHandler.post(new Runnable() {
 
@@ -229,6 +257,7 @@ public class SeePicActivity extends BaseListNavigation implements OnClickListene
                 });
                 picIds = ResourcesHelper.getPicList(itemPosition);
                 soundIds = ResourcesHelper.getSoundList(itemPosition);
+                soundLen = soundIds.length;
                 picCount = picIds.length;
                 mediaPlay.setSounds(soundIds);
                 playRadomSound();

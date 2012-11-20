@@ -22,11 +22,16 @@
     android:paddingRight="10dip"
     android:paddingTop="5dip" >
 
-    <TextView
-        android:id="@+id/game_desc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="left"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/game_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </ScrollView>
 
 </RelativeLayout>

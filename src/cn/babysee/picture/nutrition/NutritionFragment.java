@@ -11,30 +11,58 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import cn.babysee.picture.R;
-import cn.babysee.picture.base.BaseActivity;
+import cn.babysee.picture.base.BaseFragment;
 import cn.babysee.picture.env.AppEnv;
 
-public class NutritionListActivity extends BaseActivity {
+public class NutritionFragment extends BaseFragment {
 
     private boolean DEBUG = AppEnv.DEBUG;
 
     private String TAG = "NutritionListActivity";
 
-    private Context mContext;
-
     private ListView mListView;
 
-    private NutritionHelper mNutritionHelper;
+    private INutrionHelper mNutritionHelper;
+
+    int mNum;
+
+    /**
+     * Create a new instance of CountingFragment, providing "num" as an
+     * argument.
+     */
+    static NutritionFragment newInstance(int num) {
+        NutritionFragment f = new NutritionFragment();
+
+        // Supply num input as an argument.
+        Bundle args = new Bundle();
+        args.putInt("num", num);
+        f.setArguments(args);
+
+        return f;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.draw_list);
+        mNum = getArguments() != null ? getArguments().getInt("num") : 1;
+        if (mNum == 0) {
+            mNutritionHelper = new NutritionHelper1_36(mContext);
+        } else {
+            mNutritionHelper = new NutritionHelperGuidance(mContext);
+        }
+    }
 
-        mListView = (ListView) findViewById(R.id.list);
-        mContext = getApplicationContext();
-        mNutritionHelper = new NutritionHelper(mContext);
-        mListView.setAdapter(new EfficientAdapter(this, mNutritionHelper.getList()));
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.draw_list, container, false);
+        mListView = (ListView) v.findViewById(R.id.list);
+        return v;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mListView.setAdapter(new EfficientAdapter(mContext, mNutritionHelper.getList()));
     }
 
     private static class EfficientAdapter extends BaseAdapter {

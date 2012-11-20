@@ -17,6 +17,8 @@ package cn.babysee.picture.game;
 
 import java.util.List;
 
+import com.baidu.mobstat.StatService;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -33,6 +35,7 @@ import cn.babysee.picture.R;
 import cn.babysee.picture.base.BaseListNavigation;
 import cn.babysee.picture.env.AppEnv;
 import cn.babysee.picture.env.SharePref;
+import cn.babysee.picture.env.StatServiceEnv;
 
 /**
  * 亲子游戏
@@ -43,8 +46,6 @@ public class GameListActivity extends BaseListNavigation implements
     private static final String TAG = "GameHelper";
 
     private boolean DEBUG = AppEnv.DEBUG;
-
-    private Context mContext;
 
     private GameHelper mGameHelper;
 
@@ -64,7 +65,6 @@ public class GameListActivity extends BaseListNavigation implements
         setContentView(R.layout.game_list);
 
         mExpandableListView = (ExpandableListView) findViewById(R.id.game_list);
-        mContext = getApplicationContext();
         mGameHelper = new GameHelper(mContext);
         mExpandableListView.setOnChildClickListener(this);
 
@@ -83,6 +83,25 @@ public class GameListActivity extends BaseListNavigation implements
     @Override
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
         super.onNavigationItemSelected(itemPosition, itemId);
+        
+        //打点
+        switch (itemPosition) {
+            case 0:
+                StatService.onEvent(mContext, StatServiceEnv.GAME_PHASE1_EVENT_ID,
+                        StatServiceEnv.GAME_PHASE1_LABEL, 1);
+                break;
+            case 1:
+                StatService.onEvent(mContext, StatServiceEnv.GAME_PHASE2_EVENT_ID,
+                        StatServiceEnv.GAME_PHASE2_LABEL, 1);
+                break;
+            case 2:
+                StatService.onEvent(mContext, StatServiceEnv.GAME_PHASE3_EVENT_ID,
+                        StatServiceEnv.GAME_PHASE3_LABEL, 1);
+                break;
+
+            default:
+                break;
+        }
 
         mAdapter = new MyExpandableListAdapter(mContext, mGameHelper.getGameList(itemPosition));
         mExpandableListView.setAdapter(mAdapter);

@@ -9,3 +9,10 @@ appchina market
 wandoujia market
 //Developer Market
 开发测试
+
+打包注意事项
+
+1、关闭debug开关
+2、取消统计配置文件注释
+3、修改版本号及版本说明
+4、修改渠道号

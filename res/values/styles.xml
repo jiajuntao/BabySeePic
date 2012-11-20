@@ -15,19 +15,34 @@
   limitations under the License.
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="Transparent" parent="android:style/Theme.Dialog">
+        <item name="android:windowIsTranslucent">true</item> 
+        <item name="android:windowAnimationStyle">@+android:style/Animation.Translucent</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
     <style name="draw_color_item">
         <item name="android:layout_height">48dip</item>
         <item name="android:layout_width">48dip</item>
         <item name="android:layout_marginRight">10dip</item>
         <item name="android:paddingTop">5dip</item>
     </style>
+
+    <style name="draw_tool_item_bg">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:background">@drawable/ic_draw_item_bg</item>
+    </style>
     <style name="draw_tool_item">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_marginLeft">6dip</item>
-        <item name="android:layout_marginRight">6dip</item>
-        <item name="android:paddingTop">5dip</item>
+        <item name="android:paddingRight">7dip</item>
+        <item name="android:paddingLeft">7dip</item>
+        <item name="android:paddingTop">3dip</item>
+        <item name="android:paddingBottom">3dip</item>
     </style>
+
     <style name="seepic_imageview">
         <item name="android:layout_height">@dimen/seepic_width</item>
         <item name="android:layout_width">@dimen/seepic_height</item>

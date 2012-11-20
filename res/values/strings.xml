@@ -3,7 +3,6 @@
 
     <string name="hello">宝宝智力方程</string>
     <string name="app_name">宝宝智力方程</string>
-    <string name="app_version">宝宝智力方程</string>
     <string name="test">智力测试</string>
     <string name="game">亲子游戏</string>
     <string name="seepic">宝宝看图</string>
@@ -14,11 +13,13 @@
     <string name="vegetable">蔬菜</string>
     <string name="transport">交通</string>
 
-    <!-- 智力测试 -->
     <string name="game_desc">游戏描述</string>
+    
+    <!-- 关于 -->
     <string name="menu_settings">设置</string>
     <string name="menu_about">关于</string>
-    <string name="menu_advice">意见反馈</string>
+    <string name="menu_support_us">表扬一下</string>
+    <string name="menu_advice">提提建议</string>
     <string name="about_office_web">官网：</string>
     <string name="about_office_web_url">babystudy.diandian.com</string>
     <string name="about_mail">邮箱：</string>
@@ -27,12 +28,21 @@
     <string name="about_description">"　　通过多年对宝宝行为的观察，专为宝宝量身打造的看图软件，通过图片和声音认识常见的动物、水果、蔬菜、交通工具；通过宝宝画板，提高宝宝的动手能力、想象能力，在玩的过程中认识新的事物，帮助你做好宝宝的启蒙教育！
         如果你有任何反馈或修改意见请与我们联系！"</string>
     <string name="help_singal">"?"</string>
+    
+    <!-- 宝宝画板 -->
     <string name="dialog_save_pic_title">请输入要保存的名称</string>
     <string name="dialog_ok">确定</string>
     <string name="dialog_cancel">取消</string>
     <string name="pic_type">.jpg</string>
     <string name="pic_view">预览宝宝作品</string>
     <string name="pic_empty">没有找到宝宝的作品\n赶快让您的宝宝来画画吧！</string>
+    <string name="menu_color">画笔颜色</string>
+    <string name="menu_color_canvas">背景颜色</string>
+    <string name="menu_emboss">浮雕</string>
+    <string name="menu_blur">羽化</string>
+    <string name="menu_erase">橡皮檫</string>
+    <string name="menu_save_pic">保存</string>
+    <string name="menu_save_pic_list">宝宝作品</string>
 
     <!-- 智力测试 -->
     <string name="test_next">下一题</string>
@@ -43,16 +53,19 @@
     <string name="test_score">您宝宝的得分为：%1$s分\n(%2$s)</string>
     <string name="test_untest_finish_tip">您的宝宝还有几项没测试呢，测试完成后才能看结果呦！</string>
     <string name="test_analysis">"%1$s题主要%2$s\n应得%3$d分(实得%4$d分)"</string>
-
-    <!-- 画板 -->
-    <string name="menu_color">画笔颜色</string>
-    <string name="menu_color_canvas">背景颜色</string>
-    <string name="menu_emboss">浮雕</string>
-    <string name="menu_blur">羽化</string>
-    <string name="menu_erase">橡皮檫</string>
-    <string name="menu_save_pic">保存</string>
-    <string name="menu_save_pic_list">宝宝作品</string>
-    <string name="menu_srcatop">SrcATop</string>
+    
+    <!-- 后台提醒 -->
+    <string name="notif_test">宝宝又长大了，来测试一下宝宝的智力吧</string>
+    <string name="notif_game">周末了，陪孩子做做游戏吧！</string>
+    <string name="notif_seepic">宝宝又长大了，来宝宝看图看看吧！</string>
+    <string name="notif_nutrion">周末了，给宝宝做顿好吃的吧！</string>
+    <string name="notif_draw">宝宝画板功能很好用，让宝宝大显身手吧</string>
+    
+    <!-- 宝宝营养 -->
+    <string name="nutrition_tab_1">1-36月</string>
+    <string name="nutrition_tab_2">经典食谱</string>
+    <string name="nutrition_tab_3">饮食指导</string>
+    
 
     <!-- SD卡检查 -->
     <string name="download_file_error_dlg_title">"没有存储空间"</string>
@@ -67,10 +80,8 @@
 
     <!-- 市场推广 -->
     <string name="goto_market_dialog_title">鼓励一下</string>
-    <string name="goto_market_dialog_content">如果觉得宝宝智力方程给您提供了帮助和便捷，不妨去应用市场表扬一下我们吧~</string>
+    <string name="goto_market_dialog_content">如果觉得"宝宝智力方程"给您提供了帮助，不妨去应用市场表扬一下我们吧~</string>
     <string name="goto_market_dialog_btn_ok">表扬一下</string>
     <string name="goto_market_dialog_btn_cancel">以后再说</string>
-
-    <string name="list_navigation_content">List navigation requires the use of a special layout for the spinner item. Failure to use it will result in your spinner text being the same color as the action bar background on pre-3.0. See the source code of this demo for more information.</string>
 
 </resources>

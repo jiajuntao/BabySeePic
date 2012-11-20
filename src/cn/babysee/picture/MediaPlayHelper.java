@@ -59,12 +59,9 @@ public class MediaPlayHelper {
         
         Integer ins = soundPoolMap.get(soundIndex);
         if(ins == null) {
-            Random random = new Random();
-            int i = random.nextInt(10);
-            soundPool.play(soundPoolMap.get(i), volume, volume, 1, loop, 1f);
-        } else {
-            soundPool.play(ins, volume, volume, 1, loop, 1f);
+            ins = soundPoolMap.get(0);
         }
+        soundPool.play(ins, volume, volume, 1, loop, 1f);
         
     }
 

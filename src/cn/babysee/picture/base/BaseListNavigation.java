@@ -1,9 +1,11 @@
 package cn.babysee.picture.base;
 
+import java.util.Arrays;
+
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
 import cn.babysee.picture.R;
 import cn.babysee.picture.env.ThemeHelper;
 
@@ -12,7 +14,6 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
 
 public abstract class BaseListNavigation extends SherlockActivity implements ActionBar.OnNavigationListener {
-    private TextView mSelected;
     protected String[] mLocations;
     private int arrayRId;
     protected Context mContext;
@@ -25,7 +26,6 @@ public abstract class BaseListNavigation extends SherlockActivity implements Act
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mContext = getApplicationContext();
         setContentView(R.layout.list_navigation);
-        mSelected = (TextView)findViewById(R.id.text);
 
         arrayRId = getActionBarDropDownViewResource();
         mLocations = getResources().getStringArray(arrayRId);
@@ -42,7 +42,11 @@ public abstract class BaseListNavigation extends SherlockActivity implements Act
     
     @Override
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-        mSelected.setText("Selected: " + mLocations[itemPosition]);
+        if (mLocations == null || itemPosition >= mLocations.length) {
+            Log.e("BaseListNavigation", "error ! index out itemPosition:" + itemPosition + Arrays.toString(mLocations));
+            return false;
+        }
+        
         mNavigationItemPosition = itemPosition;
         return true;
     }

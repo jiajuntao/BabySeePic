@@ -64,6 +64,7 @@
                 android:layout_marginRight="10dip"
                 android:text="亲子游戏" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -82,17 +83,20 @@
                 android:layout_marginRight="10dip"
                 android:text="宝宝营养" />
         </LinearLayout>
-    </LinearLayout>
 
-    <include layout="@layout/divider" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dip"
+            android:orientation="horizontal"
+            android:visibility="gone" >
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dip"
-        android:layout_marginTop="10dip"
-        android:gravity="center"
-        android:orientation="horizontal" >
+            <TextView
+                android:id="@+id/tools"
+                style="@style/MainItem2"
+                android:layout_marginRight="20dip"
+                android:text="应用工具" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

@@ -65,10 +65,12 @@ public class ResourcesHelper {
                         R.raw.animal_6_tiger, };
             case 1:
             case 2:
+                return new int[] { R.raw.box_click, R.raw.box_jump1, R.raw.box_jump2, R.raw.jump,
+                        R.raw.touch, R.raw.touches, };
             case 3:
                 return new int[] { R.raw.radom_sound_1_, R.raw.radom_sound_2_,
-                        R.raw.radom_sound_3_, R.raw.radom_sound_4_, R.raw.radom_sound_5_,
-                        R.raw.radom_sound_6_, R.raw.radom_sound_7_, R.raw.radom_sound_8_,
+                        R.raw.radom_sound_5_, R.raw.box_click, R.raw.box_jump1, R.raw.box_jump2,
+                        R.raw.jump, R.raw.touch, R.raw.touches, R.raw.radom_sound_8_,
                         R.raw.radom_sound_9_, R.raw.radom_sound_10_, R.raw.radom_sound_11_,
                         R.raw.radom_sound_12_, };
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cn.babysee.picture"
-    android:versionCode="7"
-    android:versionName="1.5.0" >
+    android:versionCode="8"
+    android:versionName="1.6.0" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -53,7 +53,7 @@
         <!-- 渠道商编号 -->
         <meta-data
             android:name="BaiduMobAd_CHANNEL"
-            android:value="360" />
+            android:value="eomarket" />
 
         <!-- 是否开启错误日志统计，默认为false -->
         <meta-data
@@ -70,13 +70,17 @@
         <!-- 日志仅在wifi网络下发送，默认为false -->
         <meta-data
             android:name="BaiduMobAd_ONLY_WIFI"
-            android:value="true" />
+            android:value="false" />
 
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
-            
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".SeePicActivity"
@@ -87,11 +91,6 @@
         <activity
             android:name=".draw.DrawBoardActivity"
             android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".draw.DrawListActivity"
@@ -113,15 +112,27 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".nutrition.NutritionListActivity"
+            android:name=".nutrition.NutritionFragmentTabNavigation"
             android:label="@string/nutrition"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.PageIndicatorDefaults" >
         </activity>
         <activity
             android:name=".guide.GuideListActivity"
             android:label="@string/guide"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name=".tools.BabyHeightActivity"
+            android:label="@string/guide"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <receiver android:name=".remind.RemindReceiver" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
