@@ -77,7 +77,7 @@ public class GameListActivity extends BaseListNavigation implements
             int childPosition, long id) {
         Game game = (Game) mAdapter.getChild(groupPosition, childPosition);
         showGameDescDialog(game.desc);
-        return false;
+        return true;
     }
 
     @Override
@@ -169,13 +169,13 @@ public class GameListActivity extends BaseListNavigation implements
         }
 
         public TextView getGenericView() {
-            return (TextView) mInflater.inflate(R.layout.game_list_item_title_view, null);
+            return (TextView) mInflater.inflate(R.layout.list_item_title_view, null);
         }
 
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
                 View convertView, ViewGroup parent) {
 
-            View view = mInflater.inflate(R.layout.game_list_item_sub_view, null);
+            View view = mInflater.inflate(R.layout.list_item_sub_view, null);
             TextView title = (TextView) view.findViewById(R.id.title);
             TextView summary = (TextView) view.findViewById(R.id.summary);
             Game game = getChild(groupPosition, childPosition);

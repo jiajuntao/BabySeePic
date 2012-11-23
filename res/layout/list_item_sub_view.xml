@@ -32,6 +32,6 @@
         android:layout_below="@+id/title"
         android:layout_marginTop="5dip"
         android:layout_toRightOf="@+id/icon"
-        android:text="妈妈竖抱着宝宝，爸爸在妈妈的身后叫宝宝的名字； 宝宝会随着声音扭动上身转头去看； 爸爸先在右侧叫，等宝宝的头转到右侧，再在左侧叫； 这时，爸爸可以对宝宝做个鬼脸，让宝宝大声笑起来" />
+        android:text="妈妈竖抱着宝宝" />
 
 </RelativeLayout>

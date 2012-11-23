@@ -53,8 +53,7 @@ public class GuideListActivity extends BaseActivity {
         mExpandableListView = (ExpandableListView) findViewById(R.id.game_list);
 
         mTestHelper = new GuideHelper(mContext);
-        mExpandableListView
-                .setAdapter(new MyExpandableListAdapter(mContext, mTestHelper.getList()));
+        mExpandableListView.setAdapter(new MyExpandableListAdapter(mContext, mTestHelper.getList()));
     }
 
     public class MyExpandableListAdapter extends BaseExpandableListAdapter {
@@ -82,19 +81,16 @@ public class GuideListActivity extends BaseActivity {
         }
 
         public TextView getGenericView() {
-            return (TextView) mInflater.inflate(R.layout.game_list_item_title_view, null);
+            return (TextView) mInflater.inflate(R.layout.list_item_title_view, null);
         }
 
-        public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
-                View convertView, ViewGroup parent) {
+        public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView,
+                ViewGroup parent) {
 
-            View view = mInflater.inflate(R.layout.game_list_item_sub_view, null);
+            View view = mInflater.inflate(R.layout.nutrition_list_item_sub_view, null);
             TextView title = (TextView) view.findViewById(R.id.title);
-            TextView summary = (TextView) view.findViewById(R.id.summary);
             Guide nutrition = getChild(groupPosition, childPosition);
-
-            title.setText(nutrition.desc0);
-            summary.setText(nutrition.desc1 + "\n\n" + nutrition.desc2);
+            title.setText(nutrition.desc0 + "\n\n" + nutrition.desc1 + "\n\n" + nutrition.desc2);
 
             return view;
         }
@@ -111,8 +107,7 @@ public class GuideListActivity extends BaseActivity {
             return groupPosition;
         }
 
-        public View getGroupView(int groupPosition, boolean isExpanded, View convertView,
-                ViewGroup parent) {
+        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
             TextView textView = getGenericView();
             textView.setText(getGroup(groupPosition).phase);
             return textView;

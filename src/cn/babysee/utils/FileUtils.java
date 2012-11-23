@@ -24,7 +24,6 @@ import android.net.Uri;
 import android.os.Environment;
 import android.os.StatFs;
 import android.text.TextUtils;
-import android.util.Log;
 import android.webkit.CacheManager;
 import android.webkit.CacheManager.CacheResult;
 import android.webkit.MimeTypeMap;
@@ -443,7 +442,8 @@ public class FileUtils {
     public static boolean saveImageFromWebCache(String url, String savePath) {
 
         // 缓存的文件路径
-        String cachePath = null;;
+        String cachePath = null;
+        ;
         CacheResult mCacheResult = CacheManager.getCacheFile(url, null);
         if (mCacheResult != null) {
             String fileName = mCacheResult.getLocalPath();
@@ -636,8 +636,7 @@ public class FileUtils {
         // to ensure that file is not larger than Integer.MAX_VALUE.
         if (length > Integer.MAX_VALUE) {
             // File is too large
-            throw new IOException("ensure that file is not larger than Integer.MAX_VALUE "
-                    + file.getName());
+            throw new IOException("ensure that file is not larger than Integer.MAX_VALUE " + file.getName());
         }
 
         // Create the byte array to hold the data
@@ -646,8 +645,7 @@ public class FileUtils {
         // Read in the bytes
         int offset = 0;
         int numRead = 0;
-        while (offset < bytes.length
-                && (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
+        while (offset < bytes.length && (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
             offset += numRead;
         }
 
@@ -677,7 +675,7 @@ public class FileUtils {
             e.printStackTrace();
         }
     }
-    
+
     public static List<String> getAssetFileByLine(Context context, String filename) {
         InputStream file;
         try {
@@ -686,6 +684,20 @@ public class FileUtils {
                 return null;
             }
             return parseConfigFile(new InputStreamReader(file));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String getAssetFile(Context context, String filename) {
+        InputStream file;
+        try {
+            file = context.getAssets().open(filename);
+            if (file == null) {
+                return null;
+            }
+            return readFile(new InputStreamReader(file));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -718,5 +730,32 @@ public class FileUtils {
             return configList;
         else
             return null;
+    }
+
+    /**
+     * 从指定位置读取Log（指定目录）
+     * */
+    public static String readFile(Reader fileReader) {
+
+        String content = null;
+        try {
+            StringBuffer sb = new StringBuffer();
+            BufferedReader br = new BufferedReader(fileReader);
+            String s = null;
+            while ((s = br.readLine()) != null) {
+                sb.append(s + "\n");
+            }
+            // 将字符列表转换成字符串
+            content = sb.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fileReader.close();
+            } catch (Exception e) {
+                // ignore
+            }
+        }
+        return content;
     }
 }

@@ -7,11 +7,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.PowerManager;
 import android.util.Log;
 
 public class RemindReceiver extends BroadcastReceiver {
     
-    private static final int TIME = 4 * 60 * 60 * 1000;
+    private static final int TIME = 8 * 60 * 60 * 1000;
 
     @Override
     public void onReceive(final Context context, Intent intent) {
@@ -22,6 +23,13 @@ public class RemindReceiver extends BroadcastReceiver {
             NetworkInfo info = connectivityManager.getActiveNetworkInfo();
             if (info != null && info.isAvailable()) {
                 String name = info.getTypeName();
+                
+                //屏幕亮相才提醒用户
+                PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+                boolean isScreenOn = pm.isScreenOn();
+                if (!isScreenOn) {
+                    return;
+                }
                 
                 long lastRemindTime = SharePref.getLong(context, SharePref.NOTIF_LAST_TIME, 0);
                 

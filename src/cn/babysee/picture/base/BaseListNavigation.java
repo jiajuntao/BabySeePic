@@ -3,11 +3,13 @@ package cn.babysee.picture.base;
 import java.util.Arrays;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import cn.babysee.picture.R;
 import cn.babysee.picture.env.ThemeHelper;
+import cn.babysee.picture.remind.RemindHelper;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
@@ -36,6 +38,15 @@ public abstract class BaseListNavigation extends SherlockActivity implements Act
 
         getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         getSupportActionBar().setListNavigationCallbacks(list, this);
+        
+
+        Intent intent = getIntent();
+        if(intent != null) {
+            int notifId = intent.getIntExtra("NotificationId", -1);
+            if (notifId != -1) {
+                RemindHelper.removeNotification(mContext, notifId);
+            }
+        }
     }
     
     protected abstract int getActionBarDropDownViewResource();

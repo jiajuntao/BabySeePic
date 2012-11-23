@@ -5,7 +5,7 @@ import cn.babysee.picture.R;
 
 public class ThemeHelper {
 
-    public static int THEME = R.style.Theme_Sherlock;
+    public static int THEME = R.style.Theme_BabySee;
     
 //    sub.add(0, R.style.Theme_Sherlock, 0, "Default");
 //    sub.add(0, R.style.Theme_Sherlock_Light, 0, "Light");

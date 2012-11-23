@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,16 +14,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.TextView;
 import cn.babysee.picture.base.BaseStatActivity;
+import cn.babysee.picture.book.BookListActivity;
 import cn.babysee.picture.draw.DrawBoardActivity;
 import cn.babysee.picture.env.AppEnv;
 import cn.babysee.picture.env.StatServiceEnv;
 import cn.babysee.picture.game.GameListActivity;
+import cn.babysee.picture.guide.Guide01Activity;
 import cn.babysee.picture.guide.GuideListActivity;
+import cn.babysee.picture.http.BabySeePicApi;
 import cn.babysee.picture.nutrition.NutritionFragmentTabNavigation;
 import cn.babysee.picture.remind.RemindHelper;
 import cn.babysee.picture.test.TestListActivity;
 import cn.babysee.picture.tools.BabyHeightActivity;
+import cn.babysee.utils.Utils;
 
 import com.baidu.mobstat.StatService;
 
@@ -43,6 +49,13 @@ public class MainActivity extends BaseStatActivity implements OnClickListener {
 
         AppEnv.initScreen(this);
 
+        Typeface typeface = Utils.getFontTypeFace(mContext, "fonts/llt.ttf");
+        if (typeface != null) {
+            TextView title = (TextView)findViewById(R.id.title);
+            title.setText("宝宝智力方程");
+            title.setTypeface(typeface);
+        }
+        
         findViewById(R.id.title).setOnClickListener(this);
         findViewById(R.id.brush).setOnClickListener(this);
         findViewById(R.id.test).setOnClickListener(this);
@@ -50,11 +63,14 @@ public class MainActivity extends BaseStatActivity implements OnClickListener {
         findViewById(R.id.seepic).setOnClickListener(this);
         findViewById(R.id.guide).setOnClickListener(this);
         findViewById(R.id.nutrition).setOnClickListener(this);
+        findViewById(R.id.book).setOnClickListener(this);
         findViewById(R.id.tools).setOnClickListener(this);
 
         if (RemindHelper.goToSupportUs(mContext)) {
             showDialog(DIALOG_MARKET);
         }
+        
+        BabySeePicApi.getUpdateConfig(mContext);
     }
 
     @Override
@@ -90,10 +106,17 @@ public class MainActivity extends BaseStatActivity implements OnClickListener {
                         StatServiceEnv.MAIN_NUTRITION_LABEL, 1);
                 startActivity(new Intent(mContext, NutritionFragmentTabNavigation.class));
                 break;
+            case R.id.book:
+                //TODO
+                StatService.onEvent(mContext, StatServiceEnv.MAIN_TOOLS_EVENT_ID,
+                        StatServiceEnv.MAIN_TOOLS_LABEL, 1);
+                startActivity(new Intent(mContext, BookListActivity.class));
+                break;
             case R.id.tools:
                 StatService.onEvent(mContext, StatServiceEnv.MAIN_TOOLS_EVENT_ID,
                         StatServiceEnv.MAIN_TOOLS_LABEL, 1);
-                startActivity(new Intent(mContext, BabyHeightActivity.class));
+                startActivity(new Intent(mContext, Guide01Activity.class));
+//                startActivity(new Intent(mContext, BabyHeightActivity.class));
                 break;
 
             default:

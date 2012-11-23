@@ -189,7 +189,7 @@ public class NutritionFragment2 extends BaseFragment implements ExpandableListVi
         }
 
         public TextView getGenericView() {
-            return (TextView) mInflater.inflate(R.layout.game_list_item_title_view, null);
+            return (TextView) mInflater.inflate(R.layout.list_item_title_view, null);
         }
 
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild,

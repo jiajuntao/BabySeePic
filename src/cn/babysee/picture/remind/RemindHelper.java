@@ -20,7 +20,7 @@ import cn.babysee.picture.nutrition.NutritionFragmentTabNavigation;
 import cn.babysee.picture.test.TestListActivity;
 
 public class RemindHelper {
-    
+
     private static final String TAG = "RemindHelper";
 
     //3天后才能提醒
@@ -60,14 +60,14 @@ public class RemindHelper {
         intent.setData(uri);
         context.startActivity(intent);
     }
-    
+
     // Use a layout id for a unique identifier
     public static final int NOTIF_TEST_ID = 1452793630;
     public static final int NOTIF_DRAW_ID = 1454793630;
     public static final int NOTIF_GAME_ID = 1452393630;
     public static final int NOTIF_SEEPIC_ID = 1452792630;
     public static final int NOTIF_NUTRION_ID = 1452793130;
-    
+
     private static void showNotification(Context context, int moodId, int textId, int notifId, Class classPend) {
         NotificationManager mNM = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -81,72 +81,77 @@ public class RemindHelper {
         // changed" messages that always pop up)
         Notification notification = new Notification(moodId, null, System.currentTimeMillis());
 
+        Intent intent = new Intent(context, classPend);
+        intent.putExtra("NotificationId", notifId);
+
         // The PendingIntent to launch our activity if the user selects this notification
-        PendingIntent contentIntent = PendingIntent.getActivity(context, 0, new Intent(context,
-                classPend), 0);
+        PendingIntent contentIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
         // Set the info for the views that show in the notification panel.
-        notification.setLatestEventInfo(context, context.getResources().getText(R.string.app_name), text, contentIntent);
+        notification
+                .setLatestEventInfo(context, context.getResources().getText(R.string.app_name), text, contentIntent);
 
         // Send the notification.
         // We use a layout id because it is a unique number.  We use it later to cancel.
         mNM.notify(notifId, notification);
     }
-    
+
     public static void showNotification(Context context) {
-//        <string name="test_notif">宝宝又长大了，来测试一下宝宝的智力吧</string>
-//        <string name="game_notif">周末了，陪孩子做做游戏吧！</string>
-//        <string name="seepic_notif">宝宝又长大了，来宝宝看图看看吧！</string>
-//        <string name="nutrion_notif">周末了，给宝宝做顿好吃的吧！</string>
-//        <string name="draw_notif">宝宝画板功能很好用，让宝宝大显身手吧</string>
+        
+        
         String firstDayOfWeek = getFirstDayOfWeek();
         if (isWeekDay()) {
-            
+
             String gameLastTime = SharePref.getString(context, SharePref.NOTIF_GAME_TIME, null);
             if (gameLastTime == null || !firstDayOfWeek.equals(gameLastTime)) {
                 if (AppEnv.DEBUG) {
                     Log.i(TAG, "notif_game");
                 }
-                showNotification(context, R.drawable.ic_launcher,
-                        R.string.notif_game, NOTIF_GAME_ID, GameListActivity.class);
+                showNotification(context, R.drawable.ic_launcher, R.string.notif_game, NOTIF_GAME_ID,
+                        GameListActivity.class);
                 SharePref.setString(context, SharePref.NOTIF_GAME_TIME, firstDayOfWeek);
                 return;
             }
-            
+
             String nutrionLastTime = SharePref.getString(context, SharePref.NOTIF_NUTRION_TIME, null);
             if (nutrionLastTime == null || !firstDayOfWeek.equals(nutrionLastTime)) {
                 if (AppEnv.DEBUG) {
                     Log.i(TAG, "notif_nutrion");
                 }
-                showNotification(context, R.drawable.ic_launcher,
-                        R.string.notif_nutrion, NOTIF_NUTRION_ID, NutritionFragmentTabNavigation.class);
+                showNotification(context, R.drawable.ic_launcher, R.string.notif_nutrion, NOTIF_NUTRION_ID,
+                        NutritionFragmentTabNavigation.class);
                 SharePref.setString(context, SharePref.NOTIF_NUTRION_TIME, firstDayOfWeek);
                 return;
             }
         }
-        
+
         String drawLastTime = SharePref.getString(context, SharePref.NOTIF_DRAW_TIME, null);
         if (drawLastTime == null || !firstDayOfWeek.equals(drawLastTime)) {
             if (AppEnv.DEBUG) {
                 Log.i(TAG, "notif_draw");
             }
-            showNotification(context, R.drawable.ic_launcher,
-                    R.string.notif_draw, NOTIF_DRAW_ID, DrawBoardActivity.class);
+            showNotification(context, R.drawable.ic_launcher, R.string.notif_draw, NOTIF_DRAW_ID,
+                    DrawBoardActivity.class);
             SharePref.setString(context, SharePref.NOTIF_DRAW_TIME, firstDayOfWeek);
             return;
         }
-        
+
         String month = getMonth();
         String testLastTime = SharePref.getString(context, SharePref.NOTIF_TEST_TIME, null);
         if (testLastTime == null || !month.equals(testLastTime)) {
             if (AppEnv.DEBUG) {
                 Log.i(TAG, "notif_test");
             }
-            showNotification(context, R.drawable.ic_launcher,
-                    R.string.notif_draw, NOTIF_TEST_ID, TestListActivity.class);
+            showNotification(context, R.drawable.ic_launcher, R.string.notif_draw, NOTIF_TEST_ID,
+                    TestListActivity.class);
             SharePref.setString(context, SharePref.NOTIF_TEST_TIME, month);
             return;
         }
+    }
+
+    public static void removeNotification(Context context, int notifId) {
+        NotificationManager mNM = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        mNM.cancel(notifId);
     }
 
     public static boolean isWeekDay() {
@@ -154,39 +159,38 @@ public class RemindHelper {
         Calendar calendar = Calendar.getInstance();
         int week = calendar.get(Calendar.DAY_OF_WEEK) - 1;
         switch (week) {
-            case 0:
-                weekStr = "星期日";
-                return true;
-            case 1:
-                weekStr = "星期一";
-                break;
-            case 2:
-                weekStr = "星期二";
-                break;
-            case 3:
-                weekStr = "星期三";
-                break;
-            case 4:
-                weekStr = "星期四";
-                break;
-            case 5:
-                weekStr = "星期五";
-                break;
-            case 6:
-                weekStr = "星期六";
-                return true;
+        case 0:
+            weekStr = "星期日";
+            return true;
+        case 1:
+            weekStr = "星期一";
+            break;
+        case 2:
+            weekStr = "星期二";
+            break;
+        case 3:
+            weekStr = "星期三";
+            break;
+        case 4:
+            weekStr = "星期四";
+            break;
+        case 5:
+            weekStr = "星期五";
+            break;
+        case 6:
+            weekStr = "星期六";
+            return true;
         }
         return false;
     }
-    
-    public static String getFirstDayOfWeek(){
+
+    public static String getFirstDayOfWeek() {
         Calendar calendar = Calendar.getInstance();
-        String firstDayOfWeek = (calendar.get(Calendar.MONTH) + 1) + "月"
-        + calendar.get(Calendar.DATE) + "日";
+        String firstDayOfWeek = (calendar.get(Calendar.MONTH) + 1) + "月" + calendar.get(Calendar.DATE) + "日";
         return firstDayOfWeek;
     }
-    
-    public static String getMonth(){
+
+    public static String getMonth() {
         Calendar calendar = Calendar.getInstance();
         String month = (calendar.get(Calendar.MONTH) + 1) + "月";
         return month;

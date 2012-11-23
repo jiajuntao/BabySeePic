@@ -17,8 +17,6 @@ package cn.babysee.picture.test;
 
 import java.util.List;
 
-import com.baidu.mobstat.StatService;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,11 +33,12 @@ import cn.babysee.picture.env.AppEnv;
 import cn.babysee.picture.env.SharePref;
 import cn.babysee.picture.env.StatServiceEnv;
 
+import com.baidu.mobstat.StatService;
+
 /**
  * 宝宝智力测试
  */
-public class TestListActivity extends BaseListNavigation implements
-        ExpandableListView.OnChildClickListener {
+public class TestListActivity extends BaseListNavigation implements ExpandableListView.OnChildClickListener {
 
     private static final String TAG = "TestListActivity";
 
@@ -77,8 +76,7 @@ public class TestListActivity extends BaseListNavigation implements
     }
 
     @Override
-    public boolean onChildClick(ExpandableListView parent, View v, int groupPosition,
-            int childPosition, long id) {
+    public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
 
         Intent intent = new Intent(mContext, TestQuestionActivity.class);
         intent.putExtra("stagePosition", mStagePosition);
@@ -94,24 +92,20 @@ public class TestListActivity extends BaseListNavigation implements
         super.onNavigationItemSelected(itemPosition, itemId);
         //打点
         switch (itemPosition) {
-            case 0:
-                StatService.onEvent(mContext, StatServiceEnv.TEST_PHASE1_EVENT_ID,
-                        StatServiceEnv.TEST_PHASE1_LABEL, 1);
-                break;
-            case 1:
-                StatService.onEvent(mContext, StatServiceEnv.TEST_PHASE2_EVENT_ID,
-                        StatServiceEnv.TEST_PHASE2_LABEL, 1);
-                break;
-            case 2:
-                StatService.onEvent(mContext, StatServiceEnv.TEST_PHASE3_EVENT_ID,
-                        StatServiceEnv.TEST_PHASE3_LABEL, 1);
-                break;
+        case 0:
+            StatService.onEvent(mContext, StatServiceEnv.TEST_PHASE1_EVENT_ID, StatServiceEnv.TEST_PHASE1_LABEL, 1);
+            break;
+        case 1:
+            StatService.onEvent(mContext, StatServiceEnv.TEST_PHASE2_EVENT_ID, StatServiceEnv.TEST_PHASE2_LABEL, 1);
+            break;
+        case 2:
+            StatService.onEvent(mContext, StatServiceEnv.TEST_PHASE3_EVENT_ID, StatServiceEnv.TEST_PHASE3_LABEL, 1);
+            break;
 
-            default:
-                break;
+        default:
+            break;
         }
-        
-        
+
         mAdapter = new MyExpandableListAdapter(mContext, mTestHelper.getPhaseList(itemPosition));
         mExpandableListView.setAdapter(mAdapter);
         mStagePosition = itemPosition;
@@ -146,19 +140,16 @@ public class TestListActivity extends BaseListNavigation implements
         }
 
         public TextView getGenericView() {
-            return (TextView) mInflater.inflate(R.layout.game_list_item_title_view, null);
+            return (TextView) mInflater.inflate(R.layout.list_item_title_view, null);
         }
 
-        public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
-                View convertView, ViewGroup parent) {
+        public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView,
+                ViewGroup parent) {
 
-            View view = mInflater.inflate(R.layout.test_list_item_sub_view, null);
+            View view = mInflater.inflate(R.layout.nutrition_list_item_sub_view, null);
             TextView title = (TextView) view.findViewById(R.id.title);
-            TextView summary = (TextView) view.findViewById(R.id.summary);
             TestQuestion testQuestion = getChild(groupPosition, childPosition);
-
             title.setText(testQuestion.desc);
-            //            summary.setText(testQuestion.a);
 
             return view;
         }
@@ -175,8 +166,7 @@ public class TestListActivity extends BaseListNavigation implements
             return groupPosition;
         }
 
-        public View getGroupView(int groupPosition, boolean isExpanded, View convertView,
-                ViewGroup parent) {
+        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
             TextView textView = getGenericView();
 
             String title = getGroup(groupPosition).title;

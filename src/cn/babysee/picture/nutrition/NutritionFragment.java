@@ -92,7 +92,7 @@ public class NutritionFragment extends BaseFragment {
             ViewHolder holder;
 
             if (convertView == null) {
-                convertView = mInflater.inflate(R.layout.game_list_item_sub_view, null);
+                convertView = mInflater.inflate(R.layout.list_item_sub_view, null);
 
                 holder = new ViewHolder();
                 holder.title = (TextView) convertView.findViewById(R.id.title);

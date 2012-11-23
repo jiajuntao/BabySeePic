@@ -16,6 +16,9 @@
     <string name="game_desc">游戏描述</string>
     
     <!-- 关于 -->
+     <string name="menu_net_update">联网升级</string>
+    <string name="menu_share2friends">推荐好友</string>
+    <string name="menu_submit_proposal">提交建议</string>
     <string name="menu_settings">设置</string>
     <string name="menu_about">关于</string>
     <string name="menu_support_us">表扬一下</string>

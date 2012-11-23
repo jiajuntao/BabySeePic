@@ -17,9 +17,14 @@
 <resources>
 
     <style name="Theme.BabySee" parent="@style/Theme.Sherlock">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="Theme.BabySee_Light" parent="@style/Theme.Sherlock">
         <item name="actionBarStyle">@style/Widget.Styled.ActionBar</item>
         <item name="android:actionBarStyle">@style/Widget.Styled.ActionBar</item>
         <item name="android:windowBackground">@color/background</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="Widget.Styled.ActionBar" parent="Widget.Sherlock.ActionBar.Solid">

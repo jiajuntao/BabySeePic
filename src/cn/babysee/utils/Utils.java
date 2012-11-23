@@ -11,7 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
-import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,6 +22,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -30,7 +30,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.provider.MediaStore.MediaColumns;
-import android.provider.SyncStateContract.Constants;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.text.format.Time;
@@ -46,8 +45,20 @@ public class Utils {
     private static final char CHAR_LINE = '_';
 
     private static final char CHAR_DOT = '.';
-    
+
     private static final String TAG_MAIL_REX = "^\\s*\\w+(?:\\.{0,1}[\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\.[a-zA-Z]+\\s*$";
+
+    public static Typeface getFontTypeFace(Context context, String fontPath) {
+        //默认获取改字体的Typeface，当字体加载失败时获取当前正在使用的Typeface
+        Typeface fontFace = null;
+        try {
+            fontFace = Typeface.createFromAsset(context.getAssets(), fontPath);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        return fontFace;
+    }
 
     /**
      * 手机信息类型：1屏幕宽度
@@ -64,7 +75,7 @@ public class Utils {
     public static void setContext(Context appContext) {
         context = appContext;
     }
-    
+
     public static Context getContext() {
         return context;
     }
@@ -74,7 +85,8 @@ public class Utils {
     /**
      * Constructs the version string of the application.
      * 
-     * @param context the context to use for getting package info
+     * @param context
+     *            the context to use for getting package info
      * @return the versions string of the application
      */
     public static String getVersionName(Context context) {
@@ -93,7 +105,8 @@ public class Utils {
     /**
      * Constructs the version string of the application.
      * 
-     * @param context the context to use for getting package info
+     * @param context
+     *            the context to use for getting package info
      * @return the versions code of the application
      */
     public static int getVersionCode(Context context) {
@@ -121,14 +134,14 @@ public class Utils {
         Display display = activity.getWindowManager().getDefaultDisplay();
 
         switch (infoType) {
-            case TYPE_SCREENW:
-                return display.getWidth();
-            case TYPE_SCREENH:
-                return display.getHeight();
-            default:
-                if (AppEnv.DEBUG)
-                    Log.v(TAG, "Unknow Screen type wao founded.");
-                return 0;
+        case TYPE_SCREENW:
+            return display.getWidth();
+        case TYPE_SCREENH:
+            return display.getHeight();
+        default:
+            if (AppEnv.DEBUG)
+                Log.v(TAG, "Unknow Screen type wao founded.");
+            return 0;
         }
     }
 
@@ -166,7 +179,7 @@ public class Utils {
         }
         return path;
     }
-    
+
     /**
      * 根据图片的URL获取图片的宽度和高度
      * */
@@ -198,7 +211,7 @@ public class Utils {
         }
         return widthAndHeight;
     }
-    
+
     /**
      * 获取当前的时间（格式：YYYYMMDDTHHMMSS）
      **/
@@ -207,16 +220,16 @@ public class Utils {
         time.setToNow();
         return time.format2445();
     }
-    
+
     private static final DecimalFormat dcmFmt = new DecimalFormat("0.000");
-    
+
     /**
      * 获取当前的时间（格式：YYYYMMDDTHHMMSS）
      **/
     public static String getFormatNumString(double f) {
         return dcmFmt.format(f);
     }
-    
+
     /**
      * 获取当前的时间（格式：yyyy-MM-dd H:m:s）.
      **/
@@ -224,36 +237,33 @@ public class Utils {
         Calendar c1 = Calendar.getInstance();
         c1.setTime(new Date(time));
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd H:m:s");
-        
+
         return format.format(c1.getTime());
     }
-    
+
     /**
      * 获取当前的时间（格式：毫秒）
      **/
     public static long getNowTime() {
         return Calendar.getInstance().getTimeInMillis();
     }
-    
-    public static String getSimpleTimeString(long time){
+
+    public static String getSimpleTimeString(long time) {
         Date date = new Date(time);
-        java.text.DateFormat format = new java.text.SimpleDateFormat(  
-        "MM-dd");  
-        return format.format(date);     
+        java.text.DateFormat format = new java.text.SimpleDateFormat("MM-dd");
+        return format.format(date);
     }
-    
-    public static String getComplexTimeString(long time){
+
+    public static String getComplexTimeString(long time) {
         Date date = new Date(time);
-        java.text.DateFormat format = new java.text.SimpleDateFormat(  
-        "yyyy-MM-dd HH:mm:ss");
-        return format.format(date);  
+        java.text.DateFormat format = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return format.format(date);
     }
 
     public static boolean isConnection(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);//获取系统的连接服务
-        TelephonyManager mTelephony = (TelephonyManager) context
-                .getSystemService(Context.TELEPHONY_SERVICE);
+        TelephonyManager mTelephony = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 
         NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();//获取网络的连接情况
 
@@ -265,8 +275,7 @@ public class Utils {
         int netSubtype = activeNetInfo.getSubtype();
         if (netType == ConnectivityManager.TYPE_WIFI) {
             return activeNetInfo.isConnected();
-        } else if ((netType == ConnectivityManager.TYPE_MOBILE)
-                && (netSubtype == TelephonyManager.NETWORK_TYPE_UMTS)
+        } else if ((netType == ConnectivityManager.TYPE_MOBILE) && (netSubtype == TelephonyManager.NETWORK_TYPE_UMTS)
                 && !mTelephony.isNetworkRoaming()) {
             return activeNetInfo.isConnected();
         } else {
@@ -276,7 +285,7 @@ public class Utils {
 
     public static boolean is3GOrWifi(Context context) {
         int networkType = NetworkUtil.getNetworkType(context);
-        return (networkType==NetworkUtil.NETWORK_3G || networkType==NetworkUtil.NETWORK_WIFI);
+        return (networkType == NetworkUtil.NETWORK_3G || networkType == NetworkUtil.NETWORK_WIFI);
     }
 
     // Copies src file to dst file.
@@ -358,16 +367,16 @@ public class Utils {
             return null;
         }
     }
-    
+
     /***************************************************************************
      * 删除SharedPreferences的内容
      */
     public static void DeleteSharedPreferences(String name) {
-        SharedPreferences.Editor userInfoEditor = context.getSharedPreferences(name,0).edit();
+        SharedPreferences.Editor userInfoEditor = context.getSharedPreferences(name, 0).edit();
         userInfoEditor.clear();
         userInfoEditor.commit();
     }
-    
+
     /***************************************************************************
      * 向SharedPreferences中写入指定的内容
      */
@@ -409,10 +418,10 @@ public class Utils {
      */
     public static boolean isMailAddressValid(String data) {
         Pattern pattern = Pattern.compile(TAG_MAIL_REX);
-        Matcher matcher = pattern.matcher(data); 
+        Matcher matcher = pattern.matcher(data);
         return matcher.matches();
     }
-    
+
     public static long parseLong(CharSequence s) {
         long out = 0;
         byte shifts = 0;
@@ -438,6 +447,7 @@ public class Utils {
 
     /**
      * 根据feedid生成时间
+     * 
      * @param uuidStr
      * @return
      * @throws Exception
@@ -452,14 +462,14 @@ public class Utils {
         long currHi = (time & 0x0FFF) << 48;
         return (currLow + currMid + currHi - 0x01B21DD213814000L) / 10000;
     }
-    
+
     private static final String IMAGE_URL = "http://m{catchid}.img.libdd.com/dynamic/{imageid}/{width}/{height}/";
-    
+
     /**
      * 根据宽度获得静态的图片（如果是gif图片取第一帧）
      * */
     public static String getStaticImageUrlByWidth(String imageId, String imageType, int imageWidth, int requestWidth) {
-        if(imageId == null) {
+        if (imageId == null) {
             return null;
         }
         if (imageWidth > 0 && requestWidth >= imageWidth) {
@@ -467,11 +477,9 @@ public class Utils {
         }
         char c[] = imageId.toCharArray();
         int catchId = c[c.length - 1];
-        catchId = catchId%3 + 1;
-        String imageUrl = IMAGE_URL.replace("{catchid}", String.valueOf(catchId))
-                    .replace("{imageid}", imageId)
-                    .replace("{width}", String.valueOf(requestWidth))
-                    .replace("{height}", "0");
+        catchId = catchId % 3 + 1;
+        String imageUrl = IMAGE_URL.replace("{catchid}", String.valueOf(catchId)).replace("{imageid}", imageId)
+                .replace("{width}", String.valueOf(requestWidth)).replace("{height}", "0");
         return imageUrl;
     }
 
@@ -479,7 +487,7 @@ public class Utils {
      * 根据高度获得静态的图片
      * */
     public static String getStaticImageUrlByHeight(String imageId, String imageType, int imageHeight, int requestHeight) {
-        if(imageId == null) {
+        if (imageId == null) {
             return null;
         }
         if (imageHeight > 0 && requestHeight >= imageHeight) {
@@ -487,43 +495,40 @@ public class Utils {
         }
         char c[] = imageId.toCharArray();
         int catchId = c[c.length - 1];
-        catchId = catchId%3 + 1;
-        String imageUrl = IMAGE_URL.replace("{catchid}", String.valueOf(catchId))
-                    .replace("{imageid}", imageId)
-                    .replace("{width}", "0")
-                    .replace("{height}", String.valueOf(requestHeight));
+        catchId = catchId % 3 + 1;
+        String imageUrl = IMAGE_URL.replace("{catchid}", String.valueOf(catchId)).replace("{imageid}", imageId)
+                .replace("{width}", "0").replace("{height}", String.valueOf(requestHeight));
         return imageUrl;
     }
-    
+
     /**
      * 取整张图片
      * */
-    public static String getFullImageUrl(String imageId,int width , int height) {
-        if(imageId == null) {
+    public static String getFullImageUrl(String imageId, int width, int height) {
+        if (imageId == null) {
             return null;
         }
         char c[] = imageId.toCharArray();
         int catchId = c[c.length - 1];
-        catchId = catchId%3 + 1;
-        String imageUrl = IMAGE_URL.replace("{catchid}", String.valueOf(catchId))
-                    .replace("{imageid}", imageId)
-                    .replace("{width}", String.valueOf(width))
-                    .replace("{height}", String.valueOf(height));
-//        PrintLog.d(TAG, "imageUrl=" + imageUrl);
+        catchId = catchId % 3 + 1;
+        String imageUrl = IMAGE_URL.replace("{catchid}", String.valueOf(catchId)).replace("{imageid}", imageId)
+                .replace("{width}", String.valueOf(width)).replace("{height}", String.valueOf(height));
+        //        PrintLog.d(TAG, "imageUrl=" + imageUrl);
         return imageUrl;
     }
-    
+
     /**
      * 获取经纬度
+     * 
      * @param context
      * @return
      */
-    public static double[] getLatitudeAndLongitude(Context context){
+    public static double[] getLatitudeAndLongitude(Context context) {
         double[] latLong = null;
-        
+
         LocationManager loctionManager;
-        loctionManager=(LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        
+        loctionManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+
         //使用标准集合，让系统自动选择可用的最佳位置提供器，提供位置
         Criteria criteria = new Criteria();
         criteria.setAccuracy(Criteria.ACCURACY_FINE);//高精度
@@ -531,59 +536,62 @@ public class Utils {
         criteria.setBearingRequired(false);//不要求方位
         criteria.setCostAllowed(true);//允许有花费
         criteria.setPowerRequirement(Criteria.POWER_HIGH);//低功耗
-        
+
         //从可用的位置提供器中，匹配以上标准的最佳提供器
         String provider = loctionManager.getBestProvider(criteria, true);
-        if(TextUtils.isEmpty(provider)){
-            provider=LocationManager.GPS_PROVIDER;
+        if (TextUtils.isEmpty(provider)) {
+            provider = LocationManager.GPS_PROVIDER;
         }
-        
+
         //获得最后一次变化的位置
         Location location = loctionManager.getLastKnownLocation(provider);
-        if(location!=null){
+        if (location != null) {
             latLong = new double[2];
             latLong[0] = location.getLatitude();
             latLong[1] = location.getLongitude();
             if (AppEnv.DEBUG)
-                Log.d(TAG, "latitude: "+latLong[0]+" longitude: "+latLong[1]);
-        }else{
+                Log.d(TAG, "latitude: " + latLong[0] + " longitude: " + latLong[1]);
+        } else {
             if (AppEnv.DEBUG)
                 Log.d(TAG, "can't find Location info");
         }
         return latLong;
     }
-    
+
     /**
      * 获取图片矩阵变换后的X坐标
+     * 
      * @param m
      * @return
      */
-    public static float getImageMatrixPointX(ImageView view){
-        float [] values = new float[9];
+    public static float getImageMatrixPointX(ImageView view) {
+        float[] values = new float[9];
         view.getImageMatrix().getValues(values);
         return values[2];
     }
-    
+
     /**
      * 获取图片矩阵变换后的Y坐标
+     * 
      * @param m
      * @return
      */
-    public static float getImageMatrixPointY(ImageView view){
-        float [] values = new float[9];
+    public static float getImageMatrixPointY(ImageView view) {
+        float[] values = new float[9];
         view.getImageMatrix().getValues(values);
         return values[5];
     }
-    
+
     /**
      * 获取图片矩阵变换后的缩放比例(在不旋转和长宽比一样的情况下)
+     * 
      * @param m
      * @return
      */
-    public static float getImageMatrixScale(ImageView view){
-        float [] values = new float[9];
+    public static float getImageMatrixScale(ImageView view) {
+        float[] values = new float[9];
         view.getImageMatrix().getValues(values);
-        return values[8]*values[0];
+        return values[8] * values[0];
     }
 
     /**
@@ -601,15 +609,16 @@ public class Utils {
             return false;
         }
     }
-    
+
     /**
      * 获取文件名称
+     * 
      * @return 返回 yyyy-MM-dd(HH_mm_ss)
      */
     public static String getFileName() {
         Date currentTime = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd(HH_mm_ss)");
-        String dateString = formatter.format(currentTime) ;
+        String dateString = formatter.format(currentTime);
         return dateString;
     }
 }

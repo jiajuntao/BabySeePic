@@ -156,6 +156,7 @@ public class DrawBoardActivity extends BaseStatActivity implements View.OnClickL
                 //                mColorView.setVisibility(View.GONE);
             }
         });
+        
     }
 
     @Override

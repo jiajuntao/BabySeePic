@@ -53,7 +53,7 @@
         <!-- 渠道商编号 -->
         <meta-data
             android:name="BaiduMobAd_CHANNEL"
-            android:value="eomarket" />
+            android:value="update" />
 
         <!-- 是否开启错误日志统计，默认为false -->
         <meta-data
@@ -124,6 +124,21 @@
         </activity>
         <activity
             android:name=".tools.BabyHeightActivity"
+            android:label="@string/guide"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".book.BookListActivity"
+            android:label="@string/guide"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".book.BookContentActivity"
+            android:label="@string/guide"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".guide.Guide01Activity"
             android:label="@string/guide"
             android:screenOrientation="portrait" >
         </activity>
