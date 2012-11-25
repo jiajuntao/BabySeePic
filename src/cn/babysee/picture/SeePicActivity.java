@@ -13,7 +13,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import cn.babysee.picture.base.BaseListNavigation;
 import cn.babysee.picture.env.AppEnv;
-import cn.babysee.picture.env.SharePref;
+import cn.babysee.picture.env.SharedPref;
 import cn.babysee.picture.env.StatServiceEnv;
 import cn.babysee.utils.Utils;
 
@@ -73,7 +73,7 @@ public class SeePicActivity extends BaseListNavigation implements OnClickListene
         dotViews[4] = (ImageView) findViewById(R.id.dot5);
         dotViews[5] = (ImageView) findViewById(R.id.dot6);
 
-        int position = SharePref.getInt(mContext, SharePref.SEEPIC_PHASE, 0);
+        int position = SharedPref.getInt(mContext, SharedPref.SEEPIC_PHASE, 0);
         getSupportActionBar().setSelectedNavigationItem(position);
         mediaPlay = new MediaPlayHelper(mContext);
     }
@@ -81,7 +81,7 @@ public class SeePicActivity extends BaseListNavigation implements OnClickListene
     @Override
     protected void onPause() {
         super.onPause();
-        SharePref.setInt(mContext, SharePref.SEEPIC_PHASE, mNavigationItemPosition);
+        SharedPref.setInt(mContext, SharedPref.SEEPIC_PHASE, mNavigationItemPosition);
     }
 
     @Override

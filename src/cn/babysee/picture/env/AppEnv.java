@@ -5,9 +5,13 @@ import android.util.DisplayMetrics;
 
 public class AppEnv {
 
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
 
     public static final String TAG = "BabyStudy";
+    public static final String DOWNLOAD_PATH = "BabySeePic";
+    public static final String DOWNLOAD_NAME = "BabySeePic.apk";
+    
+    public static final int ONE_DAY = 24 * 60 * 60 * 1000;
 
     public static int screenWeight;
 
@@ -18,10 +22,10 @@ public class AppEnv {
             0XFFFF7F50, 0XFFFF6347, 0XFF00C78C, 0XFF8A2BE2, 0XFFE3170D, 0XFF082E54, 0XFF40E0D0,
             0XFF6A5ACD, 0XFFB0E0E6, 0XFFFFFF00, 0XFFB03060, 0XFFFFC0CB, 0XFFF0E68C, 0XFF8B4513,
             0XFF3D59AB, 0XFF03A89E, 0XFFB0171F, 0XFFA066D3, 0XFFC76114, 0XFF708069, 0XFF385E0F };
-
-    //    public static final int[] COLORS = { Color.BLUE, Color.CYAN, Color.BLACK, Color.DKGRAY, Color.GRAY, Color.GREEN, Color.LTGRAY,
-    //        Color.MAGENTA, Color.RED, Color.WHITE, Color.YELLOW, 0xFFff458B00, 0xFFff8B0000, 0xFFff7CFC00, 0xFFffFF00FF, 0xFFffEE1289, 
-    //        0xFFffB23AEE, 0xFFff00FFFF, 0xFFff27408B, 0xFFffFF8247, 0xFFffFFFF00, 0xFFff458B74, 0xFFff8B7500, 0xFFff8C8C8C, };
+    
+    
+    //升级文件地址
+    public static final String UPDATE_CONFIG_URL = "http://bcs.duapp.com/babyseepic/%2Fbabyseepic_update_config?sign=MBO:102ff356464477239159a6e735ea2791:xLlH0ezC3Rz5ueTRL%2B%2FdOC1xXgQ%3D";
 
     /** 百度统计appkey */
     public static final String APPKEY_BAIDU = "f0234c2f5c";

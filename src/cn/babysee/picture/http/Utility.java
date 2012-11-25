@@ -3,11 +3,14 @@ package cn.babysee.picture.http;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.Socket;
 import java.net.URL;
@@ -34,7 +37,6 @@ import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
-import org.apache.http.HttpVersion;
 import org.apache.http.NameValuePair;
 import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
@@ -72,6 +74,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+import cn.babysee.picture.update.UpdateService;
 
 /**
  * Utility class for Weibo object.
@@ -267,15 +270,19 @@ public class Utility {
             }
         }
         if (TextUtils.isEmpty(file)) {
-            rlt = openUrl(context, url, method, params, null, token);
+            rlt = openUrl(context, url, method, params, null, token, null, null);
         } else {
-            rlt = openUrl(context, url, method, params, file, token);
+            rlt = openUrl(context, url, method, params, file, token, null, null);
         }
         return rlt;
     }
+    
+    public static void downloadFile(Context context, String url, File saveFile, DownloadCallback downloadCallback) throws WeiboException {
+        openUrl(context, url, "GET", null, null, null, saveFile, downloadCallback);
+    }
 
     public static String openUrl(Context context, String url, String method, WeiboParameters params, String file,
-            Token token) throws WeiboException {
+            Token token, File saveFile, DownloadCallback downloadCallback) throws WeiboException {
         String result = "";
         try {
             HttpClient client = getNewHttpClient(context);
@@ -323,7 +330,16 @@ public class Utility {
                 throw new WeiboException(String.format(status.toString()), statusCode);
             }
             // parse content stream from response
-            result = read(response);
+            if (saveFile == null) {
+                result = read(response);
+            } else {
+                //下载接口
+                try {
+                    downloadFile(response, saveFile, downloadCallback);
+                } catch (Exception e) {
+                    throw new WeiboException(e);
+                }
+            }
             return result;
         } catch (IOException e) {
             throw new WeiboException(e);
@@ -343,7 +359,7 @@ public class Utility {
             HttpConnectionParams.setConnectionTimeout(params, 10000);
             HttpConnectionParams.setSoTimeout(params, 10000);
 
-            HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
+//            HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
             HttpProtocolParams.setContentCharset(params, HTTP.UTF_8);
 
             SchemeRegistry registry = new SchemeRegistry();
@@ -513,7 +529,7 @@ public class Utility {
     private static String read(HttpResponse response) throws WeiboException {
         String result = "";
         HttpEntity entity = response.getEntity();
-        InputStream inputStream;
+        InputStream inputStream = null;
         try {
             inputStream = entity.getContent();
             ByteArrayOutputStream content = new ByteArrayOutputStream();
@@ -536,7 +552,71 @@ public class Utility {
             throw new WeiboException(e);
         } catch (IOException e) {
             throw new WeiboException(e);
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
+    }
+    
+    public static interface DownloadCallback {
+        void onDownloadStart();
+        void onDownloadProcess(int downloadPercent);
+        void onDownloadFinish();
+    }
+    
+    public static long downloadFile(HttpResponse response, File saveFile, DownloadCallback downloadCallback) throws Exception {
+        int downloadCount = 0;
+        long totalSize = 0;
+        long updateTotalSize = 0;
+        int downloadPercent = 0;
+        
+        HttpEntity entity = response.getEntity();
+        InputStream is = null;
+        FileOutputStream fos = null;
+
+        try {
+            is = entity.getContent();;
+            fos = new FileOutputStream(saveFile, false);
+            //断电续传，暂不支持
+//            if (currentSize > 0) {
+//                httpConnection.setRequestProperty("RANGE", "bytes=" + currentSize + "-");
+//            }
+            updateTotalSize = entity.getContentLength();
+            
+            byte buffer[] = new byte[4096];
+            int readsize = 0;
+            
+            while ((readsize = is.read(buffer)) > 0) {
+                fos.write(buffer, 0, readsize);
+                totalSize += readsize;
+                
+                if (downloadCallback != null) {
+                    
+                    downloadPercent = (int) (totalSize * 100 / updateTotalSize);
+                    //为了防止频繁的通知导致应用吃紧，百分比增加1%才通知一次
+                    if ((downloadCount == 0) || (downloadPercent - 1) > downloadCount) {
+                        downloadCount += 1;
+                        downloadCallback.onDownloadProcess(downloadPercent);
+                    }
+                }
+            }
+            downloadCallback.onDownloadFinish();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (is != null) {
+                is.close();
+            }
+            if (fos != null) {
+                fos.close();
+            }
+        }
+        return totalSize;
     }
 
     /**

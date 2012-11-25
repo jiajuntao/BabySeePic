@@ -11,26 +11,9 @@ public class BabySeePicApi {
 
     private static final boolean DEBUG = AppEnv.DEBUG;
     private static final String TAG = "BabySeePicApi";
-    private static final String updateConfigUrl = "http://bcs.duapp.com/babyseepic/%2Fbabyseepic_update_config?sign=MBO:102ff356464477239159a6e735ea2791:xLlH0ezC3Rz5ueTRL%2B%2FdOC1xXgQ%3D";
     
-    public static void getUpdateConfig(Context context) {
-        
-        
-        try {
-            String content = Utility.openUrl(context, updateConfigUrl, "GET", null, null);
-//            String content = getStaticPage(updateConfigUrl);
-            if (DEBUG)
-                Log.d(TAG, "getUpdateConfig" + content);
-            
-            Gson gson = new Gson();
-            if (DEBUG)
-                Log.d(TAG, "UpdateConfig: " + gson.fromJson(content, UpdateConfig.class));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
     
-    private static String getStaticPage(String surl) {
+    public static String getStaticPage(String surl) {
         String htmlContent = "";
         try {
             java.io.InputStream inputStream;

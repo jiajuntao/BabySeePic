@@ -34,7 +34,7 @@ import android.widget.TextView;
 import cn.babysee.picture.R;
 import cn.babysee.picture.base.BaseListNavigation;
 import cn.babysee.picture.env.AppEnv;
-import cn.babysee.picture.env.SharePref;
+import cn.babysee.picture.env.SharedPref;
 import cn.babysee.picture.env.StatServiceEnv;
 
 /**
@@ -68,7 +68,7 @@ public class GameListActivity extends BaseListNavigation implements
         mGameHelper = new GameHelper(mContext);
         mExpandableListView.setOnChildClickListener(this);
 
-        int position = SharePref.getInt(mContext, SharePref.GAME_STAGE, 0);
+        int position = SharedPref.getInt(mContext, SharedPref.GAME_STAGE, 0);
         getSupportActionBar().setSelectedNavigationItem(position);
     }
 
@@ -112,7 +112,7 @@ public class GameListActivity extends BaseListNavigation implements
     @Override
     protected void onPause() {
         super.onPause();
-        SharePref.setInt(mContext, SharePref.GAME_STAGE, mStagePosition);
+        SharedPref.setInt(mContext, SharedPref.GAME_STAGE, mStagePosition);
     }
 
     @Override

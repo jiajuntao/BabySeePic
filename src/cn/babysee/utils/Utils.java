@@ -17,6 +17,7 @@ import java.util.regex.Pattern;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -620,5 +621,40 @@ public class Utils {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd(HH_mm_ss)");
         String dateString = formatter.format(currentTime);
         return dateString;
+    }
+
+    /**
+     * 获取今天的日期
+     * 
+     * @return 返回 yyyy-MM-dd
+     */
+    public static String getToday() {
+        Date currentTime = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String dateString = formatter.format(currentTime);
+        return dateString;
+    }
+    
+    /**
+     * 获取当前几点
+     * @return 返回 当前的小时数
+     */
+    public static int getCurrentHour() {
+        Date currentTime = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("HH");
+        String hour = formatter.format(currentTime);
+        return Integer.valueOf(hour);
+    }
+
+    public static void installApk(Context context, File file) {
+        try {
+            Uri uri = Uri.fromFile(file);
+            Intent installIntent = new Intent(Intent.ACTION_VIEW);
+            installIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            installIntent.setDataAndType(uri, "application/vnd.android.package-archive");
+            context.startActivity(installIntent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -45,6 +45,24 @@ public class StatServiceEnv {
     public static final String MAIN_TOOLS_EVENT_ID = "1013";
     public static final String MAIN_TOOLS_LABEL = "首页应用工具";
     
+    public static final String MAIN_SUPPORT_US_EVENT_ID = "1014";
+    public static final String MAIN_SUPPORT_US_LABEL = "支持我们";
+    
+    public static final String MAIN_CHECK_UPDATE_EVENT_ID = "1015";
+    public static final String MAIN_CHECK_UPDATE_LABEL = "检查更新";
+    
+    public static final String MAIN_SUPPORT_US_NOW_EVENT_ID = "1016";
+    public static final String MAIN_SUPPORT_US_NOW_LABEL = "立即支持我们";
+    
+    public static final String MAIN_SUPPORT_US_LATER_EVENT_ID = "1017";
+    public static final String MAIN_SUPPORT_US_LATER_LABEL = "以后支持我们";
+    
+    public static final String MAIN_YUERZHINAN_EVENT_ID = "1018";
+    public static final String MAIN_YUERZHINAN_LATER_LABEL = "育儿指南";
+    
+    public static final String MAIN_YUERBAIKE_LATER_EVENT_ID = "1019";
+    public static final String MAIN_YUERBAIKE_LATER_LABEL = "育儿百科";
+    
     //宝宝画板
     public static final String DRAWBOARD_MENU_BRUSH_COLOR_EVENT_ID = "2001";
     public static final String DRAWBOARD_MENU_BRUSH_COLOR_LABEL = "画笔颜色";
@@ -99,4 +117,13 @@ public class StatServiceEnv {
     public static final String NUTRION_PHASE3_EVENT_ID = "6003";
     public static final String NUTRION_PHASE3_LABEL = "饮食指导";
     
+    //升级检查
+    public static final String UPDATE_NOW_EVENT_ID = "7001";
+    public static final String UPDATE_NOW_LABEL = "立即升级";
+    
+    public static final String UPDATE_LATER_EVENT_ID = "7002";
+    public static final String UPDATE_LATER_LABEL = "以后升级";
+    
+    public static final String UPDATE_REMIND_EVENT_ID = "7003";
+    public static final String UPDATE_REMIND_LABEL = "升级提醒";
 }

@@ -116,7 +116,7 @@ public class DrawListActivity extends BaseActivity implements OnItemClickListene
             ViewHolder holder;
 
             if (convertView == null) {
-                convertView = mInflater.inflate(R.layout.list_item_icon_text, null);
+                convertView = mInflater.inflate(R.layout.list_item_view, null);
 
                 holder = new ViewHolder();
                 holder.text = (TextView) convertView.findViewById(R.id.text);

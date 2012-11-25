@@ -9,7 +9,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 import cn.babysee.picture.env.AppEnv;
-import cn.babysee.picture.env.SharePref;
+import cn.babysee.picture.env.SharedPref;
 import cn.babysee.utils.FileUtils;
 
 public class TestHelper{
@@ -17,12 +17,6 @@ public class TestHelper{
     private static final String TAG = "TestHelper";
 
     private boolean DEBUG = AppEnv.DEBUG;
-
-    private static final int TYPE_0_1 = 0;
-
-    private static final int TYPE_1_2 = 1;
-
-    private static final int TYPE_2_6 = 2;
 
     private Context mContext;
 
@@ -151,11 +145,11 @@ public class TestHelper{
             sb.append(";");
         }
         if (DEBUG) Log.d(TAG, "save: " + sb.toString());
-        SharePref.setString(mContext, mOperateSaveKey, sb.toString());
+        SharedPref.setString(mContext, mOperateSaveKey, sb.toString());
     }
 
     public List<String> getSelectOption() {
-        String saveSelect = SharePref.getString(mContext, mOperateSaveKey, null);
+        String saveSelect = SharedPref.getString(mContext, mOperateSaveKey, null);
         if (DEBUG) Log.d(TAG, "getSelectOption: " + saveSelect);
         if (TextUtils.isEmpty(saveSelect)) {
             return null;
@@ -177,6 +171,8 @@ public class TestHelper{
     }
 
     public List<TestPhase> getPhaseList(int phaseType) {
+        if (DEBUG)
+            Log.d(TAG, "getPhaseList phaseType:" + phaseType);
 
         List<TestPhase> list = mTestList.get(Integer.valueOf(phaseType));
         if (list != null) {
@@ -185,14 +181,17 @@ public class TestHelper{
 
         String filePath = "test/test_phase1";
         switch (phaseType) {
-            case TYPE_0_1:
+            case 0:
                 filePath = "test/test_phase1";
                 break;
-            case TYPE_1_2:
+            case 1:
                 filePath = "test/test_phase2";
                 break;
-            case TYPE_2_6:
+            case 2:
                 filePath = "test/test_phase3";
+                break;
+            case 3:
+                filePath = "test/test_phase4";
                 break;
             default:
                 break;

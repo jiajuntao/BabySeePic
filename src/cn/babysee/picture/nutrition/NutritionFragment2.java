@@ -195,9 +195,8 @@ public class NutritionFragment2 extends BaseFragment implements ExpandableListVi
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
                 View convertView, ViewGroup parent) {
 
-            View view = mInflater.inflate(R.layout.nutrition_list_item_sub_view, null);
+            View view = mInflater.inflate(R.layout.list_sub_item_view, null);
             TextView title = (TextView) view.findViewById(R.id.title);
-            //            TextView summary = (TextView) view.findViewById(R.id.summary);
             Nutrition nutrition = getChild(groupPosition, childPosition);
 
             if (mNum == 0) {
@@ -205,8 +204,6 @@ public class NutritionFragment2 extends BaseFragment implements ExpandableListVi
             } else {
                 title.setText(nutrition.phase);
             }
-            //            summary.setText(nutrition.desc);
-
             return view;
         }
 

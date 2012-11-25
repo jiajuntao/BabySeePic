@@ -61,7 +61,8 @@
     <!-- 主页面tab文字颜色 -->
     <color name="tab_green">#44d90f</color>
     <color name="main_bg">#CDCD00</color>
-    <color name="main_item_bg">#B0CDCD00</color>
+    <color name="main_item_bg_normal">#B0CDCD00</color>
+    <color name="main_item_bg_pressed">#B0999999</color>
 
     <!-- 新界面颜色 -->
     <color name="black">#000000</color>

@@ -2,15 +2,23 @@
 
     <item
         android:id="@+id/menu_advice"
+        android:icon="@drawable/popup_menu_item_advice"
         android:orderInCategory="0"
         android:title="@string/menu_advice"/>
     <item
         android:id="@+id/menu_support_us"
+        android:icon="@drawable/popup_menu_item_friend"
         android:orderInCategory="1"
         android:title="@string/menu_support_us"/>
     <item
-        android:id="@+id/menu_about"
+        android:id="@+id/menu_update"
+        android:icon="@drawable/popup_menu_item_update"
         android:orderInCategory="2"
+        android:title="@string/menu_net_update"/>
+    <item
+        android:id="@+id/menu_about"
+        android:icon="@drawable/popup_menu_item_about"
+        android:orderInCategory="3"
         android:title="@string/menu_about"/>
     <!--
          <item

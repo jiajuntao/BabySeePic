@@ -6,122 +6,56 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.TextView;
-import cn.babysee.picture.base.BaseStatActivity;
-import cn.babysee.picture.book.BookListActivity;
-import cn.babysee.picture.draw.DrawBoardActivity;
+import android.view.Window;
+import cn.babysee.picture.base.BaseFragmentActivity;
 import cn.babysee.picture.env.AppEnv;
 import cn.babysee.picture.env.StatServiceEnv;
-import cn.babysee.picture.game.GameListActivity;
-import cn.babysee.picture.guide.Guide01Activity;
-import cn.babysee.picture.guide.GuideListActivity;
-import cn.babysee.picture.http.BabySeePicApi;
-import cn.babysee.picture.nutrition.NutritionFragmentTabNavigation;
 import cn.babysee.picture.remind.RemindHelper;
-import cn.babysee.picture.test.TestListActivity;
-import cn.babysee.picture.tools.BabyHeightActivity;
-import cn.babysee.utils.Utils;
+import cn.babysee.picture.update.UpdateHelper;
 
 import com.baidu.mobstat.StatService;
 
-public class MainActivity extends BaseStatActivity implements OnClickListener {
+public class MainActivity extends BaseFragmentActivity {
 
-    private boolean DEBUG = AppEnv.DEBUG;
-
-    private String TAG = "MainActivity";
+    private static final boolean DEBUG = AppEnv.DEBUG;
+    private static final String TAG = "MainActivity";
 
     private static final int DIALOG_ABOUT = 1;
-
     private static final int DIALOG_MARKET = 2;
+
+    private UpdateHelper updateHelper = null;
+    private static final int NUM_ITEMS = 1;
+
+    MyAdapter mAdapter;
+    ViewPager mPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-
         AppEnv.initScreen(this);
 
-        Typeface typeface = Utils.getFontTypeFace(mContext, "fonts/llt.ttf");
-        if (typeface != null) {
-            TextView title = (TextView)findViewById(R.id.title);
-            title.setText("宝宝智力方程");
-            title.setTypeface(typeface);
-        }
-        
-        findViewById(R.id.title).setOnClickListener(this);
-        findViewById(R.id.brush).setOnClickListener(this);
-        findViewById(R.id.test).setOnClickListener(this);
-        findViewById(R.id.game).setOnClickListener(this);
-        findViewById(R.id.seepic).setOnClickListener(this);
-        findViewById(R.id.guide).setOnClickListener(this);
-        findViewById(R.id.nutrition).setOnClickListener(this);
-        findViewById(R.id.book).setOnClickListener(this);
-        findViewById(R.id.tools).setOnClickListener(this);
+        mAdapter = new MyAdapter(getSupportFragmentManager());
+        mPager = (ViewPager) findViewById(R.id.pager);
+        mPager.setAdapter(mAdapter);
 
         if (RemindHelper.goToSupportUs(mContext)) {
             showDialog(DIALOG_MARKET);
         }
-        
-        BabySeePicApi.getUpdateConfig(mContext);
-    }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.brush:
-                StatService.onEvent(mContext, StatServiceEnv.MAIN_BABYDRAW_EVENT_ID,
-                        StatServiceEnv.MAIN_BABYDRAW_LABEL, 1);
-                startActivity(new Intent(mContext, DrawBoardActivity.class));
-                break;
-            case R.id.game:
-                StatService.onEvent(mContext, StatServiceEnv.MAIN_BABYGAME_EVENT_ID,
-                        StatServiceEnv.MAIN_BABYGAME_LABEL, 1);
-                startActivity(new Intent(mContext, GameListActivity.class));
-                break;
-            case R.id.test:
-                StatService.onEvent(mContext, StatServiceEnv.MAIN_TEST_EVENT_ID,
-                        StatServiceEnv.MAIN_TEST_LABEL, 1);
-                startActivity(new Intent(mContext, TestListActivity.class));
-                break;
-            case R.id.seepic:
-                StatService.onEvent(mContext, StatServiceEnv.MAIN_SEE_PIC_EVENT_ID,
-                        StatServiceEnv.MAIN_SEE_PIC_LABEL, 1);
-                startActivity(new Intent(mContext, SeePicActivity.class));
-                break;
-            case R.id.guide:
-                StatService.onEvent(mContext, StatServiceEnv.MAIN_GUIDE_EVENT_ID,
-                        StatServiceEnv.MAIN_GUIDE_LABEL, 1);
-                startActivity(new Intent(mContext, GuideListActivity.class));
-                break;
-            case R.id.nutrition:
-                StatService.onEvent(mContext, StatServiceEnv.MAIN_NUTRITION_EVENT_ID,
-                        StatServiceEnv.MAIN_NUTRITION_LABEL, 1);
-                startActivity(new Intent(mContext, NutritionFragmentTabNavigation.class));
-                break;
-            case R.id.book:
-                //TODO
-                StatService.onEvent(mContext, StatServiceEnv.MAIN_TOOLS_EVENT_ID,
-                        StatServiceEnv.MAIN_TOOLS_LABEL, 1);
-                startActivity(new Intent(mContext, BookListActivity.class));
-                break;
-            case R.id.tools:
-                StatService.onEvent(mContext, StatServiceEnv.MAIN_TOOLS_EVENT_ID,
-                        StatServiceEnv.MAIN_TOOLS_LABEL, 1);
-                startActivity(new Intent(mContext, Guide01Activity.class));
-//                startActivity(new Intent(mContext, BabyHeightActivity.class));
-                break;
-
-            default:
-                break;
-        }
+        updateHelper = new UpdateHelper(this);
+        updateHelper.checkUpdate();
     }
 
     @Override
@@ -132,33 +66,42 @@ public class MainActivity extends BaseStatActivity implements OnClickListener {
 
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
-        if (DEBUG) Log.d(TAG, "onMenuItemSelected");
+        if (DEBUG)
+            Log.d(TAG, "onMenuItemSelected");
 
         switch (item.getItemId()) {
-            case R.id.menu_about:
-                StatService.onEvent(mContext, StatServiceEnv.MAIN_MENU_ABOUT_EVENT_ID,
-                        StatServiceEnv.MAIN_MENU_ABOUT_LABEL, 1);
-                showDialog(DIALOG_ABOUT);
-                break;
-            case R.id.menu_advice:
+        case R.id.menu_about:
+            StatService.onEvent(mContext, StatServiceEnv.MAIN_MENU_ABOUT_EVENT_ID,
+                    StatServiceEnv.MAIN_MENU_ABOUT_LABEL, 1);
+            showDialog(DIALOG_ABOUT);
+            break;
+        case R.id.menu_advice:
 
-                StatService.onEvent(mContext, StatServiceEnv.MAIN_MENU_ADVICE_EVENT_ID,
-                        StatServiceEnv.MAIN_MENU_ADVICE_LABEL, 1);
-                try {
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    Uri maiUri = Uri.parse("mailto:yxstudio@gmail.com");
-                    intent.setData(maiUri);
-                    startActivity(Intent.createChooser(intent, getString(R.string.menu_advice)));
-                } catch (Exception e) {
-                    if (DEBUG) e.printStackTrace();
-                }
-                break;
-            case R.id.menu_support_us:
-                showDialog(DIALOG_MARKET);
-                break;
+            StatService.onEvent(mContext, StatServiceEnv.MAIN_MENU_ADVICE_EVENT_ID,
+                    StatServiceEnv.MAIN_MENU_ADVICE_LABEL, 1);
+            try {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                Uri maiUri = Uri.parse("mailto:yxstudio@gmail.com");
+                intent.setData(maiUri);
+                startActivity(Intent.createChooser(intent, getString(R.string.menu_advice)));
+            } catch (Exception e) {
+                if (DEBUG)
+                    e.printStackTrace();
+            }
+            break;
+        case R.id.menu_support_us:
+            StatService.onEvent(mContext, StatServiceEnv.MAIN_SUPPORT_US_EVENT_ID,
+                    StatServiceEnv.MAIN_SUPPORT_US_LABEL, 1);
+            showDialog(DIALOG_MARKET);
+            break;
+        case R.id.menu_update:
+            StatService.onEvent(mContext, StatServiceEnv.MAIN_CHECK_UPDATE_EVENT_ID,
+                    StatServiceEnv.MAIN_CHECK_UPDATE_LABEL, 1);
+            updateHelper.update(false);
+            break;
 
-            default:
-                break;
+        default:
+            break;
         }
 
         return super.onMenuItemSelected(featureId, item);
@@ -168,60 +111,74 @@ public class MainActivity extends BaseStatActivity implements OnClickListener {
     protected Dialog onCreateDialog(int id) {
 
         switch (id) {
-            case DIALOG_ABOUT:
+        case DIALOG_ABOUT:
 
-                String versionName = getString(R.string.app_name);
-                PackageInfo packageInfo = null;
-                try {
-                    packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-                    versionName += packageInfo.versionName;
-                } catch (NameNotFoundException e) {
-                    e.printStackTrace();
-                }
+            String versionName = getString(R.string.app_name);
+            PackageInfo packageInfo = null;
+            try {
+                packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+                versionName += packageInfo.versionName;
+            } catch (NameNotFoundException e) {
+                e.printStackTrace();
+            }
 
-                View view = View.inflate(this, R.layout.about, null);
+            View view = View.inflate(this, R.layout.about, null);
 
-                return new AlertDialog.Builder(this)
-                        .setIcon(R.drawable.ic_launcher)
-                        .setTitle(versionName)
-                        .setView(view)
-                        .setPositiveButton(android.R.string.ok,
-                                new DialogInterface.OnClickListener() {
+            return new AlertDialog.Builder(this).setIcon(R.drawable.ic_launcher).setTitle(versionName).setView(view)
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 
-                                    public void onClick(DialogInterface dialog, int whichButton) {
-                                        dismissDialog(DIALOG_ABOUT);
-                                    }
-                                }).create();
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            dismissDialog(DIALOG_ABOUT);
+                        }
+                    }).create();
 
-            case DIALOG_MARKET:
+        case DIALOG_MARKET:
 
-                return new AlertDialog.Builder(this)
-                        .setIcon(R.drawable.ic_launcher)
-                        .setTitle(R.string.goto_market_dialog_title)
-                        .setMessage(R.string.goto_market_dialog_content)
-                        .setPositiveButton(R.string.goto_market_dialog_btn_ok,
-                                new DialogInterface.OnClickListener() {
+            return new AlertDialog.Builder(this).setIcon(R.drawable.ic_launcher)
+                    .setTitle(R.string.goto_market_dialog_title).setMessage(R.string.goto_market_dialog_content)
+                    .setPositiveButton(R.string.goto_market_dialog_btn_ok, new DialogInterface.OnClickListener() {
 
-                                    public void onClick(DialogInterface dialog, int whichButton) {
-                                        RemindHelper.goToMarketScore(MainActivity.this);
-                                    }
-                                })
-                        .setNegativeButton(R.string.goto_market_dialog_btn_cancel,
-                                new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            StatService.onEvent(mContext, StatServiceEnv.MAIN_SUPPORT_US_NOW_EVENT_ID,
+                                    StatServiceEnv.MAIN_SUPPORT_US_NOW_LABEL, 1);
+                            RemindHelper.goToMarketScore(MainActivity.this);
+                        }
+                    }).setNegativeButton(R.string.goto_market_dialog_btn_cancel, new DialogInterface.OnClickListener() {
 
-                                    public void onClick(DialogInterface dialog, int whichButton) {
-                                        RemindHelper.showNotification(mContext);
-                                        dismissDialog(DIALOG_MARKET);
-                                    }
-                                })
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            StatService.onEvent(mContext, StatServiceEnv.MAIN_SUPPORT_US_LATER_EVENT_ID,
+                                    StatServiceEnv.MAIN_SUPPORT_US_LATER_LABEL, 1);
+                            RemindHelper.showNotification(mContext);
+                            dismissDialog(DIALOG_MARKET);
+                        }
+                    })
 
-                        .create();
+                    .create();
 
-            default:
-                break;
+        default:
+            break;
         }
 
         return super.onCreateDialog(id);
     }
 
+    public static class MyAdapter extends FragmentPagerAdapter {
+        public MyAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public int getCount() {
+            return NUM_ITEMS;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            if (position == 0) {
+                return new MainFragment();
+            } else {
+                return new MainFragment2();
+            }
+        }
+    }
 }

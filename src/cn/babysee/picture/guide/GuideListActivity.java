@@ -87,7 +87,7 @@ public class GuideListActivity extends BaseActivity {
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView,
                 ViewGroup parent) {
 
-            View view = mInflater.inflate(R.layout.nutrition_list_item_sub_view, null);
+            View view = mInflater.inflate(R.layout.list_sub_item_view, null);
             TextView title = (TextView) view.findViewById(R.id.title);
             Guide nutrition = getChild(groupPosition, childPosition);
             title.setText(nutrition.desc0 + "\n\n" + nutrition.desc1 + "\n\n" + nutrition.desc2);

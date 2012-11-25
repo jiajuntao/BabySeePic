@@ -1,27 +1,28 @@
 package cn.babysee.picture;
 
-import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.webkit.WebView;
+import cn.babysee.picture.base.BaseActivity;
 
-import com.baidu.mobstat.StatActivity;
-
-public class WebViewActivity extends StatActivity {
+public class WebViewActivity extends BaseActivity {
 
     private WebView webview;
-
-    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.webview);
 
-        context = getApplicationContext();
-
         webview = (WebView) findViewById(R.id.webview);
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings().setDefaultTextEncodingName("utf-8");
-        webview.loadUrl("file:///android_asset/help.html");
+        String url = getIntent().getStringExtra("url");
+        if (TextUtils.isEmpty(url)) {
+            webview.loadUrl("file:///android_asset/help.html");
+        } else {
+            webview.getSettings().setDefaultTextEncodingName("gb2312");
+            webview.loadUrl("file:///android_asset/" + url);
+        }
     }
 }

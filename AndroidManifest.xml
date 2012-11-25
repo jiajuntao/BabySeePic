@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cn.babysee.picture"
-    android:versionCode="8"
-    android:versionName="1.6.0" >
+    android:versionCode="9"
+    android:versionName="1.7.0.0001" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -44,16 +44,19 @@
         android:theme="@style/Theme.BabySee" >
 
         <!-- 您从百度网站获取的APP KEY -->
-        <!-- <meta-data -->
-        <!-- android:name="BaiduMobAd_STAT_ID" -->
-        <!-- android:value="f0234c2f5c" /> -->
         <meta-data
             android:name="BaiduMobAd_STAT_ID"
-            android:value="none" />
+            android:value="f0234c2f5c" />
+
+        <!-- <meta-data -->
+        <!-- android:name="BaiduMobAd_STAT_ID" -->
+        <!-- android:value="none" /> -->
+
+
         <!-- 渠道商编号 -->
         <meta-data
             android:name="BaiduMobAd_CHANNEL"
-            android:value="update" />
+            android:value="huawei" />
 
         <!-- 是否开启错误日志统计，默认为false -->
         <meta-data
@@ -124,22 +127,32 @@
         </activity>
         <activity
             android:name=".tools.BabyHeightActivity"
-            android:label="@string/guide"
+            android:label="@string/tools"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".book.BookListActivity"
-            android:label="@string/guide"
+            android:name=".book.ZhiliFangChengListActivity"
+            android:label="@string/zhi_li_fang_cheng"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".book.BookContentActivity"
-            android:label="@string/guide"
+            android:name=".book.ZhiLiFangChengContentActivity"
+            android:label="@string/zhi_li_fang_cheng"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".book.YuErZhiNanListActivity"
+            android:label="@string/yuerzhinan"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".guide.Guide01Activity"
-            android:label="@string/guide"
+            android:label="@string/guide_one"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".book.BaikeListActivity"
+            android:label="@string/baike"
             android:screenOrientation="portrait" >
         </activity>
 
@@ -148,6 +161,9 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
+
+        <service android:name=".update.UpdateService" >
+        </service>
     </application>
 
 </manifest>

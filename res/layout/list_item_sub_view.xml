@@ -22,7 +22,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/icon"
-        android:text="谁在叫我" />
+        android:text="谁在叫我"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/summary"
@@ -32,6 +33,8 @@
         android:layout_below="@+id/title"
         android:layout_marginTop="5dip"
         android:layout_toRightOf="@+id/icon"
-        android:text="妈妈竖抱着宝宝" />
+        android:lineSpacingMultiplier="1.1"
+        android:text="妈妈竖抱着宝宝"
+        android:textSize="16sp" />
 
 </RelativeLayout>

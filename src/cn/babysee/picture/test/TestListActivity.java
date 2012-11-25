@@ -30,7 +30,7 @@ import android.widget.TextView;
 import cn.babysee.picture.R;
 import cn.babysee.picture.base.BaseListNavigation;
 import cn.babysee.picture.env.AppEnv;
-import cn.babysee.picture.env.SharePref;
+import cn.babysee.picture.env.SharedPref;
 import cn.babysee.picture.env.StatServiceEnv;
 
 import com.baidu.mobstat.StatService;
@@ -63,7 +63,7 @@ public class TestListActivity extends BaseListNavigation implements ExpandableLi
         mExpandableListView = (ExpandableListView) findViewById(R.id.game_list);
         mExpandableListView.setOnChildClickListener(this);
 
-        int position = SharePref.getInt(mContext, SharePref.TEST_PHASE, 0);
+        int position = SharedPref.getInt(mContext, SharedPref.TEST_PHASE, 0);
         getSupportActionBar().setSelectedNavigationItem(position);
 
         mTestHelper = new TestHelper(mContext);
@@ -72,7 +72,7 @@ public class TestListActivity extends BaseListNavigation implements ExpandableLi
     @Override
     protected void onPause() {
         super.onPause();
-        SharePref.setInt(mContext, SharePref.TEST_PHASE, mStagePosition);
+        SharedPref.setInt(mContext, SharedPref.TEST_PHASE, mStagePosition);
     }
 
     @Override
@@ -146,7 +146,7 @@ public class TestListActivity extends BaseListNavigation implements ExpandableLi
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView,
                 ViewGroup parent) {
 
-            View view = mInflater.inflate(R.layout.nutrition_list_item_sub_view, null);
+            View view = mInflater.inflate(R.layout.list_sub_item_view, null);
             TextView title = (TextView) view.findViewById(R.id.title);
             TestQuestion testQuestion = getChild(groupPosition, childPosition);
             title.setText(testQuestion.desc);
