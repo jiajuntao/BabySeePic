@@ -46,17 +46,12 @@
         <!-- 您从百度网站获取的APP KEY -->
         <meta-data
             android:name="BaiduMobAd_STAT_ID"
-            android:value="f0234c2f5c" />
-
-        <!-- <meta-data -->
-        <!-- android:name="BaiduMobAd_STAT_ID" -->
-        <!-- android:value="none" /> -->
-
+            android:value="BAIDU_STAT_ID_NONE" />
 
         <!-- 渠道商编号 -->
         <meta-data
             android:name="BaiduMobAd_CHANNEL"
-            android:value="huawei" />
+            android:value="CHANELID_NONE" />
 
         <!-- 是否开启错误日志统计，默认为false -->
         <meta-data
