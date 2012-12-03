@@ -25,12 +25,12 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+import cn.babysee.base.BaseActivity;
 import cn.babysee.picture.R;
-import cn.babysee.picture.base.BaseActivity;
 import cn.babysee.picture.env.AppEnv;
 
 /**
- * 宝宝智力测试
+ * 成长向导
  */
 public class GuideListActivity extends BaseActivity {
 

@@ -15,12 +15,12 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
+import cn.babysee.http.HttpUtils;
+import cn.babysee.http.HttpException;
+import cn.babysee.http.HttpUtils.DownloadCallback;
 import cn.babysee.picture.MainActivity;
 import cn.babysee.picture.R;
 import cn.babysee.picture.env.AppEnv;
-import cn.babysee.picture.http.Utility;
-import cn.babysee.picture.http.Utility.DownloadCallback;
-import cn.babysee.picture.http.WeiboException;
 import cn.babysee.picture.remind.RemindHelper;
 import cn.babysee.utils.UIUtils;
 import cn.babysee.utils.Utils;
@@ -146,8 +146,8 @@ public class UpdateService extends Service {
         }
     }
 
-    public void downloadUpdateFile(String downloadUrl, File saveFile) throws WeiboException {
-        Utility.downloadFile(this, downloadUrl, saveFile, new DownloadCallback() {
+    public void downloadUpdateFile(String downloadUrl, File saveFile) throws HttpException {
+        HttpUtils.downloadFile(this, downloadUrl, saveFile, new DownloadCallback() {
 
             @Override
             public void onDownloadStart() {

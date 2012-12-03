@@ -13,18 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.babysee.picture.book;
+package cn.babysee.picture.guide;
 
 import java.util.List;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 import cn.babysee.base.BaseActivity;
@@ -32,21 +30,19 @@ import cn.babysee.picture.R;
 import cn.babysee.picture.env.AppEnv;
 
 /**
- * 中国儿童智力方程
+ * 成长建议
  */
-public class ZhiliFangChengListActivity extends BaseActivity implements ExpandableListView.OnChildClickListener {
+public class GrowAdviceActivity extends BaseActivity {
 
-    private static final String TAG = "BookListActivity";
+    private static final String TAG = "TestListActivity";
 
     private boolean DEBUG = AppEnv.DEBUG;
 
     private Context mContext;
 
-    private IBookHelper mHelper;
+    private GrowAdviceHelper mTestHelper;
 
     private ExpandableListView mExpandableListView;
-
-    private ExpandableListAdapter mAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,35 +51,25 @@ public class ZhiliFangChengListActivity extends BaseActivity implements Expandab
         mContext = getApplicationContext();
 
         mExpandableListView = (ExpandableListView) findViewById(R.id.game_list);
-        mExpandableListView.setOnChildClickListener(this);
-        mHelper = new ZhiLiFangChengHelper(mContext);
-        mAdapter = new MyExpandableListAdapter(mContext, mHelper.getChapterList());
-        mExpandableListView.setAdapter(mAdapter);
-    }
 
-    @Override
-    public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-        ChapterSub child = (ChapterSub) mAdapter.getChild(groupPosition, childPosition);
-        Intent intent = new Intent(this, ZhiLiFangChengContentActivity.class);
-        intent.putExtra("filePath", child.contentPath);
-        startActivity(intent);
-        return true;
+        mTestHelper = new GrowAdviceHelper(mContext);
+        mExpandableListView.setAdapter(new MyExpandableListAdapter(mContext, mTestHelper.getList()));
     }
 
     public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 
         private LayoutInflater mInflater;
 
-        private List<Chapter> mList;
+        private List<Guide> gameLists;
 
-        public MyExpandableListAdapter(Context context, List<Chapter> list) {
+        public MyExpandableListAdapter(Context context, List<Guide> gameLists) {
             mInflater = LayoutInflater.from(context);
-            this.mList = list;
+            this.gameLists = gameLists;
         }
 
-        public ChapterSub getChild(int groupPosition, int childPosition) {
+        public Guide getChild(int groupPosition, int childPosition) {
 
-            return mList.get(groupPosition).chapterSubList.get(childPosition);
+            return gameLists.get(groupPosition);
         }
 
         public long getChildId(int groupPosition, int childPosition) {
@@ -91,7 +77,7 @@ public class ZhiliFangChengListActivity extends BaseActivity implements Expandab
         }
 
         public int getChildrenCount(int groupPosition) {
-            return mList.get(groupPosition).chapterSubList.size();
+            return 1;
         }
 
         public TextView getGenericView() {
@@ -103,18 +89,18 @@ public class ZhiliFangChengListActivity extends BaseActivity implements Expandab
 
             View view = mInflater.inflate(R.layout.list_sub_item_view, null);
             TextView title = (TextView) view.findViewById(R.id.title);
-            ChapterSub child = getChild(groupPosition, childPosition);
-            title.setText(child.name);
+            Guide nutrition = getChild(groupPosition, childPosition);
+            title.setText(nutrition.desc0);
 
             return view;
         }
 
-        public Chapter getGroup(int groupPosition) {
-            return mList.get(groupPosition);
+        public Guide getGroup(int groupPosition) {
+            return gameLists.get(groupPosition);
         }
 
         public int getGroupCount() {
-            return mList.size();
+            return gameLists.size();
         }
 
         public long getGroupId(int groupPosition) {
@@ -123,7 +109,7 @@ public class ZhiliFangChengListActivity extends BaseActivity implements Expandab
 
         public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
             TextView textView = getGenericView();
-            textView.setText(getGroup(groupPosition).name);
+            textView.setText(getGroup(groupPosition).phase);
             return textView;
         }
 

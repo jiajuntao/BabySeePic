@@ -13,11 +13,11 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
+import cn.babysee.http.HttpUtils;
 import cn.babysee.picture.R;
 import cn.babysee.picture.env.AppEnv;
 import cn.babysee.picture.env.SharedPref;
 import cn.babysee.picture.env.StatServiceEnv;
-import cn.babysee.picture.http.Utility;
 import cn.babysee.utils.FileUtils;
 import cn.babysee.utils.NetworkUtil;
 import cn.babysee.utils.UIUtils;
@@ -193,7 +193,7 @@ public class UpdateHelper {
 
         try {
             //            String content = BabySeePicApi.getStaticPage(updateConfigUrl);
-            String content = Utility.openUrl(context, updateConfigUrl, "GET", null, null);
+            String content = HttpUtils.openUrl(context, updateConfigUrl, "GET", null, null);
             if (DEBUG)
                 Log.d(TAG, "getUpdateConfig" + content);
 

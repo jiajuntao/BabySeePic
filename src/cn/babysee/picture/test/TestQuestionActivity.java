@@ -34,8 +34,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
+import cn.babysee.base.BaseActivity;
 import cn.babysee.picture.R;
-import cn.babysee.picture.base.BaseActivity;
 import cn.babysee.picture.env.AppEnv;
 
 /**

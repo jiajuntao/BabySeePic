@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.babysee.picture.http;
+package cn.babysee.http;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -37,15 +37,15 @@ public abstract class HttpHeaderFactory {
     public HttpHeaderFactory() {
     }
 
-    public String getWeiboAuthHeader(String method, String url, WeiboParameters params,
-            String app_key, String app_secret, Token token) throws WeiboException {
+    public String getWeiboAuthHeader(String method, String url, HttpParameters params,
+            String app_key, String app_secret, Token token) throws HttpException {
         // step 1: generate timestamp and nonce
         final long timestamp = System.currentTimeMillis() / 1000;
         final long nonce = timestamp + (new Random()).nextInt();
         // step 2: authParams有两个用处：1.加密串一部分 2.生成最后Authorization头域
-        WeiboParameters authParams = this.generateAuthParameters(nonce, timestamp, token);
+        HttpParameters authParams = this.generateAuthParameters(nonce, timestamp, token);
         // 生成用于计算signature的，参数串
-        WeiboParameters signatureParams = this.generateSignatureParameters(authParams, params, url);
+        HttpParameters signatureParams = this.generateSignatureParameters(authParams, params, url);
         // step 3: 生成用于签名的base String
         String oauthBaseString = this.generateAuthSignature(method, signatureParams, url, token);
         // step 4: 生成oauth_signature
@@ -56,7 +56,7 @@ public abstract class HttpHeaderFactory {
         return "OAuth " + encodeParameters(authParams, ",", true);
     }
 
-    private String generateAuthSignature(final String method, WeiboParameters signatureParams,
+    private String generateAuthSignature(final String method, HttpParameters signatureParams,
             final String url, Token token) {
         StringBuffer base = new StringBuffer(method).append("&")
                 .append(encode(constructRequestURL(url))).append("&");
@@ -65,19 +65,19 @@ public abstract class HttpHeaderFactory {
         return oauthBaseString;
     }
 
-    private WeiboParameters generateSignatureParameters(WeiboParameters authParams,
-            WeiboParameters params, String url) throws WeiboException {
-        WeiboParameters signatureParams = new WeiboParameters();
+    private HttpParameters generateSignatureParameters(HttpParameters authParams,
+            HttpParameters params, String url) throws HttpException {
+        HttpParameters signatureParams = new HttpParameters();
         signatureParams.addAll(authParams);
 //        signatureParams.add("source", Weibo.getAppKey());
         signatureParams.addAll(params);
         this.parseUrlParameters(url, signatureParams);
-        WeiboParameters lsp = generateSignatureList(signatureParams);
+        HttpParameters lsp = generateSignatureList(signatureParams);
         return lsp;
     }
 
-    private WeiboParameters generateAuthParameters(long nonce, long timestamp, Token token) {
-        WeiboParameters authParams = new WeiboParameters();
+    private HttpParameters generateAuthParameters(long nonce, long timestamp, Token token) {
+        HttpParameters authParams = new HttpParameters();
 //        authParams.add("oauth_consumer_key", Weibo.getAppKey());
         authParams.add("oauth_nonce", String.valueOf(nonce));
         authParams.add("oauth_signature_method", HttpHeaderFactory.CONST_SIGNATURE_METHOD);
@@ -92,15 +92,15 @@ public abstract class HttpHeaderFactory {
     }
 
     // 生成用于哈希的base string串，注意要按顺序，按需文档需求参数生成，否则40107错误
-    public abstract WeiboParameters generateSignatureList(WeiboParameters bundle);
+    public abstract HttpParameters generateSignatureList(HttpParameters bundle);
 
     // add additional parameters to des key-value pairs,support to expanding
     // params
-    public abstract void addAdditionalParams(WeiboParameters des, WeiboParameters src);
+    public abstract void addAdditionalParams(HttpParameters des, HttpParameters src);
 
     // 解析url中参数对,存储到signatureBaseParams
-    public void parseUrlParameters(String url, WeiboParameters signatureBaseParams)
-            throws WeiboException {
+    public void parseUrlParameters(String url, HttpParameters signatureBaseParams)
+            throws HttpException {
         int queryStart = url.indexOf("?");
         if (-1 != queryStart) {
             String[] queryStrs = url.substring(queryStart + 1).split("&");
@@ -115,16 +115,16 @@ public abstract class HttpHeaderFactory {
                     }
                 }
             } catch (UnsupportedEncodingException e) {
-                throw new WeiboException(e);
+                throw new HttpException(e);
             }
 
         }
 
     }
 
-    public abstract String generateSignature(String data, Token token) throws WeiboException;
+    public abstract String generateSignature(String data, Token token) throws HttpException;
 
-    public static String encodeParameters(WeiboParameters postParams, String splitter, boolean quot) {
+    public static String encodeParameters(HttpParameters postParams, String splitter, boolean quot) {
         StringBuffer buf = new StringBuffer();
         for (int i = 0; i < postParams.size(); i++) {
             if (buf.length() != 0) {

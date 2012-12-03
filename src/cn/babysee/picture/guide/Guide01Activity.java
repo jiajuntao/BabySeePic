@@ -18,8 +18,8 @@ package cn.babysee.picture.guide;
 import android.content.Context;
 import android.os.Bundle;
 import android.widget.TextView;
+import cn.babysee.base.BaseActivity;
 import cn.babysee.picture.R;
-import cn.babysee.picture.base.BaseActivity;
 import cn.babysee.picture.env.AppEnv;
 import cn.babysee.utils.FileUtils;
 

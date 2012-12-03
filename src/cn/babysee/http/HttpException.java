@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.babysee.picture.http;
+package cn.babysee.http;
 
 
 /**
@@ -22,7 +22,7 @@ package cn.babysee.picture.http;
  *
  * @author  (luopeng@staff.sina.com.cn zhangjie2@staff.sina.com.cn 官方微博：WBSDK  http://weibo.com/u/2791136085)
  */
-public class WeiboException extends Exception {
+public class HttpException extends Exception {
 
 	private static final long serialVersionUID = 475022994858770424L;
 	
@@ -128,24 +128,24 @@ public class WeiboException extends Exception {
 	
 	
 	
-    public WeiboException(String msg) {
+    public HttpException(String msg) {
         super(msg);
     }
 
-    public WeiboException(Exception cause) {
+    public HttpException(Exception cause) {
         super(cause);
     }
 
-    public WeiboException(String msg, int statusCode) {
+    public HttpException(String msg, int statusCode) {
         super(msg);
         this.statusCode = statusCode;
     }
 
-    public WeiboException(String msg, Exception cause) {
+    public HttpException(String msg, Exception cause) {
         super(msg, cause);
     }
 
-    public WeiboException(String msg, Exception cause, int statusCode) {
+    public HttpException(String msg, Exception cause, int statusCode) {
         super(msg, cause);
         this.statusCode = statusCode;
     }
@@ -155,19 +155,19 @@ public class WeiboException extends Exception {
     }
     
     
-	public WeiboException() {
+	public HttpException() {
 		super(); 
 	}
 
-	public WeiboException(String detailMessage, Throwable throwable) {
+	public HttpException(String detailMessage, Throwable throwable) {
 		super(detailMessage, throwable);
 	}
 
-	public WeiboException(Throwable throwable) {
+	public HttpException(Throwable throwable) {
 		super(throwable);
 	}
 
-	public WeiboException(int statusCode) {
+	public HttpException(int statusCode) {
 		super();
 		this.statusCode = statusCode;
 	}

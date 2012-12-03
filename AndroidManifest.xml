@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cn.babysee.picture"
-    android:versionCode="9"
-    android:versionName="1.7.0.0001" >
+    android:versionCode="10"
+    android:versionName="1.8.0.1202" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -143,6 +143,11 @@
         <activity
             android:name=".guide.Guide01Activity"
             android:label="@string/guide_one"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".guide.GrowAdviceActivity"
+            android:label="@string/grow_advice"
             android:screenOrientation="portrait" >
         </activity>
         <activity

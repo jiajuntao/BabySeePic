@@ -1,4 +1,4 @@
-package cn.babysee.picture.base;
+package cn.babysee.base;
 
 import java.util.Arrays;
 

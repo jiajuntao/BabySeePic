@@ -1,4 +1,4 @@
-package cn.babysee.picture.http;
+package cn.babysee.http;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -82,9 +82,9 @@ import cn.babysee.picture.update.UpdateService;
  * @author (luopeng@staff.sina.com.cn zhangjie2@staff.sina.com.cn 官方微博：WBSDK http://weibo.com/u/2791136085)
  */
 
-public class Utility {
+public class HttpUtils {
 
-    private static WeiboParameters mRequestHeader = new WeiboParameters();
+    private static HttpParameters mRequestHeader = new HttpParameters();
     private static HttpHeaderFactory mAuth;
     private static Token mToken = null;
 
@@ -110,8 +110,8 @@ public class Utility {
     }
 
     // 设置http头,如果authParam不为空，则表示当前有token认证信息需要加入到头中
-    public static void setHeader(String httpMethod, HttpUriRequest request, WeiboParameters authParam, String url,
-            Token token) throws WeiboException {
+    public static void setHeader(String httpMethod, HttpUriRequest request, HttpParameters authParam, String url,
+            Token token) throws HttpException {
         if (!isBundleEmpty(mRequestHeader)) {
             for (int loc = 0; loc < mRequestHeader.size(); loc++) {
                 String key = mRequestHeader.getKey(loc);
@@ -129,7 +129,7 @@ public class Utility {
         request.setHeader("User-Agent", System.getProperties().getProperty("http.agent") + " WeiboAndroidSDK");
     }
 
-    public static boolean isBundleEmpty(WeiboParameters bundle) {
+    public static boolean isBundleEmpty(HttpParameters bundle) {
         if (bundle == null || bundle.size() == 0) {
             return true;
         }
@@ -142,7 +142,7 @@ public class Utility {
         mRequestHeader.add(key, value);
     }
 
-    public static void setRequestHeader(WeiboParameters params) {
+    public static void setRequestHeader(HttpParameters params) {
         mRequestHeader.addAll(params);
     }
 
@@ -168,7 +168,7 @@ public class Utility {
         return sb.toString();
     }
 
-    public static String encodeUrl(WeiboParameters parameters) {
+    public static String encodeUrl(HttpParameters parameters) {
         if (parameters == null) {
             return "";
         }
@@ -224,7 +224,7 @@ public class Utility {
      *            :parameters key pairs
      * @return UrlEncodedFormEntity: encoed entity
      */
-    public static UrlEncodedFormEntity getPostParamters(Bundle bundle) throws WeiboException {
+    public static UrlEncodedFormEntity getPostParamters(Bundle bundle) throws HttpException {
         if (bundle == null || bundle.isEmpty()) {
             return null;
         }
@@ -236,7 +236,7 @@ public class Utility {
             UrlEncodedFormEntity entity = new UrlEncodedFormEntity(form, "UTF-8");
             return entity;
         } catch (UnsupportedEncodingException e) {
-            throw new WeiboException(e);
+            throw new HttpException(e);
         }
     }
 
@@ -256,8 +256,8 @@ public class Utility {
      * @return UrlEncodedFormEntity: encoed entity
      */
 
-    public static String openUrl(Context context, String url, String method, WeiboParameters params, Token token)
-            throws WeiboException {
+    public static String openUrl(Context context, String url, String method, HttpParameters params, Token token)
+            throws HttpException {
         String rlt = "";
         String file = "";
         if (params != null) {
@@ -277,12 +277,12 @@ public class Utility {
         return rlt;
     }
     
-    public static void downloadFile(Context context, String url, File saveFile, DownloadCallback downloadCallback) throws WeiboException {
+    public static void downloadFile(Context context, String url, File saveFile, DownloadCallback downloadCallback) throws HttpException {
         openUrl(context, url, "GET", null, null, null, saveFile, downloadCallback);
     }
 
-    public static String openUrl(Context context, String url, String method, WeiboParameters params, String file,
-            Token token, File saveFile, DownloadCallback downloadCallback) throws WeiboException {
+    public static String openUrl(Context context, String url, String method, HttpParameters params, String file,
+            Token token, File saveFile, DownloadCallback downloadCallback) throws HttpException {
         String result = "";
         try {
             HttpClient client = getNewHttpClient(context);
@@ -299,11 +299,11 @@ public class Utility {
                 byte[] data = null;
                 bos = new ByteArrayOutputStream(1024 * 50);
                 if (!TextUtils.isEmpty(file)) {
-                    Utility.paramToUpload(bos, params);
+                    HttpUtils.paramToUpload(bos, params);
                     post.setHeader("Content-Type", MULTIPART_FORM_DATA + "; boundary=" + BOUNDARY);
                     Bitmap bf = BitmapFactory.decodeFile(file);
 
-                    Utility.imageContentToUpload(bos, bf);
+                    HttpUtils.imageContentToUpload(bos, bf);
 
                 } else {
                     post.setHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -327,7 +327,7 @@ public class Utility {
 
             if (statusCode != 200) {
                 result = read(response);
-                throw new WeiboException(String.format(status.toString()), statusCode);
+                throw new HttpException(String.format(status.toString()), statusCode);
             }
             // parse content stream from response
             if (saveFile == null) {
@@ -337,12 +337,12 @@ public class Utility {
                 try {
                     downloadFile(response, saveFile, downloadCallback);
                 } catch (Exception e) {
-                    throw new WeiboException(e);
+                    throw new HttpException(e);
                 }
             }
             return result;
         } catch (IOException e) {
-            throw new WeiboException(e);
+            throw new HttpException(e);
         }
     }
 
@@ -370,8 +370,8 @@ public class Utility {
 
             // Set the default socket timeout (SO_TIMEOUT) // in
             // milliseconds which is the timeout for waiting for data.
-            HttpConnectionParams.setConnectionTimeout(params, Utility.SET_CONNECTION_TIMEOUT);
-            HttpConnectionParams.setSoTimeout(params, Utility.SET_SOCKET_TIMEOUT);
+            HttpConnectionParams.setConnectionTimeout(params, HttpUtils.SET_CONNECTION_TIMEOUT);
+            HttpConnectionParams.setSoTimeout(params, HttpUtils.SET_SOCKET_TIMEOUT);
             HttpClient client = new DefaultHttpClient(ccm, params);
             setAPN(context, client);
             return client;
@@ -448,8 +448,8 @@ public class Utility {
         BasicHttpParams httpParameters = new BasicHttpParams();
         // Set the default socket timeout (SO_TIMEOUT) // in
         // milliseconds which is the timeout for waiting for data.
-        HttpConnectionParams.setConnectionTimeout(httpParameters, Utility.SET_CONNECTION_TIMEOUT);
-        HttpConnectionParams.setSoTimeout(httpParameters, Utility.SET_SOCKET_TIMEOUT);
+        HttpConnectionParams.setConnectionTimeout(httpParameters, HttpUtils.SET_CONNECTION_TIMEOUT);
+        HttpConnectionParams.setSoTimeout(httpParameters, HttpUtils.SET_SOCKET_TIMEOUT);
         HttpClient client = new DefaultHttpClient(httpParameters);
         setAPN(context, client);
         return client;
@@ -464,7 +464,7 @@ public class Utility {
      *            : bitmap for uploading
      * @return void
      */
-    private static void imageContentToUpload(OutputStream out, Bitmap imgpath) throws WeiboException {
+    private static void imageContentToUpload(OutputStream out, Bitmap imgpath) throws HttpException {
         StringBuilder temp = new StringBuilder();
 
         temp.append(MP_BOUNDARY).append("\r\n");
@@ -479,13 +479,13 @@ public class Utility {
             out.write("\r\n".getBytes());
             out.write(("\r\n" + END_MP_BOUNDARY).getBytes());
         } catch (IOException e) {
-            throw new WeiboException(e);
+            throw new HttpException(e);
         } finally {
             if (null != bis) {
                 try {
                     bis.close();
                 } catch (IOException e) {
-                    throw new WeiboException(e);
+                    throw new HttpException(e);
                 }
             }
         }
@@ -500,7 +500,7 @@ public class Utility {
      *            : post parameters for uploading
      * @return void
      */
-    private static void paramToUpload(OutputStream baos, WeiboParameters params) throws WeiboException {
+    private static void paramToUpload(OutputStream baos, HttpParameters params) throws HttpException {
         String key = "";
         for (int loc = 0; loc < params.size(); loc++) {
             key = params.getKey(loc);
@@ -513,7 +513,7 @@ public class Utility {
             try {
                 baos.write(res);
             } catch (IOException e) {
-                throw new WeiboException(e);
+                throw new HttpException(e);
             }
         }
     }
@@ -526,7 +526,7 @@ public class Utility {
      * 
      * @return String : http response content
      */
-    private static String read(HttpResponse response) throws WeiboException {
+    private static String read(HttpResponse response) throws HttpException {
         String result = "";
         HttpEntity entity = response.getEntity();
         InputStream inputStream = null;
@@ -549,9 +549,9 @@ public class Utility {
             result = new String(content.toByteArray());
             return result;
         } catch (IllegalStateException e) {
-            throw new WeiboException(e);
+            throw new HttpException(e);
         } catch (IOException e) {
-            throw new WeiboException(e);
+            throw new HttpException(e);
         } finally {
             if (inputStream != null) {
                 try {
@@ -669,8 +669,8 @@ public class Utility {
         alertBuilder.create().show();
     }
 
-    public static String encodeParameters(WeiboParameters httpParams) {
-        if (null == httpParams || Utility.isBundleEmpty(httpParams)) {
+    public static String encodeParameters(HttpParameters httpParams) {
+        if (null == httpParams || HttpUtils.isBundleEmpty(httpParams)) {
             return "";
         }
         StringBuilder buf = new StringBuilder();
@@ -742,6 +742,30 @@ public class Utility {
         } catch (Exception e) {
         }
         return s;
+    }
+    
+    public static String getStaticPage(String surl) {
+        String htmlContent = "";
+        try {
+            java.io.InputStream inputStream;
+            java.net.URL url = new java.net.URL(surl);
+            java.net.HttpURLConnection connection = (java.net.HttpURLConnection) url.openConnection();
+            connection.connect();
+            inputStream = connection.getInputStream();
+            byte[] bytes = new byte[1024 * 2000];
+            int index = 0;
+            int count = inputStream.read(bytes, index, 1024 * 2000);
+            while (count != -1) {
+                index += count;
+                count = inputStream.read(bytes, index, 1);
+            }
+            htmlContent = new String(bytes, "utf-8");
+            connection.disconnect();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return htmlContent.trim();
     }
 
 }

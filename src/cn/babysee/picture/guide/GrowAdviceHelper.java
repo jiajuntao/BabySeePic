@@ -12,9 +12,9 @@ import android.util.Log;
 import android.util.Xml;
 import cn.babysee.picture.env.AppEnv;
 
-public class GuideHelper {
+public class GrowAdviceHelper {
 
-    private static final String TAG = "GuideHelper";
+    private static final String TAG = "GrowAdviceHelper";
 
     private boolean DEBUG = AppEnv.DEBUG;
 
@@ -22,7 +22,7 @@ public class GuideHelper {
 
     private List<Guide> list;
 
-    public GuideHelper(Context context) {
+    public GrowAdviceHelper(Context context) {
         this.mContext = context;
     }
 
@@ -33,7 +33,7 @@ public class GuideHelper {
 
         InputStream inStream = null;
         try {
-            inStream = mContext.getResources().getAssets().open("guide/baby_guide");
+            inStream = mContext.getResources().getAssets().open("guide/grow_advice");
             if (inStream == null) {
                 return null;
             }
@@ -43,11 +43,12 @@ public class GuideHelper {
 
         XmlPullParser parser = Xml.newPullParser();
         Guide currentGame = null;
-
+//        <article>
+//        <title>   针对孩子注意力不集中的具体训练方法</title>
+//        <content>孩子注意力不集中，易分心，
         try {
             parser.setInput(inStream, "UTF-8");
             int eventType = parser.getEventType();
-            int count = 0;
 
             while (eventType != XmlPullParser.END_DOCUMENT) {
                 switch (eventType) {
@@ -56,31 +57,15 @@ public class GuideHelper {
                         break;
                     case XmlPullParser.START_TAG://开始元素事件
                         String name = parser.getName();
-                        if (name.equalsIgnoreCase("key")) {
+                        if (name.equalsIgnoreCase("title")) {
                             currentGame = new Guide();
                             currentGame.phase = parser.nextText();
-                            count = 0;
-                        } else if (name.equalsIgnoreCase("string")) {
-                            switch (count) {
-                                case 0:
-                                    currentGame.desc0 = parser.nextText();
-                                    count++;
-                                    break;
-                                case 1:
-                                    currentGame.desc1 = parser.nextText();
-                                    count++;
-                                    break;
-                                case 2:
-                                    currentGame.desc2 = parser.nextText();
-                                    break;
-
-                                default:
-                                    break;
-                            }
+                        } else if (name.equalsIgnoreCase("content")) {
+                            currentGame.desc0 = parser.nextText();
                         }
                         break;
                     case XmlPullParser.END_TAG://结束元素事件
-                        if (parser.getName().equals("array")) {
+                        if (parser.getName().equals("article")) {
                             list.add(currentGame);
                             currentGame = null;
                         }

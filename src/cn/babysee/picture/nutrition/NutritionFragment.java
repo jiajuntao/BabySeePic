@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import cn.babysee.base.BaseFragment;
 import cn.babysee.picture.R;
-import cn.babysee.picture.base.BaseFragment;
 import cn.babysee.picture.env.AppEnv;
 
 public class NutritionFragment extends BaseFragment {

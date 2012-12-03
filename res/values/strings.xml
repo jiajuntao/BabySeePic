@@ -12,6 +12,8 @@
     <string name="yuerzhinan">育儿指南</string>
     <string name="tools">应用工具</string>
     <string name="zhi_li_fang_cheng">智力方程</string>
+    <string name="grow_advice">成长建议</string>
+    <string name="app_tools">应用工具</string>
     <string name="guide_one">0-1岁</string>
     <string name="animal">动物</string>
     <string name="fruit">水果</string>
@@ -21,7 +23,7 @@
     <string name="game_desc">游戏描述</string>
     
     <!-- 关于 -->
-     <string name="menu_net_update">联网升级</string>
+    <string name="menu_net_update">联网升级</string>
     <string name="menu_share2friends">推荐好友</string>
     <string name="menu_submit_proposal">提交建议</string>
     <string name="menu_settings">设置</string>
@@ -77,7 +79,31 @@
     <string name="nutrition_tab_3">饮食指导</string>
     
 
-    <!-- SD卡检查 -->
+    <!-- 应用工具 -->
+    <string name="father_height">宝宝身高</string>
+    <string name="mather_height">宝宝身高</string>
+    <string name="boy">男孩</string>
+    <string name="girl">女孩</string>
+    <string name="baby_height_tips">宝宝身高小常识\n
+		宝宝的身高受遗传影响较大，所以从父母的身高可以一定程度上预测宝宝未来所能达到的身高，但是遗传因素对宝宝身高的影响不是绝对的，因为最终身高还受到其他五种因素的影响。\n
+		性别：足月新生儿的平均身长，男孩比女孩略胜一筹，差距约2厘米左右。这种性别差距在整个儿童时期都可能存在，直至青春早期。\n
+		营养：营养充足的宝宝长得较快。当宝宝营养不能满足骨骼生长需要时，身高增长的速度就会减慢。 \n
+		睡眠：睡眠充足的宝宝长得快。因为宝宝的生长受到脑垂体分泌的生长激素的调节，而人体生长激素的分泌在睡眠时量最高。 \n
+		运动：运动能促进宝宝的血液循环，改善骨骼的营养，使骨骼生长加速，骨质致密，促进身高的增长。 \n
+		疾病：一般急性病影响体重，慢性病影响身高。 环境：一般而言，我国北方的孩子普遍比南方的孩子要高些；\n
+		经济条件好、文化水平高的地区，孩子也长得较高。 \n
+		小提示：宝宝的身高及测量方法 身高是衡量宝宝体格发育的一个非常重要的指标，它是指从头顶到足底的全身长度。\n
+		3岁以下的宝宝由于不会站立，或站不安稳，测量身高(又称身长)应取仰卧位测量。 \n
+		让宝宝仰卧在桌面上，两下肢并拢并伸直，用书本固定头部并与桌面垂直，用笔作直线标记，然后用书抵住宝宝脚板并与桌面垂直用笔画线标记，用皮尺测量两线之间的长度，即为宝宝的身高。</string>
+    
+    <!-- 市场推广 -->
+    <string name="goto_market_dialog_title">鼓励一下</string>
+    <string name="goto_market_dialog_content">如果觉得"宝宝智力方程"给您提供了帮助，不妨去应用市场表扬一下我们吧~</string>
+    <string name="goto_market_dialog_btn_ok">表扬一下</string>
+    <string name="goto_market_dialog_btn_cancel">以后再说</string>
+    <string name="goto_market_fail">打开应用市场失败，请检查您的应用市场！</string>
+    
+    <!-- 软件更新相关 -->
     <string name="download_file_error_dlg_title">"没有存储空间"</string>
     <string name="download_file_error_dlg_msg">"无法下载，请释放部分手机空间，然后重试。"</string>
     <string name="download_failed_generic_dlg_title">"下载失败"</string>
@@ -90,15 +116,6 @@
     <string name="download_no_sdcard_dlg_msg">"您的设备没有安装 SD 卡！"</string>
     <string name="download_sdcard_busy_dlg_title">"SD 卡不可用"</string>
     <string name="download_sdcard_busy_dlg_msg">"您的SD卡正在用于其他用途，请在通知中选择“关闭 USB 存储设备”。"</string>
-
-    <!-- 市场推广 -->
-    <string name="goto_market_dialog_title">鼓励一下</string>
-    <string name="goto_market_dialog_content">如果觉得"宝宝智力方程"给您提供了帮助，不妨去应用市场表扬一下我们吧~</string>
-    <string name="goto_market_dialog_btn_ok">表扬一下</string>
-    <string name="goto_market_dialog_btn_cancel">以后再说</string>
-    <string name="goto_market_fail">打开应用市场失败，请检查您的应用市场！</string>
-    
-    <!-- 软件更新相关 -->
     <string name="update_back">返回</string>
     <string name="update_find_new_version_title">新版本提示</string>
     <string name="update_find_new_version_message">版本号： <b>%1$s</b>\n\n%2$s</string>

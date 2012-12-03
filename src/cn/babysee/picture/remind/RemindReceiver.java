@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.PowerManager;
 import android.util.Log;
 import cn.babysee.picture.env.AppEnv;
@@ -12,7 +11,7 @@ import cn.babysee.picture.env.SharedPref;
 
 public class RemindReceiver extends BroadcastReceiver {
 
-    private static final int TIME = 24 * 60 * 60 * 1000;
+    private static final int TIME = 2 * AppEnv.ONE_DAY;
 
     @Override
     public void onReceive(final Context context, Intent intent) {
@@ -20,10 +19,10 @@ public class RemindReceiver extends BroadcastReceiver {
         if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
             if (AppEnv.DEBUG)
                 Log.d("RemindReceiver", action);
-//            ConnectivityManager connectivityManager = (ConnectivityManager) context
-//                    .getSystemService(Context.CONNECTIVITY_SERVICE);
-//            NetworkInfo info = connectivityManager.getActiveNetworkInfo();
-//            String name = info.getTypeName();
+            //            ConnectivityManager connectivityManager = (ConnectivityManager) context
+            //                    .getSystemService(Context.CONNECTIVITY_SERVICE);
+            //            NetworkInfo info = connectivityManager.getActiveNetworkInfo();
+            //            String name = info.getTypeName();
 
             //屏幕亮相才提醒用户
             PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);

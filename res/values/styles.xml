@@ -278,8 +278,8 @@
     <style name="ButtonLarge" parent="style/TextAppearance.Medium">
         <item name="android:paddingLeft">8dip</item>
         <item name="android:paddingRight">8dip</item>
-        <item name="android:paddingTop">4dip</item>
-        <item name="android:paddingBottom">4dip</item>
+        <item name="android:paddingTop">3dip</item>
+        <item name="android:paddingBottom">3dip</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@android:color/background_dark</item>

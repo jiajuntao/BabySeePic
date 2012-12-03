@@ -3,7 +3,7 @@ package cn.babysee.picture;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.webkit.WebView;
-import cn.babysee.picture.base.BaseActivity;
+import cn.babysee.base.BaseActivity;
 
 public class WebViewActivity extends BaseActivity {
 

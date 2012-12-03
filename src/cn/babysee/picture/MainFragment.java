@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import cn.babysee.picture.base.BaseFragment;
+import cn.babysee.base.BaseFragment;
 import cn.babysee.picture.book.BaikeListActivity;
 import cn.babysee.picture.book.YuErZhiNanListActivity;
 import cn.babysee.picture.draw.DrawBoardActivity;

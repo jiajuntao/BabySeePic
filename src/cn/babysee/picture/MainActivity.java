@@ -12,12 +12,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import cn.babysee.picture.base.BaseFragmentActivity;
+import android.widget.ImageView;
+import cn.babysee.base.BaseFragmentActivity;
 import cn.babysee.picture.env.AppEnv;
 import cn.babysee.picture.env.StatServiceEnv;
 import cn.babysee.picture.remind.RemindHelper;
@@ -34,10 +36,12 @@ public class MainActivity extends BaseFragmentActivity {
     private static final int DIALOG_MARKET = 2;
 
     private UpdateHelper updateHelper = null;
-    private static final int NUM_ITEMS = 1;
+    private static final int NUM_ITEMS = 2;
 
-    MyAdapter mAdapter;
-    ViewPager mPager;
+    private MyAdapter mAdapter;
+    private ViewPager mPager;
+    private ImageView mDot1;
+    private ImageView mDot2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +50,37 @@ public class MainActivity extends BaseFragmentActivity {
         setContentView(R.layout.main);
         AppEnv.initScreen(this);
 
+        mDot1 = (ImageView) findViewById(R.id.dot1);
+        mDot2 = (ImageView) findViewById(R.id.dot2);
+
         mAdapter = new MyAdapter(getSupportFragmentManager());
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mAdapter);
+        mPager.setOnPageChangeListener(new OnPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 0) {
+                    mDot1.setImageResource(R.drawable.guide_dot_green);
+                    mDot2.setImageResource(R.drawable.guide_dot_normal);
+                } else if (position == 1) {
+                    mDot1.setImageResource(R.drawable.guide_dot_normal);
+                    mDot2.setImageResource(R.drawable.guide_dot_green);
+                }
+            }
+
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int arg0) {
+            }
+        });
 
         if (RemindHelper.goToSupportUs(mContext)) {
+            StatService.onEvent(mContext, StatServiceEnv.MAIN_REMIND_SUPPORT_EVENT_ID,
+                    StatServiceEnv.MAIN_REMIND_SUPPORT_LABEL, 1);
             showDialog(DIALOG_MARKET);
         }
 

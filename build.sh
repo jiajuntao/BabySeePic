@@ -21,12 +21,12 @@ init()
 	echo
 	echo [init]:
 	echo
-	OUTPUT_DIR=~/Myapps/$APP_NAME/$VERSION_NAME/$BUILD_MODE
+	OUTPUT_DIR=~/myapps/$APP_NAME/$VERSION_NAME/$BUILD_MODE
 	echo 	create $OUTPUT_DIR folder
 	mkdir -p $OUTPUT_DIR
 	
 	if [ $BUILD_MODE == $RELEASE ]; then
-		sed -i s/'android:value="BAIDU_STAT_ID_NONE"'/'android:value="f0234c2f5c"'/ AndroidManifest.xml 
+		sed -e s/'android:value="BAIDU_STAT_ID_NONE"'/'android:value="f0234c2f5c"'/g -i '' AndroidManifest.xml 
 	fi
 
 	check_ret
@@ -42,7 +42,7 @@ restore()
 	cp -fr bin/proguard $OUTPUT_DIR/proguard/
 	
 	if [ $BUILD_MODE == $RELEASE ]; then
-		sed -i s/'android:value="f0234c2f5c"'/'android:value="BAIDU_STAT_ID_NONE"'/ AndroidManifest.xml
+		sed -e s/'android:value="f0234c2f5c"'/'android:value="BAIDU_STAT_ID_NONE"'/g -i '' AndroidManifest.xml
 	else
 		echo debug_mode
 	fi
@@ -50,7 +50,7 @@ restore()
 	#恢复渠道号的默认值
 	CHANELID_2=$CHANELID_NONE
 	echo CHANELID_1: $CHANELID_1 CHANELID_2: $CHANELID_2
-	sed -i s/'android:value="'${CHANELID_1}'"'/'android:value="'${CHANELID_2}'"'/ AndroidManifest.xml 
+	sed -e s/'android:value="'${CHANELID_1}'"'/'android:value="'${CHANELID_2}'"'/g -i '' AndroidManifest.xml 
 	
 	#clean
 }
@@ -83,7 +83,7 @@ goToBuild()
 
 	ant release
 	check_ret
-}	
+}	 
 
 #根据传来的渠道号打包
 build()
@@ -97,11 +97,11 @@ build()
 	echo 	chanelId_1: $CHANELID_1 chanelId_2: $CHANELID_2
 	
 	#修改渠道号
-	sed -i s/'android:value="'${CHANELID_1}'"'/'android:value="'${CHANELID_2}'"'/ AndroidManifest.xml 
+	sed -e s/'android:value="'${CHANELID_1}'"'/'android:value="'${CHANELID_2}'"'/g -i '' AndroidManifest.xml 
 	
 	goToBuild
 	
-	cp bin/BabySeePic-release.apk $OUTPUT_DIR/$APP_NAME-$VERSION_NAME-$CHANELID_2.apk
+	cp bin/${APP_NAME}-release.apk $OUTPUT_DIR/$APP_NAME-$VERSION_NAME-$CHANELID_2.apk
 
 	CHANELID_1=$CHANELID_2
 }

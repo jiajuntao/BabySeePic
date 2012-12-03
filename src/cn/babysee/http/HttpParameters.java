@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.babysee.picture.http;
+package cn.babysee.http;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +28,13 @@ import android.os.Bundle;
  *
  * @author  (luopeng@staff.sina.com.cn zhangjie2@staff.sina.com.cn 官方微博：WBSDK  http://weibo.com/u/2791136085)
  */
-public class WeiboParameters {
+public class HttpParameters {
 
 	private Bundle mParameters = new Bundle();
 	private List<String> mKeys = new ArrayList<String>();
 	
 	
-	public WeiboParameters(){
+	public HttpParameters(){
 		
 	}
 	
@@ -92,7 +92,7 @@ public class WeiboParameters {
 		return mKeys.size();
 	}
 	
-	public void addAll(WeiboParameters parameters){
+	public void addAll(HttpParameters parameters){
 		for(int i = 0; i < parameters.size(); i++){
 			this.add(parameters.getKey(i), parameters.getValue(i));
 		}

@@ -2,51 +2,136 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/main_bg"
+    android:background="@color/background_test"
     android:gravity="center_horizontal"
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/seepic"
-        style="@style/MainItem2"
-        android:layout_marginRight="20dip"
-        android:text="快来预测一下宝宝的身高吧！" />
+        style="@style/divider_text"
+        android:text="想预测一下宝宝的身高吗？"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="0dip"
-        android:layout_gravity="center"
-        android:layout_weight="1.0"
-        android:gravity="center_horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
         android:orientation="vertical"
-        android:paddingLeft="30dip"
-        android:paddingTop="30dip" >
+        android:padding="10dip" >
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal" >
 
             <TextView
-                android:id="@+id/seepic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dip"
-                android:text="爸爸身高：" />
+                android:layout_marginRight="5dip"
+                android:text="爸爸身高："
+                android:textColor="@color/black" />
 
             <EditText
                 android:id="@+id/father_height"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dip" />
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="20dip"
+                android:textColor="@color/main_bg"
+                android:inputType="number"
+                android:singleLine="true" />
 
             <TextView
-                android:id="@+id/brush"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dip"
-                android:text="厘米（cm）" />
+                android:text="厘米（cm）"
+                android:textColor="@color/black" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dip"
+                android:text="妈妈身高："
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/mather_height"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:textColor="@color/main_bg"
+                android:layout_marginRight="20dip"
+                android:inputType="number"
+                android:singleLine="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dip"
+                android:text="厘米（cm）"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <RadioGroup
+            android:id="@+id/radio_group"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dip"
+                android:text="宝宝性别："
+                android:textColor="@color/black" />
+
+            <RadioButton
+                android:id="@+id/boy"
+                style="@style/my_radio_button"
+                android:layout_width="wrap_content"
+                android:text="男孩" />
+
+            <RadioButton
+                android:id="@+id/gril"
+                style="@style/my_radio_button"
+                android:layout_width="wrap_content"
+                android:text="女孩" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/baby_heigth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            android:visibility="gone"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/cal_height"
+            style="@style/ButtonLarge"
+            android:layout_width="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="5dip"
+            android:text="开始计算" />
     </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            style="@style/BookText"
+            android:padding="10dip"
+            android:textColor="@color/text_color_dark"
+            android:text="@string/baby_height_tips" />
+    </ScrollView>
 
 </LinearLayout>

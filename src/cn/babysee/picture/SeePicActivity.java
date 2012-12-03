@@ -11,7 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
-import cn.babysee.picture.base.BaseListNavigation;
+import cn.babysee.base.BaseListNavigation;
 import cn.babysee.picture.env.AppEnv;
 import cn.babysee.picture.env.SharedPref;
 import cn.babysee.picture.env.StatServiceEnv;

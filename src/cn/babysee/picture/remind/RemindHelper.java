@@ -19,6 +19,7 @@ import cn.babysee.picture.env.SharedPref;
 import cn.babysee.picture.game.GameListActivity;
 import cn.babysee.picture.nutrition.NutritionFragmentTabNavigation;
 import cn.babysee.picture.test.TestListActivity;
+import cn.babysee.utils.NetworkUtil;
 import cn.babysee.utils.UIUtils;
 import cn.babysee.utils.Utils;
 
@@ -44,6 +45,11 @@ public class RemindHelper {
 
         //已经提醒过
         if (lastTime == 1) {
+            return false;
+        }
+        
+        //wifi网络下提醒用户
+        if (NetworkUtil.getAccessPointType(context) != NetworkUtil.NETWORK_WIFI) {
             return false;
         }
 
@@ -148,17 +154,6 @@ public class RemindHelper {
             }
         }
 
-        String drawLastTime = SharedPref.getString(context, SharedPref.NOTIF_DRAW_TIME, null);
-        if (drawLastTime == null || !weekOfYear.equals(drawLastTime)) {
-            if (AppEnv.DEBUG) {
-                Log.i(TAG, "notif_draw");
-            }
-            showNotification(context, R.drawable.ic_launcher, R.string.notif_draw, NOTIF_DRAW_ID,
-                    DrawBoardActivity.class);
-            SharedPref.setString(context, SharedPref.NOTIF_DRAW_TIME, weekOfYear);
-            return;
-        }
-
         String zhinanLastTime = SharedPref.getString(context, SharedPref.NOTIF_YUERZHINAN_TIME, null);
         if (zhinanLastTime == null || !weekOfYear.equals(zhinanLastTime)) {
             if (AppEnv.DEBUG) {
@@ -190,6 +185,17 @@ public class RemindHelper {
             showNotification(context, R.drawable.ic_launcher, R.string.notif_draw, NOTIF_TEST_ID,
                     TestListActivity.class);
             SharedPref.setString(context, SharedPref.NOTIF_TEST_TIME, month);
+            return;
+        }
+
+        String drawLastTime = SharedPref.getString(context, SharedPref.NOTIF_DRAW_TIME, null);
+        if (drawLastTime == null || !weekOfYear.equals(drawLastTime)) {
+            if (AppEnv.DEBUG) {
+                Log.i(TAG, "notif_draw");
+            }
+            showNotification(context, R.drawable.ic_launcher, R.string.notif_draw, NOTIF_DRAW_ID,
+                    DrawBoardActivity.class);
+            SharedPref.setString(context, SharedPref.NOTIF_DRAW_TIME, weekOfYear);
             return;
         }
     }

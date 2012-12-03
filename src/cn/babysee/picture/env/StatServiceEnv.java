@@ -63,6 +63,15 @@ public class StatServiceEnv {
     public static final String MAIN_YUERBAIKE_LATER_EVENT_ID = "1019";
     public static final String MAIN_YUERBAIKE_LATER_LABEL = "育儿百科";
     
+    public static final String MAIN_GROW_ADVICE_EVENT_ID = "1020";
+    public static final String MAIN_GROW_ADVICE_LABEL = "首页成长建议";
+    
+    public static final String MAIN_BABY_HEIGHT_EVENT_ID = "1021";
+    public static final String MAIN_BABY_HEIGHT_LABEL = "首页宝宝身高";
+    
+    public static final String MAIN_REMIND_SUPPORT_EVENT_ID = "1022";
+    public static final String MAIN_REMIND_SUPPORT_LABEL = "首页提醒支持我们";
+    
     //宝宝画板
     public static final String DRAWBOARD_MENU_BRUSH_COLOR_EVENT_ID = "2001";
     public static final String DRAWBOARD_MENU_BRUSH_COLOR_LABEL = "画笔颜色";
