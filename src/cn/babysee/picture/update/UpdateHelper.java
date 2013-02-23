@@ -66,7 +66,7 @@ public class UpdateHelper {
     }
 
     //检查间隔1天；
-    private static final int CHECK_UPDATE_TIME = 1 * AppEnv.ONE_DAY;
+    private static final int CHECK_UPDATE_TIME = 2 * AppEnv.ONE_DAY;
     //提醒间隔3天；
     private static final int ALERT_UPDATE_TIME = 3 * AppEnv.ONE_DAY;
 

@@ -41,6 +41,7 @@
         <item name="android:paddingLeft">7dip</item>
         <item name="android:paddingTop">3dip</item>
         <item name="android:paddingBottom">3dip</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="seepic_imageview">
@@ -287,14 +288,16 @@
         <item name="android:background">@drawable/main_item_bg</item>
     </style>
 
-    <style name="MainItem">
+    <style name="MainItemNew">
         <item name="android:textColor">@android:color/black</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:layout_width">80dp</item>
-        <item name="android:layout_height">80dp</item>
+        <item name="android:layout_weight">1.0</item>
+        <item name="android:layout_width">0dip</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:padding">20dip</item>
         <item name="android:gravity">center </item>
-        <item name="android:background">@drawable/main_item_bg</item>
+        <item name="android:background">@drawable/main_item_bg_new</item>
     </style>
 
     <style name="MainItem2">

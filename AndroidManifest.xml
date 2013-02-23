@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cn.babysee.picture"
-    android:versionCode="10"
-    android:versionName="1.8.0.1202" >
+    android:versionCode="11"
+    android:versionName="1.9.0.1209" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -153,6 +153,16 @@
         <activity
             android:name=".book.BaikeListActivity"
             android:label="@string/baike"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".guide.LeftRightBrainActivity"
+            android:label="@string/left_right_brain"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".guide.IntlligenceControlTableActivity"
+            android:label="@string/intlligence_control_table"
             android:screenOrientation="portrait" >
         </activity>
 

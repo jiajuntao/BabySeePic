@@ -17,7 +17,6 @@ public class StatServiceEnv {
     public static final String MAIN_VEGETABLE_EVENT_ID = "1004";
     public static final String MAIN_VEGETABLE_LABEL = "首页蔬菜";
     
-    
     public static final String MAIN_BABYDRAW_EVENT_ID = "1005";
     public static final String MAIN_BABYDRAW_LABEL = "首页宝宝画板";
     
@@ -71,6 +70,15 @@ public class StatServiceEnv {
     
     public static final String MAIN_REMIND_SUPPORT_EVENT_ID = "1022";
     public static final String MAIN_REMIND_SUPPORT_LABEL = "首页提醒支持我们";
+    
+    public static final String MAIN_LEFT_RIGHT_BRAIN_EVENT_ID = "1023";
+    public static final String MAIN_LEFT_RIGHT_BRAIN_LABEL = "左右脑开发";
+    
+    public static final String MAIN_INTLLIGENCE_CONTROL_TABLE_EVENT_ID = "1024";
+    public static final String MAIN_INTLLIGENCE_CONTROL_TABLE_LABEL = "智力检测表";
+    
+    public static final String MAIN_SHARE_FRIEND_EVENT_ID = "1025";
+    public static final String MAIN_SHARE_FRIEND_LABEL = "推荐给好友";
     
     //宝宝画板
     public static final String DRAWBOARD_MENU_BRUSH_COLOR_EVENT_ID = "2001";

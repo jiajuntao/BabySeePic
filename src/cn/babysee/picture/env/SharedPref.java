@@ -6,10 +6,8 @@ import android.content.SharedPreferences.Editor;
 
 public class SharedPref {
 
-    private static final String SHARE_PREF_NAME = "babaysee";
+    private static final String SHARE_PREF_NAME = "babaysee_preference";
     
-    private static final String PRE_NAME = "normal_preference";
-
     public static final String GAME_STAGE = "game_stage";
 
     public static final String GAME_STAGE_POSITION = "game_stage_position";
@@ -29,6 +27,8 @@ public class SharedPref {
     public static final String NOTIF_LAST_TIME = "notif_last_time";
     public static final String NOTIF_YUERBAIKE_TIME = "notif_yuerbaike_time";
     public static final String NOTIF_YUERZHINAN_TIME = "notif_yuerzhinan_time";
+    public static final String NOTIF_LEFT_RIGHT_BRAIN_TIME = "notif_left_right_brain_time";
+    public static final String NOTIF_INTLLIGENCE_CONTROL_TABLE_TIME = "notif_intlligence_control_table_time";
     
     //最新版本号
     public static final String NEWEST_VERSION = "newest_version";
@@ -38,13 +38,13 @@ public class SharedPref {
     public static final String ALERT_UPDATE_TIME = "alert_update_time";
 
     public static void setString(Context context, String key, String value) {
-        Editor sharedata = context.getSharedPreferences(PRE_NAME, 0).edit();
+        Editor sharedata = context.getSharedPreferences(SHARE_PREF_NAME, 0).edit();
         sharedata.putString(key, value);
         sharedata.commit();
     }
 
     public static String getString(Context context, String key, String defValue) {
-        return context.getSharedPreferences(PRE_NAME, 0).getString(key, defValue);
+        return context.getSharedPreferences(SHARE_PREF_NAME, 0).getString(key, defValue);
     }
 
     public static boolean getBoolean(Context context, String key, boolean defValue) {

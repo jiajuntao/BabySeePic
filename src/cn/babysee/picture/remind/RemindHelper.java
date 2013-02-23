@@ -17,6 +17,7 @@ import cn.babysee.picture.draw.DrawBoardActivity;
 import cn.babysee.picture.env.AppEnv;
 import cn.babysee.picture.env.SharedPref;
 import cn.babysee.picture.game.GameListActivity;
+import cn.babysee.picture.guide.LeftRightBrainActivity;
 import cn.babysee.picture.nutrition.NutritionFragmentTabNavigation;
 import cn.babysee.picture.test.TestListActivity;
 import cn.babysee.utils.NetworkUtil;
@@ -47,7 +48,7 @@ public class RemindHelper {
         if (lastTime == 1) {
             return false;
         }
-        
+
         //wifi网络下提醒用户
         if (NetworkUtil.getAccessPointType(context) != NetworkUtil.NETWORK_WIFI) {
             return false;
@@ -85,6 +86,8 @@ public class RemindHelper {
     public static final int NOTIF_UPDATE_ID = 1252793130;
     public static final int NOTIF_ZHINAN_ID = 1312793130;
     public static final int NOTIF_BAIKE_ID = 1132793130;
+    public static final int NOTIF_LEFT_RIGHT_BRAIN_ID = 1132793131;
+    public static final int NOTIF_INTLLIGENCE_CONTROL_TABLE_ID = 1132793132;
 
     public static void showNotification(Context context, int moodId, int textId, int notifId, Class classPend) {
         NotificationManager mNM = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -128,7 +131,7 @@ public class RemindHelper {
         String weekOfYear = String.valueOf(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR));
         if (AppEnv.DEBUG)
             Log.d(TAG, "showNotification: weekOfYear" + weekOfYear);
-        
+
         if (isWeekDay()) {
 
             String gameLastTime = SharedPref.getString(context, SharedPref.NOTIF_GAME_TIME, null);
@@ -185,6 +188,28 @@ public class RemindHelper {
             showNotification(context, R.drawable.ic_launcher, R.string.notif_draw, NOTIF_TEST_ID,
                     TestListActivity.class);
             SharedPref.setString(context, SharedPref.NOTIF_TEST_TIME, month);
+            return;
+        }
+        String leftRightBrainLastTime = SharedPref.getString(context, SharedPref.NOTIF_LEFT_RIGHT_BRAIN_TIME, null);
+        if (leftRightBrainLastTime == null || !month.equals(leftRightBrainLastTime)) {
+            if (AppEnv.DEBUG) {
+                Log.i(TAG, "notif_left_right_brain");
+            }
+            showNotification(context, R.drawable.ic_launcher, R.string.notif_left_right_brain,
+                    NOTIF_LEFT_RIGHT_BRAIN_ID, LeftRightBrainActivity.class);
+            SharedPref.setString(context, SharedPref.NOTIF_LEFT_RIGHT_BRAIN_TIME, month);
+            return;
+        }
+        
+        String controlTableLastTime = SharedPref.getString(context, SharedPref.NOTIF_INTLLIGENCE_CONTROL_TABLE_TIME,
+                null);
+        if (controlTableLastTime == null || !month.equals(controlTableLastTime)) {
+            if (AppEnv.DEBUG) {
+                Log.i(TAG, "notif_intlligence_control_table");
+            }
+            showNotification(context, R.drawable.ic_launcher, R.string.notif_intlligence_control_table,
+                    NOTIF_INTLLIGENCE_CONTROL_TABLE_ID, LeftRightBrainActivity.class);
+            SharedPref.setString(context, SharedPref.NOTIF_INTLLIGENCE_CONTROL_TABLE_TIME, month);
             return;
         }
 

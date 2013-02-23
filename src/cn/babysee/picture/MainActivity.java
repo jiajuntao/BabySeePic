@@ -19,11 +19,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
+import cn.babysee.R;
 import cn.babysee.base.BaseFragmentActivity;
 import cn.babysee.picture.env.AppEnv;
 import cn.babysee.picture.env.StatServiceEnv;
 import cn.babysee.picture.remind.RemindHelper;
 import cn.babysee.picture.update.UpdateHelper;
+import cn.babysee.utils.Utils;
 
 import com.baidu.mobstat.StatService;
 
@@ -128,6 +130,11 @@ public class MainActivity extends BaseFragmentActivity {
             StatService.onEvent(mContext, StatServiceEnv.MAIN_CHECK_UPDATE_EVENT_ID,
                     StatServiceEnv.MAIN_CHECK_UPDATE_LABEL, 1);
             updateHelper.update(false);
+            break;
+        case R.id.menu_share2friend:
+            StatService.onEvent(mContext, StatServiceEnv.MAIN_SHARE_FRIEND_EVENT_ID,
+                    StatServiceEnv.MAIN_SHARE_FRIEND_LABEL, 1);
+            Utils.share2friend(this, R.string.share2friends_title, R.string.share2friends_content);
             break;
 
         default:

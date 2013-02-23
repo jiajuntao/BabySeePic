@@ -36,6 +36,9 @@ public class TestPhase implements Serializable {
     }
     
     public void initTestAnalysis() {
+        if (testAnalysis == null) {
+            return;
+        }
         
         for (TestAnalysis t : testAnalysis) {
             List<Integer> i = t.getList();

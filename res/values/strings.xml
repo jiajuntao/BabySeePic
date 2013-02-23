@@ -14,6 +14,8 @@
     <string name="zhi_li_fang_cheng">智力方程</string>
     <string name="grow_advice">成长建议</string>
     <string name="app_tools">应用工具</string>
+    <string name="left_right_brain">左右脑开发</string>
+    <string name="intlligence_control_table">智力对照表</string>
     <string name="guide_one">0-1岁</string>
     <string name="animal">动物</string>
     <string name="fruit">水果</string>
@@ -25,18 +27,20 @@
     <!-- 关于 -->
     <string name="menu_net_update">联网升级</string>
     <string name="menu_share2friends">推荐好友</string>
+    <string name="share2friends_title">向好友推荐应用</string>
+    <string name="share2friends_content">宝宝智力方程是一款很不错的早教应用，集智力开发、益智游戏、育儿百科等多项功能，内容很丰富，好东西要与朋友来分享，你也试试吧！</string>
     <string name="menu_submit_proposal">提交建议</string>
+    <string name="menu_support_us">表扬一下</string>
     <string name="menu_settings">设置</string>
     <string name="menu_about">关于</string>
-    <string name="menu_support_us">表扬一下</string>
     <string name="menu_advice">提提建议</string>
     <string name="about_office_web">官网：</string>
     <string name="about_office_web_url">babystudy.diandian.com</string>
     <string name="about_mail">邮箱：</string>
     <string name="about_mail_url">babyseepic@gmail.com</string>
     <string name="about_copyright">懿轩工作室</string>
-    <string name="about_description">"　　通过多年对宝宝行为的观察，专为宝宝量身打造的看图软件，通过图片和声音认识常见的动物、水果、蔬菜、交通工具；通过宝宝画板，提高宝宝的动手能力、想象能力，在玩的过程中认识新的事物，帮助你做好宝宝的启蒙教育！
-        如果你有任何反馈或修改意见请与我们联系！"</string>
+    <string name="about_description">"　　专为0-6岁儿童开发的早教软件，汇集了智力开发、益智游戏、智力测试、营养保健、育儿百科等功能，为使初为父母的您提供360度的指导，使您能快速了解、掌握科学的教养方法，让宝宝健康快乐的成长！
+        如果您有任何疑问与建议请与我们联系！"</string>
     <string name="help_singal">"?"</string>
     
     <!-- 宝宝画板 -->
@@ -72,6 +76,8 @@
     <string name="notif_draw">宝宝画板功能很好用，让宝宝大显身手吧</string>
     <string name="notif_yuerbaike">来育儿百科看看吧，帮您解决育儿中的疑惑！</string>
     <string name="notif_yuerzhinan">常来阅读育儿指南，为您健康育儿保驾护航！</string>
+    <string name="notif_left_right_brain">关注宝宝左右脑开发，让您的宝宝更聪明！</string>
+    <string name="notif_intlligence_control_table">智力测试表可以帮助您检测宝宝智力发展状态，助您检测早教效果</string>
     
     <!-- 宝宝营养 -->
     <string name="nutrition_tab_1">1-36月</string>
@@ -113,9 +119,7 @@
     <string name="download_apk_success_install_msg">"下载完成,点击安装"</string>
     <string name="downloading_apk_msg">"正在下载%1$s %2$d"</string>
     <string name="download_no_sdcard_dlg_title">"没有 SD 卡"</string>
-    <string name="download_no_sdcard_dlg_msg">"您的设备没有安装 SD 卡！"</string>
-    <string name="download_sdcard_busy_dlg_title">"SD 卡不可用"</string>
-    <string name="download_sdcard_busy_dlg_msg">"您的SD卡正在用于其他用途，请在通知中选择“关闭 USB 存储设备”。"</string>
+    
     <string name="update_back">返回</string>
     <string name="update_find_new_version_title">新版本提示</string>
     <string name="update_find_new_version_message">版本号： <b>%1$s</b>\n\n%2$s</string>

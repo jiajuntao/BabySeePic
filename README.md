@@ -16,3 +16,6 @@ wandoujia market
 2、取消统计配置文件注释
 3、修改版本号及版本说明
 4、修改渠道号
+
+自动so打包
+./build.sh -r -all

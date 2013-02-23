@@ -8,8 +8,8 @@ public class AppEnv {
     public static final boolean DEBUG = false;
 
     public static final String TAG = "BabyStudy";
-    public static final String DOWNLOAD_PATH = "BabySeePic";
-    public static final String DOWNLOAD_NAME = "BabySeePic.apk";
+    public static final String DOWNLOAD_PATH = "babysee";
+    public static final String DOWNLOAD_NAME = "babysee.apk";
     
     public static final int ONE_DAY = 24 * 60 * 60 * 1000;
 

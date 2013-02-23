@@ -43,8 +43,11 @@ public class MediaPlayHelper {
         }
 
         int len = soundIds.length;
-        for (int i = 0; i < len; i++) {
-            soundPoolMap.put(i, soundPool.load(context, soundIds[i], 1));
+        try {
+            for (int i = 0; i < len; i++) {
+                soundPoolMap.put(i, soundPool.load(context, soundIds[i], 1));
+            }
+        } catch (Exception e) {
         }
     }
 

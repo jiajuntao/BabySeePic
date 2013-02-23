@@ -15,14 +15,13 @@
  */
 package cn.babysee.picture.guide;
 
-
 /**
- * 成长建议
+ * 左右脑开发
  */
-public class GrowAdviceActivity extends AdviceActivity {
+public class IntlligenceControlTableActivity extends AdviceActivity {
 
     @Override
     void init() {
-        mTestHelper = new GrowAdviceHelper(mContext);
+        mTestHelper = new IntlligenceControlTableHelper(mContext);
     }
 }

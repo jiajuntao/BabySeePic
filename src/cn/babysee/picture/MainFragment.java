@@ -14,6 +14,8 @@ import cn.babysee.picture.env.AppEnv;
 import cn.babysee.picture.env.StatServiceEnv;
 import cn.babysee.picture.game.GameListActivity;
 import cn.babysee.picture.guide.GuideListActivity;
+import cn.babysee.picture.guide.IntlligenceControlTableActivity;
+import cn.babysee.picture.guide.LeftRightBrainActivity;
 import cn.babysee.picture.nutrition.NutritionFragmentTabNavigation;
 import cn.babysee.picture.test.TestListActivity;
 
@@ -37,9 +39,9 @@ public class MainFragment extends BaseFragment implements OnClickListener {
         v.findViewById(R.id.test).setOnClickListener(this);
         v.findViewById(R.id.game).setOnClickListener(this);
         v.findViewById(R.id.seepic).setOnClickListener(this);
-        v.findViewById(R.id.guide).setOnClickListener(this);
+        v.findViewById(R.id.left_right_brain).setOnClickListener(this);
         v.findViewById(R.id.nutrition).setOnClickListener(this);
-        v.findViewById(R.id.yuerzhinan).setOnClickListener(this);
+        v.findViewById(R.id.intlligence_control_table).setOnClickListener(this);
         v.findViewById(R.id.yuerbaike).setOnClickListener(this);
         return v;
     }
@@ -63,19 +65,18 @@ public class MainFragment extends BaseFragment implements OnClickListener {
             StatService.onEvent(mContext, StatServiceEnv.MAIN_SEE_PIC_EVENT_ID, StatServiceEnv.MAIN_SEE_PIC_LABEL, 1);
             startActivity(new Intent(mContext, SeePicActivity.class));
             break;
-        case R.id.guide:
-            StatService.onEvent(mContext, StatServiceEnv.MAIN_GUIDE_EVENT_ID, StatServiceEnv.MAIN_GUIDE_LABEL, 1);
-            startActivity(new Intent(mContext, GuideListActivity.class));
+        case R.id.left_right_brain:
+            StatService.onEvent(mContext, StatServiceEnv.MAIN_LEFT_RIGHT_BRAIN_EVENT_ID, StatServiceEnv.MAIN_LEFT_RIGHT_BRAIN_LABEL, 1);
+            startActivity(new Intent(mContext, LeftRightBrainActivity.class));
             break;
         case R.id.nutrition:
             StatService.onEvent(mContext, StatServiceEnv.MAIN_NUTRITION_EVENT_ID, StatServiceEnv.MAIN_NUTRITION_LABEL,
                     1);
             startActivity(new Intent(mContext, NutritionFragmentTabNavigation.class));
             break;
-        case R.id.yuerzhinan:
-            StatService.onEvent(mContext, StatServiceEnv.MAIN_YUERZHINAN_EVENT_ID,
-                    StatServiceEnv.MAIN_YUERZHINAN_LATER_LABEL, 1);
-            startActivity(new Intent(mContext, YuErZhiNanListActivity.class));
+        case R.id.intlligence_control_table:
+            StatService.onEvent(mContext, StatServiceEnv.MAIN_INTLLIGENCE_CONTROL_TABLE_EVENT_ID, StatServiceEnv.MAIN_INTLLIGENCE_CONTROL_TABLE_LABEL, 1);
+            startActivity(new Intent(mContext, IntlligenceControlTableActivity.class));
             break;
         case R.id.yuerbaike:
             StatService.onEvent(mContext, StatServiceEnv.MAIN_YUERBAIKE_LATER_EVENT_ID,

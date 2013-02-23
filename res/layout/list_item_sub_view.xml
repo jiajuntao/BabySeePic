@@ -23,7 +23,9 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/icon"
         android:text="谁在叫我"
-        android:textSize="16sp" />
+        android:textSize="18sp" 
+        android:textStyle="bold"
+        />
 
     <TextView
         android:id="@+id/summary"

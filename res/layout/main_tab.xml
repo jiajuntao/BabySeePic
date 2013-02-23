@@ -43,9 +43,9 @@
             android:text="@string/test" />
 
         <TextView
-            android:id="@+id/game"
-            style="@style/MainItem2"
-            android:text="@string/game" />
+            android:id="@+id/left_right_brain"
+            style="@style/MainItemNew"
+            android:text="@string/left_right_brain" />
     </LinearLayout>
 
     <LinearLayout
@@ -55,17 +55,17 @@
         android:layout_weight="1.0"
         android:gravity="center"
         android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/intlligence_control_table"
+            style="@style/MainItemNew"
+            android:layout_marginRight="20dip"
+            android:text="@string/intlligence_control_table" />
 
         <TextView
             android:id="@+id/nutrition"
             style="@style/MainItem2"
-            android:layout_marginRight="20dip"
             android:text="@string/nutrition" />
-
-        <TextView
-            android:id="@+id/yuerzhinan"
-            style="@style/MainItem2"
-            android:text="@string/yuerzhinan" />
     </LinearLayout>
 
     <LinearLayout
@@ -77,10 +77,10 @@
         android:orientation="horizontal" >
 
         <TextView
-            android:id="@+id/guide"
+            android:id="@+id/game"
             style="@style/MainItem2"
             android:layout_marginRight="20dip"
-            android:text="@string/guide" />
+            android:text="@string/game" />
 
         <TextView
             android:id="@+id/yuerbaike"

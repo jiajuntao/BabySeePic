@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +41,12 @@ public class DrawListActivity extends BaseActivity implements OnItemClickListene
 
     private List<String> getPicList() {
 
-        File fileDir = new File(FileUtils.getImageFolderPath());
+        String filePath = FileUtils.getImageFolderPath();
+        if(TextUtils.isEmpty(filePath)) {
+            return picList;
+        }
+        
+        File fileDir = new File(filePath);
         File[] pics = fileDir.listFiles();
         if (pics == null) {
             return null;
