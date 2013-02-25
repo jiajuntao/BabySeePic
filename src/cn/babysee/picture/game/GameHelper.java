@@ -11,6 +11,7 @@ import android.content.Context;
 import android.util.Log;
 import android.util.Xml;
 import cn.babysee.picture.env.AppEnv;
+import cn.babysee.utils.FileUtils;
 
 public class GameHelper {
 
@@ -75,15 +76,7 @@ public class GameHelper {
     }
 
     public List<GameList> getGameList() {
-        InputStream inStream = null;
-        try {
-            inStream = mContext.getResources().getAssets().open("game/baby_game");
-            if (inStream == null) {
-                return null;
-            }
-        } catch (IOException e) {
-            if (DEBUG) e.printStackTrace();
-        }
+        InputStream inStream = FileUtils.getAssetFile(mContext, "game/baby_game", true);
 
         XmlPullParser parser = Xml.newPullParser();
         List<GameList> gameLists = null;

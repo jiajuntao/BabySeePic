@@ -33,7 +33,7 @@ public class NutritionHelperClassicRecipes implements INutrionHelper {
             return list;
         }
 
-        List<String> lines = FileUtils.getAssetFileByLine(mContext, "nutrition/nutrition_classic_recipes");
+        List<String> lines = FileUtils.getAssetFileByLine(mContext, "nutrition/nutrition_classic_recipes", true, null);
         List<NutritionCategory> cateList = new ArrayList<NutritionCategory>();
         NutritionCategory nutritionCategory = null;
         Nutrition nutrition = null;

@@ -52,16 +52,7 @@ public class YuErZhiNanHelper implements IBookHelper {
      */
     @Override
     public void initBook() {
-        InputStream inStream = null;
-        try {
-            inStream = context.getResources().getAssets().open(BASE_PATH + "g_title.xml");
-            if (inStream == null) {
-                return;
-            }
-        } catch (IOException e) {
-            if (DEBUG)
-                e.printStackTrace();
-        }
+        InputStream inStream = FileUtils.getAssetFile(context, BASE_PATH + "g_title.xml", true);
 
         List<Chapter> list = new ArrayList<Chapter>();
 
@@ -113,16 +104,7 @@ public class YuErZhiNanHelper implements IBookHelper {
     }
 
     private List<ChapterSub> getChapterSubList(String path) {
-        InputStream inStream = null;
-        try {
-            inStream = context.getResources().getAssets().open(BASE_PATH + path);
-            if (inStream == null) {
-                return null;
-            }
-        } catch (IOException e) {
-            if (DEBUG)
-                e.printStackTrace();
-        }
+        InputStream inStream = FileUtils.getAssetFile(context, BASE_PATH + path, true);
 
         List<ChapterSub> subList = new ArrayList<ChapterSub>();
 

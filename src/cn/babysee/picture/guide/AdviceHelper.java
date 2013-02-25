@@ -8,6 +8,7 @@ import java.util.List;
 import org.xmlpull.v1.XmlPullParser;
 
 import cn.babysee.picture.env.AppEnv;
+import cn.babysee.utils.FileUtils;
 
 import android.content.Context;
 import android.util.Log;
@@ -34,15 +35,7 @@ public abstract class AdviceHelper {
                 return list;
             }
     
-            InputStream inStream = null;
-            try {
-                inStream = mContext.getResources().getAssets().open(filePath);
-                if (inStream == null) {
-                    return null;
-                }
-            } catch (IOException e) {
-                if (DEBUG) e.printStackTrace();
-            }
+            InputStream inStream = FileUtils.getAssetFile(mContext, filePath, true);
     
             XmlPullParser parser = Xml.newPullParser();
             Guide currentGame = null;

@@ -3,8 +3,6 @@ package cn.babysee.picture.book;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gson.Gson;
-
 import android.content.Context;
 import cn.babysee.utils.FileUtils;
 
@@ -43,7 +41,7 @@ public class BaiKeHelper implements IBookHelper {
      */
     @Override
     public void initBook() {
-        List<String> lines = FileUtils.getAssetFileByLine(context, BASE_PATH + "chart.txt");
+        List<String> lines = FileUtils.getAssetFileByLine(context, BASE_PATH + "chart.txt", true, null);
         book = new Book();
         List<Chapter> list = new ArrayList<Chapter>();
         List<ChapterSub> subList = null;

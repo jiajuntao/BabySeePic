@@ -11,6 +11,7 @@ import android.content.Context;
 import android.util.Log;
 import android.util.Xml;
 import cn.babysee.picture.env.AppEnv;
+import cn.babysee.utils.FileUtils;
 
 public class GuideHelper {
 
@@ -31,15 +32,7 @@ public class GuideHelper {
             return list;
         }
 
-        InputStream inStream = null;
-        try {
-            inStream = mContext.getResources().getAssets().open("guide/baby_guide");
-            if (inStream == null) {
-                return null;
-            }
-        } catch (IOException e) {
-            if (DEBUG) e.printStackTrace();
-        }
+        InputStream inStream = FileUtils.getAssetFile(mContext, "guide/baby_guide", true);
 
         XmlPullParser parser = Xml.newPullParser();
         Guide currentGame = null;
@@ -51,56 +44,59 @@ public class GuideHelper {
 
             while (eventType != XmlPullParser.END_DOCUMENT) {
                 switch (eventType) {
-                    case XmlPullParser.START_DOCUMENT://文档开始事件,可以进行数据初始化处理
-                        list = new ArrayList<Guide>();
-                        break;
-                    case XmlPullParser.START_TAG://开始元素事件
-                        String name = parser.getName();
-                        if (name.equalsIgnoreCase("key")) {
-                            currentGame = new Guide();
-                            currentGame.phase = parser.nextText();
-                            count = 0;
-                        } else if (name.equalsIgnoreCase("string")) {
-                            switch (count) {
-                                case 0:
-                                    currentGame.desc0 = parser.nextText();
-                                    count++;
-                                    break;
-                                case 1:
-                                    currentGame.desc1 = parser.nextText();
-                                    count++;
-                                    break;
-                                case 2:
-                                    currentGame.desc2 = parser.nextText();
-                                    break;
+                case XmlPullParser.START_DOCUMENT://文档开始事件,可以进行数据初始化处理
+                    list = new ArrayList<Guide>();
+                    break;
+                case XmlPullParser.START_TAG://开始元素事件
+                    String name = parser.getName();
+                    if (name.equalsIgnoreCase("key")) {
+                        currentGame = new Guide();
+                        currentGame.phase = parser.nextText();
+                        count = 0;
+                    } else if (name.equalsIgnoreCase("string")) {
+                        switch (count) {
+                        case 0:
+                            currentGame.desc0 = parser.nextText();
+                            count++;
+                            break;
+                        case 1:
+                            currentGame.desc1 = parser.nextText();
+                            count++;
+                            break;
+                        case 2:
+                            currentGame.desc2 = parser.nextText();
+                            break;
 
-                                default:
-                                    break;
-                            }
+                        default:
+                            break;
                         }
-                        break;
-                    case XmlPullParser.END_TAG://结束元素事件
-                        if (parser.getName().equals("array")) {
-                            list.add(currentGame);
-                            currentGame = null;
-                        }
-                        break;
+                    }
+                    break;
+                case XmlPullParser.END_TAG://结束元素事件
+                    if (parser.getName().equals("array")) {
+                        list.add(currentGame);
+                        currentGame = null;
+                    }
+                    break;
                 }
                 eventType = parser.next();
             }
         } catch (Exception e) {
-            if (DEBUG) e.printStackTrace();
+            if (DEBUG)
+                e.printStackTrace();
         } finally {
             if (inStream != null) {
                 try {
                     inStream.close();
                 } catch (IOException e) {
-                    if (DEBUG) e.printStackTrace();
+                    if (DEBUG)
+                        e.printStackTrace();
                 }
             }
         }
 
-        if (DEBUG) Log.d(TAG, "list: " + list);
+        if (DEBUG)
+            Log.d(TAG, "list: " + list);
 
         return list;
     }

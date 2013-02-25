@@ -1,5 +1,9 @@
 package cn.babysee.picture;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -26,6 +30,7 @@ import cn.babysee.picture.env.StatServiceEnv;
 import cn.babysee.picture.remind.RemindHelper;
 import cn.babysee.picture.update.UpdateHelper;
 import cn.babysee.utils.Utils;
+import cn.babysee.utils.ZipUtil;
 
 import com.baidu.mobstat.StatService;
 
@@ -88,6 +93,7 @@ public class MainActivity extends BaseFragmentActivity {
 
         updateHelper = new UpdateHelper(this);
         updateHelper.checkUpdate();
+
     }
 
     @Override

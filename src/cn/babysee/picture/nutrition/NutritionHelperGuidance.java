@@ -11,6 +11,7 @@ import android.content.Context;
 import android.util.Log;
 import android.util.Xml;
 import cn.babysee.picture.env.AppEnv;
+import cn.babysee.utils.FileUtils;
 
 public class NutritionHelperGuidance implements INutrionHelper {
 
@@ -35,15 +36,7 @@ public class NutritionHelperGuidance implements INutrionHelper {
             return list;
         }
 
-        InputStream inStream = null;
-        try {
-            inStream = mContext.getResources().getAssets().open("nutrition/nutrition_guidance");
-            if (inStream == null) {
-                return null;
-            }
-        } catch (IOException e) {
-            if (DEBUG) e.printStackTrace();
-        }
+        InputStream inStream = FileUtils.getAssetFile(mContext, "nutrition/nutrition_guidance", true);
 
         XmlPullParser parser = Xml.newPullParser();
         Nutrition currentGame = null;

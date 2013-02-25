@@ -35,7 +35,7 @@ public class NutritionHelper1_36 implements INutrionHelper {
             return list;
         }
 
-        List<String> lines = FileUtils.getAssetFileByLine(mContext, "nutrition/nutrition_1_36");
+        List<String> lines = FileUtils.getAssetFileByLine(mContext, "nutrition/nutrition_1_36", true, null);
         List<Nutrition> list = new ArrayList<Nutrition>();
         Nutrition nutrition = null;
         StringBuffer sb = null;

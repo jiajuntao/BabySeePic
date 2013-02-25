@@ -215,7 +215,7 @@ public class TestHelper{
      */
     public List<TestPhase> getPhaseList(String filePath) {
 
-        List<String> lines = FileUtils.getAssetFileByLine(mContext, filePath);
+        List<String> lines = FileUtils.getAssetFileByLine(mContext, filePath, true, null);
         List<TestPhase> testPhases = new ArrayList<TestPhase>();
 
         TestPhase testPhase = null;
